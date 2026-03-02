@@ -1,0 +1,63 @@
+############################
+# OS / Editor artifacts
+############################
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+._*
+
+# Vscode / IDE
+.vscode/
+.idea/
+*.iml
+
+############################
+# Node / JavaScript
+############################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+coverage/
+.turbo/
+.cache/
+.parcel-cache/
+
+# Local env / secrets
+.env
+.env.*
+!.env.example
+
+############################
+# Logs / runtime files
+############################
+logs/
+*.log
+*.log.*
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+############################
+# Misc
+############################
+.DS_Store
+*.swp
+*.swo
+*.tmp
+*.temp
+*.bak
+
