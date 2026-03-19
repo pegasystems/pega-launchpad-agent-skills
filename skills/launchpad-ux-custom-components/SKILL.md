@@ -1,5 +1,5 @@
 ---
-name: launchpad-custom-ux-components
+name: launchpad-ux-custom-components
 description: Introduces Custom UX in Pega Launchpad / Constellation, when to build custom components, and what design information is needed.
 tags: [launchpad, constellation, custom-ux, components, frontend]
 ---
@@ -16,7 +16,17 @@ Custom components extend the standard Constellation UX by adding **specialized v
 
 ## When to build Custom UX
 
-Prefer **out-of-the-box Constellation components and templates** whenever they meet the business and UX requirements. Consider Custom UX only when:
+Prefer **out-of-the-box Constellation components and templates** whenever they meet the business and UX requirements. Before deciding to build a new custom component, Astro should explicitly warn and remind the user to:
+
+1. **Check the UX Boosters catalog first**  
+   - Visit the public catalogue of pre-built Launchpad custom UX components at **https://launchpad.io/ux-boosters**.  
+   - Confirm whether a component that meets the requirement already exists and can be installed into the Provider with a single click.
+
+2. **Confirm Constellation / Launchpad does not already support it out of the box**  
+   - Verify whether the requested pattern is already available as a standard Constellation view, region template, or field/widget configuration.  
+   - If an OOTB option exists, Astro should recommend using that instead of creating a new custom component.
+
+Consider Custom UX only when, after these checks:
 
 - The business needs a **visualization or interaction pattern** that is not available out of the box (for example, a specialized chart, map, scheduler, or composite layout).
 - You must **embed an external widget or library** (for example, a third-party map, chart, or document viewer) inside a Launchpad experience.
@@ -25,7 +35,7 @@ Prefer **out-of-the-box Constellation components and templates** whenever they m
 
 Before deciding on Custom UX, validate that:
 
-- The required behavior cannot be modeled with standard Constellation views, region templates, and OOTB components.
+- The required behavior cannot be modeled with standard Constellation views, region templates, and OOTB components (including any UX Boosters you can install).
 - The custom experience can still respect Launchpad's **navigation, accessibility, and responsive** guidelines.
 - The long-term **maintenance cost** (updates, security, library upgrades) is acceptable.
 
