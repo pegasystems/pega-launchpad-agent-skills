@@ -31,7 +31,13 @@ Extend Launchpad with logic implemented in high-level languages (Java, Python, N
 
 ### Creating Consumer Front Ends
 
-TBD.
+Build custom React front ends on top of Pega Launchpad using the Pega React SDK (`@pega/react-sdk-components`) and Constellation runtime, rather than calling DX APIs directly. This skill covers when a custom front end is justified, required Launchpad configuration (OAuth client, app alias, case type, and server URLs), SDK architecture, authentication with `@pega/auth`, `PCore` readiness patterns, webpack setup, theming, local component overrides, and common Launchpad-specific troubleshooting.
+
+It also includes:
+- a complete reference implementation in [skills/launchpad-ux-custom-frontend/examples/workmanagement](skills/launchpad-ux-custom-frontend/examples/workmanagement)
+- supporting documentation for [authentication flow](skills/launchpad-ux-custom-frontend/references/authentication-flow.md), [architectural patterns](skills/launchpad-ux-custom-frontend/references/key-architectural-patterns.md), and [webpack configuration](skills/launchpad-ux-custom-frontend/references/webpack-configuration.md)
+
+Use this skill when you want a fully custom React shell around Launchpad case workflows while still letting the SDK handle Constellation rendering, data binding, assignments, and case creation.
 
 ## Installing Skills
 
