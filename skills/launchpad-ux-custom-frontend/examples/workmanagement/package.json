@@ -1,0 +1,43 @@
+{
+  "name": "launchpad-react-sdk-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Example React app using Pega Launchpad backend with the Pega React SDK and Material UI",
+  "scripts": {
+    "start": "webpack serve --mode=development",
+    "start:https": "webpack serve --server-type https --mode=development",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production",
+    "clean": "npx shx --yes rm -rf ./dist/** ./node_modules"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
+    "@pega/auth": "^0.2.37",
+    "@pega/react-sdk-components": "~25.1.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@pega/constellationjs": "~25.1.1",
+    "@pega/pcore-pconnect-typedefs": "~4.1.0",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
+    "compression-webpack-plugin": "^11.1.0",
+    "copy-webpack-plugin": "^13.0.1",
+    "css-loader": "^7.1.2",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.6.4",
+    "null-loader": "^4.0.1",
+    "sass": "^1.98.0",
+    "sass-loader": "^16.0.5",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.9.2",
+    "webpack": "^5.101.2",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  }
+}

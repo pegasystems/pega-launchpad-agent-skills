@@ -1,0 +1,35 @@
+{
+  "comment": "SDK configuration — update these values with your Launchpad environment details",
+  "theme": "light",
+  "authConfig": {
+    "authService": "pega",
+
+    "authorize_comment": "Full path to the Launchpad OAuth 2.0 authorization endpoint (note: this is the cluster frontend URL, not the app server URL)",
+    "authorize": "https://cluster-s14p4m3b12mthyp4qpszrxb0-frontend-us-east-1.cluster.lp.pegaservice.net/uas/oauth/authorize",
+
+    "token_comment": "Full path to the Launchpad OAuth 2.0 token endpoint (proxied through dev server to avoid CORS)",
+    "token": "http://localhost:3502/dx/uas/oauth/token",
+
+    "revoke_comment": "Full path to the Launchpad OAuth 2.0 token revocation endpoint (proxied through dev server to avoid CORS)",
+    "revoke": "http://localhost:3502/dx/uas/oauth/revoke",
+
+    "mashupClientId": "DUxcGyIt9QQjJBbk",
+    "mashupClientSecret_comment": "Required when the OAuth 2.0 client registration is configured as Confidential",
+    "mashupClientSecret": "NEvwWFkjEGXYREkYr0cIA7JWVI8hXOVC",
+
+    "portalClientId": "DUxcGyIt9QQjJBbk",
+    "portalClientSecret": "NEvwWFkjEGXYREkYr0cIA7JWVI8hXOVC",
+
+    "mashupGrantType": "authCode",
+    "redirectUri_comment": "Must match the redirect URI registered in your Launchpad OAuth 2.0 client — typically http://localhost:3502/ for main redirect flow",
+    "redirectUri": "http://localhost:3502/"
+  },
+  "serverConfig": {
+    "serverType": "launchpad",
+    "infinityRestServerUrl": "http://localhost:3502",
+    "appAlias": "WorkManagement",
+    "sdkContentServerUrl": "",
+    "appPortal": "",
+    "appMashupCaseType": "WorkOrder"
+  }
+}
