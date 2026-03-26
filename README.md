@@ -15,7 +15,22 @@ Skills follow the [Agent Skills](https://agentskills.io/) specification.
 
 ### Calling Launchpad via DX API
 
-TBD.
+Use Launchpad DX APIs when an external system needs to work with Launchpad cases or data objects over REST rather than through embedded UI or the React SDK. This skill explains the main DX API patterns, the required authentication setup, and the Launchpad-specific constraints that shape request payloads.
+
+It covers:
+- OAuth 2.0 authentication using a Launchpad client registration, including how the selected persona controls API access
+- creating cases and data objects with the `POST /dx/api/application/v2/cases` and `POST /dx/api/application/v2/objects` endpoints
+- retrieving existing cases or data objects and interpreting returned assignment actions and case `availableActions`
+- updating work by invoking assignment actions or case-level actions with `PATCH` requests
+- querying lists of records with data view DX APIs such as `POST /dx/api/application/v2/data_views/...`
+- Launchpad configuration requirements such as Allowed Fields, action definitions, data views, and access permissions
+
+Use this skill when you need to:
+- create Launchpad cases from an external system
+- fetch case details and discover what actions are currently available
+- complete assignments or invoke optional case actions programmatically
+- expose filtered Launchpad data to other systems
+- generate request/response examples or YAML-style API documentation for a Launchpad application
 
 ### Embedding Launchpad with Web Embed
 

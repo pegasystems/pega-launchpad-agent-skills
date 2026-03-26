@@ -10,7 +10,9 @@ A practical guide for building custom React UIs on top of Pega Launchpad using t
 
 Before proceeding, validate that building a custom front-end is necessary. Launchpad's out-of-the-box Constellation components and templates may meet requirements without this complexity.
 
-When implementing a front-end, proceed incrementally. Ask for validation and questions at each step to ensure that the user understands what was built and why, and to confirm that it meets their needs before moving on to the next step.
+When implementing a front-end, proceed incrementally. Always ask what folder to create the project in, don't assume or guess the location. 
+
+Ask for validation and questions at each step to ensure that the user understands what was built and why, and to confirm that it meets their needs before moving on to the next step.
 
 ---
 
@@ -66,6 +68,7 @@ before starting, gather this info from the developer and use it when generating 
 
 1. What UI framework do they want to use with the React SDK? The example uses Material UI, but the SDK is compatible with any React component library. The choice of UI framework will influence the structure of the React components and the theming approach.
 2. What are the brand colors they want to use?
+3. What folder do they want to generate the application into? The example uses `examples/workmanagement`, but it can be generated anywhere in the file system.
 
 ## 3. Information You'll Need from Pega Launchpad
 
