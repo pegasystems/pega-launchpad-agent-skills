@@ -9,7 +9,7 @@ Skills follow the [Agent Skills](https://agentskills.io/) specification.
 2. [Embedding Launchpad with Web Embed](#embedding-launchpad-with-web-embed)
 3. [Creating Custom UX Components](#creating-custom-ux-components)
 4. [Creating Custom Functions](#creating-custom-functions)
-5. [Creating Consumer Front Ends](#creating-consumer-front-ends)
+5. [Creating custom Front Ends](#creating-custom-front-ends)
 
 ## Available Skills
 
@@ -44,7 +44,7 @@ Introduces Custom UX for Pega Launchpad on the Constellation design system: when
 
 Extend Launchpad with logic implemented in high-level languages (Java, Python, Node.js) by uploading JAR or Python artifacts and referencing the method to invoke. The Custom Function signature must match the HLL method; use when functionality cannot be implemented in other rule types such as Automation.
 
-### Creating Consumer Front Ends
+### Creating custom Front Ends
 
 Build custom React front ends on top of Pega Launchpad using the Pega React SDK (`@pega/react-sdk-components`) and Constellation runtime, rather than calling DX APIs directly. This skill covers when a custom front end is justified, required Launchpad configuration (OAuth client, app alias, case type, and server URLs), SDK architecture, authentication with `@pega/auth`, `PCore` readiness patterns, webpack setup, theming, local component overrides, and common Launchpad-specific troubleshooting.
 
