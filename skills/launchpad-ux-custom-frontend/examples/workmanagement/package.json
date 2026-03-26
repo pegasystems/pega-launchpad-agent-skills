@@ -15,8 +15,9 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.0",
     "@mui/material": "^6.4.0",
-    "@pega/auth": "^0.2.37",
-    "@pega/react-sdk-components": "~25.1.11",
+    "@pega/auth": "~0.2.0",
+    "@pega/constellationjs": "^25.1.0",
+    "@pega/react-sdk-components": "^25.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

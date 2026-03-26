@@ -43,11 +43,52 @@ Browser → React App → PCore (Constellation Engine) → Pega Launchpad Server
 
 ### Key Packages
 
-| Package | Purpose |
-| ------- | ------- |
-| `@pega/react-sdk-components` | React bridge for Constellation — renders DX components, provides `PCore` lifecycle hooks, component mapping |
-| `@pega/constellationjs` | Constellation bootstrap shell — loads `PCore` into the browser, manages the server connection |
-| `@pega/auth` | OAuth 2.0 authentication — `loginIfNecessary()`, token management, handles the redirect flow |
+| Package | Purpose | Required Version |
+| ------- | ------- | --- |
+| `@pega/react-sdk-components` | React bridge for Constellation — renders DX components, provides `PCore` lifecycle hooks, component mapping | `^25.1.0` |
+| `@pega/constellationjs` | Constellation bootstrap shell — loads `PCore` into the browser, manages the server connection | `^25.1.0` |
+| `@pega/auth` | OAuth 2.0 authentication — `loginIfNecessary()`, token management, handles the redirect flow | `~0.2.0` |
+
+### Package.json Generation Requirements
+
+When generating a new React web application for this skill, **enforce the following package.json requirements strictly**:
+
+#### Required Pega Package Versions (Non-Negotiable)
+
+```json
+{
+  "dependencies": {
+    "@pega/auth": "~0.2.0",
+    "@pega/constellationjs": "^25.1.0",
+    "@pega/react-sdk-components": "^25.1.0"
+  }
+}
+```
+
+These versions must be enforced exactly as specified. They have been validated together with this skill's guidance and patterns. Using different versions may cause compatibility issues with authentication, rendering, or the Constellation engine.
+
+#### Other Dependencies: Use Latest Stable, Avoid Deprecated Versions
+
+For all other dependencies (React, Material UI, TypeScript, webpack, build tools, etc.):
+
+1. **Default to the latest stable version** unless you have a specific reason to use an older version.
+2. **Before generating code, check for deprecation warnings** in npm registry for any specified versions.
+3. **If a dependency is deprecated**, substitute it with the latest stable version and adjust your generated code accordingly to accommodate any breaking changes.
+4. **Common examples**:
+   - `react` and `react-dom`: Use latest stable (e.g., `^18.3.0` or newer)
+   - `@mui/material` and `@mui/icons-material`: Use latest v6 (e.g., `^6.4.0` or newer)
+   - `typescript`: Use latest stable (e.g., `^5.9.0` or newer)
+   - `webpack` and related tools: Verify no deprecated versions are in use
+
+#### Code Adjustment Expectations
+
+When you upgrade a dependency to avoid deprecation, be prepared to adjust the generated code:
+- Update imports if package names or paths have changed
+- Update API calls if the library's interface has changed significantly
+- Test the generated application to ensure all features work with the new versions
+- Document any breaking changes in comments within the generated code
+
+---
 
 ### Key Files in a Custom Frontend Project
 
@@ -306,6 +347,7 @@ Use this as a starting point or reference.
 
 ## 12. Quick Start Checklist
 
+- [ ] **Verify package.json versions**: Ensure `@pega/auth` is `~0.2.0`, `@pega/constellationjs` is `^25.1.0`, and `@pega/react-sdk-components` is `^25.1.0`. All other dependencies should use latest stable versions (check for deprecation warnings).
 - [ ] Gather server URL, authorize URL (cluster frontend), OAuth client ID + secret, app alias, case type name from Pega Launchpad
 - [ ] Register the redirect URI (`http://localhost:3502/`) in your Launchpad OAuth client
 - [ ] Set up `sdk-config.json` with:

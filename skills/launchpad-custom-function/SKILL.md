@@ -1,70 +1,57 @@
 ---
 name: launchpad-custom-function
-description: Extend LaunchPad functionality with rule that implements logic using High Level Language (HLL). 
-tags: [launchpad, custom-function, jar, python, nodejs]
+
+description: Custom Functions are a type of Function that extends LaunchPad with code written in Java 11, Python 3.12, or Node.js 20 via AWS Lambda. Use this skill whenever the user asks what is a custom function, what types of functions exist, how to create or extend Launchpad with custom logic, or when troubleshooting handler naming conventions (Java package.Class::method, Python file.function), signature mismatches, AWS Lambda execution limits, or timezone/null handling in date or list functions. Use when the user needs to parse Excel files, perform advanced date manipulations, integrate external libraries, or handle specialized data transformations. Use when user asks for Callable rules.
+
+tags: [Python, Java, Node, Function, Method, Subroutine, Composable, Testable, Runable, Callable]
 ---
 
 ## Custom Function
-
-Custom Function is a type Function that enables the user to extend the capability of LaunchPad with code written in High Level Languages (HLL) like Java.
+[Custom Function is a type Function](references/custom-function.md) that enables the user to extend the capability of LaunchPad with code written in High Level Languages (HLL) like Java.
 This feature is typically reserved for functionality that cannot be implemented in another rule type, i.e. Automation. 
 To use this feature you upload the HLL artifacts, i.e. Jar or Python file, and reference the method you want to invoke when the Custom Function is called.
 The signature of Custom Function MUST match that of the HLL method so that the Custom Function can invoke it.
 
+Like Functions Custom Function are sideeffect free and should not assume any shared state between requests. 
+They perform the task or computation required the same way each time they are invoked.
 
-### Example:
-- Parsing an Excel file that you uploaded and extrac the results into a user defined data structure.
-
-
-## High Level Language
-At the time of this writting, LaunchPad supports writting code in NodeJs 20, Java 11 and Python 3.12.
-
-### Handler naming conventions
-#### Python
-The function handler name defined 
-- The name of the file
-- The name of the Python handler function
+**Supported Languages:**
+- [Java 11](references/java.md)
+- [Python 3.12](references/python.md)
+- [Node.js 20](references/node.md)
 
 
+### How to create
+1. Write your code in a supported High Level Language (HLL)
+2. Create JAR (Java) or ZIP (Python, Node.js) of code, as known as Code Bundle
+3. Create a Function Rule
+  - Be sure to specify Function uses a Code Bundle
+4. Upload Code Bundle
+5. Define Custom Function's inputs parameters and output
+  - MUST signature of method defined in Code Bundle 
 
-### Java
-If you prefer Java for the implementation of the Custom Function, create a static method
+### Inputs
+Inputs are also known as arguments to a Function. The input type MUST be compatible
+with the LaunchPad type otherwise user may have issues accessing the data associated with the input.
 
-### Example
-```java
-class UplusCalculator {
-    public static int compute(int lhs, int rhs){
+### Gotchas
 
-    }
-}
-```
+- **Timezone Awareness:** Date Functions use GMT by default; use `TodayWithTimeZone` for specific timezones
+- **Custom Function Limits:** AWS Lambda execution limits apply to custom Functions
+- Arguments defined in HLL method MUST be defined in the same order as the Custom Function
+- Return type of HLL method MUST be compatible with the return type of the Custom Function
+- [Using objects as input](references/field-reference.md) requires special handling for LaunchPad Field
 
-If you intend to pass a Page from LaunchPad to the Custom Function, you need to define an equivalent object in your Jar
-to represent the LaunchPad object. When defining the Object users MUST use the `@Field` annotation to decorate fields in the 
-Java class that will come from LaunchPad.
+## Best Practices
 
-``` java
-public class UplusLoan {
-    /** 
-    *  Unique identifier for the loan
-    */
-    @Field(ID = "ID", namespace = "UPlus") 
-    String ID;
-
-
-    /**
-    *  Amount the loan is being requested for
-    */
-    @Field(ID="amount", namespace="UPlus")
-    double amount;
-
-}
-```
-
-In the above example the `@Field` annotation contains
-- ID: name of the Field in LaunchPad
-- namespace: RuleSet or Application the rule is defined in
+- Use built-in Functions before creating custom function
+- Test Custom Function with various input values
+- Document custom Functions thoroughly
 
 
-NOTE: if you override a rule from a different application, it's namespace does not change
-
+# Example
+- Parsing an Excel file that you uploaded and extract the results into a user defined data structure.
+- Advanced date manipulations
+- Complex mathematical calculations
+- Integration with external libraries
+- Specialized data transformations
