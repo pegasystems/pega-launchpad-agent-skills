@@ -7,7 +7,7 @@ tags: [Python, Java, Node, Function, Method, Subroutine, Composable, Testable, R
 ---
 
 ## Custom Function
-[Custom Function is a type Function](references/custom-function.md) that enables the user to extend the capability of LaunchPad with code written in High Level Languages (HLL) like Java.
+Custom Functions are rules that enables the user to extend the capability of LaunchPad with code written in High Level Languages (HLL) like Java.
 This feature is typically reserved for functionality that cannot be implemented in another rule type, i.e. Automation. 
 To use this feature you upload the HLL artifacts, i.e. Jar or Python file, and reference the method you want to invoke when the Custom Function is called.
 The signature of Custom Function MUST match that of the HLL method so that the Custom Function can invoke it.
