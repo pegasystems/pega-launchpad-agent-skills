@@ -1,7 +1,18 @@
 ---
 name: launchpad-ux-custom-components
 description: Introduces Custom UX in Pega Launchpad / Constellation, when to build custom components, and what design information is needed.
-tags: [launchpad, constellation, custom-ux, components, frontend]
+tags: [launchpad, constellation, custom-ux, componen       -                    - Context / filter fields (for example, `contextField`, `setCaseID`):
+             - *"Should the widget filter by the current case? If yes, which field carries the context?"*
+          - Layout-specific fields (for example, `groups`, `groupField`):
+             - *"Which statuses or groups should appear as columns, and which field drives grouping?"*ELD bindings (for example, `inputProperty`, `minValueProperty`, `maxValueProperty`):
+             - *"Which case field should this component read and update?"*or **Field** components:
+          - FIELD bindings (for example, `inputProperty`, `minValueProperty`, `maxValueProperty`):
+             - *"Which case field should this component read and update?"*
+          - LABEL / helper text fields (for example, `label`, `helperText`):
+             - *"What label and helper text should users see for this control?"*
+          - SELECT options (for example, `format`, `maxRating`):
+             - *"Which option do you prefer for [config name]? (list valid values from `source`.)"*
+       - For **Widget** components:tend]
 ---
 
 ## Overview
@@ -13,6 +24,45 @@ This skill introduces **Custom UX** for Pega Launchpad built on the **Constellat
 - How Custom UX fits into the overall Launchpad architecture and DX patterns.
 
 Custom components extend the standard Constellation UX by adding **specialized visualizations, interactions, or integrations** while still respecting Launchpad's design language and runtime model.
+
+## Mandatory conversation flow before generating code
+
+**IMPORTANT**: When a user requests a custom component, the agent MUST follow the step-by-step conversation flow defined in `references/conversation-flow.md`. 
+
+**Do NOT generate any code until all steps are completed and the user confirms.**
+
+The flow ensures:
+1. **Step 1**: Verify OOTB Constellation components cannot meet the requirement
+2. **Step 2**: Check UX Boosters catalog at https://launchpad.io/ux-boosters
+3. **Step 3**: Gather detailed requirements (functionality, location, data, interactions)
+4. **Step 4**: Present component type recommendation (Field/Widget/Template) and get user confirmation
+5. **Step 5**: Only then generate the code
+
+See `references/conversation-flow.md` for the complete conversation script and examples.
+
+---
+
+## Prerequisites
+
+Before building a custom DX component for Launchpad, ensure you have:
+
+1. **Development environment**
+   - Node.js (LTS version, e.g., 18.x or 20.x)
+   - npm (comes with Node.js)
+   - A code editor (VS Code recommended)
+
+2. **Launchpad Provider access**
+   - Admin access to your Launchpad Provider
+   - An application where you want to use the component
+
+3. **OAuth client credentials for DXCB**
+   - In Launchpad Studio, click the 9-dot menu and go to **Administration setup**
+   - Add a new **OAuth 2.0 client registration**
+   - Note the `clientId` and `clientSecret` for `tasks.config.json`
+
+4. **Provider details**
+   - Frontend URL (e.g., `https://your-provider.launchpad.io`)
+   - Isolation ID (found in Provider settings)
 
 ## When to build Custom UX
 
@@ -64,7 +114,6 @@ To successfully design and implement a Custom UX component, gather the following
    - Guidelines for **responsive behavior** (desktop, tablet, mobile breakpoints).
 
 5. **Technical constraints and libraries**
-   - Which **frontend stack** will be used (for example, React-based Constellation extension)?
    - Any **external libraries** or SDKs required (maps, charts, document viewers) and their licensing/security implications.
    - Performance or security considerations (large data sets, PII, external calls).
 
@@ -108,21 +157,18 @@ At a high level, building a Launchpad custom component with DXCB involves:
    npx @pega/custom-dx-components@~25.1 init
    ```
 
+   > **Important**: Always check the official Pega documentation for the current recommended version (see **Official Pega documentation** section at the end of this skill).
+
    - Answer prompts for project name, organization, version, and description.  
    - Keep your **organization/library names reasonably short** so you have room for meaningful component names.
 
 2. **Configure `tasks.config.json`**  
-   After initialization, DXCB creates a `tasks.config.json` file that controls:
-   - Where components live (for example, `components-directory-path: "src/components"`).
-   - How to connect to your **Launchpad Provider** (under `server-config`).
-   - The default component library metadata.
+   After initialization, DXCB creates a `tasks.config.json` file. Configure the `server-config` section with your Launchpad Provider details (see Prerequisites):
+   - `server` – Provider frontend URL
+   - `clientId` and `clientSecret` – OAuth credentials
+   - `isolationID` – Provider isolation ID
 
-   For Launchpad, make sure you align at least:
-   - `server-config.server` – the Provider frontend URL.  
-   - `server-config.clientId` and `clientSecret` – OAuth client credentials for DXCB.  
-   - `server-config.isolationID` – the Provider isolation ID.
-
-   Treat credentials as **sensitive** and follow your internal security practices when storing or sharing this file.
+   Treat credentials as **sensitive** and follow your internal security practices.
 
 3. **Create a component folder**  
    Inside the components directory (for example, `src/components`):
@@ -137,7 +183,7 @@ DXCB supports three main kinds of Constellation components:
 
 - **Layout templates** – overall layouts for views (DETAILS, FORM, PAGE).  
 - **Widgets** – self-contained panels/cards for dashboards and Utilities (PAGE, CASE, or PAGE & CASE).  
-- **Field components** – single-property controls with a field subtype (Integer, Text, Decimal, etc.).
+- **Field components** – single-field controls with a field subtype (Integer, Text, Decimal, etc.).
 
 When in doubt, think in terms of Constellation UX patterns:
 
@@ -162,11 +208,11 @@ When in doubt, think in terms of Constellation UX patterns:
 
 Choosing the correct type and subtype ensures:
 
-- App Studio authors can **discover** your component in the right context.  
+- Launchpad Studio authors can **discover** your component in the right context.  
 - DXCB generates an appropriate **starter implementation**.  
 - The component appears where you expect it (widget pickers, layout templates, or field Display-as options).
 
-### From DXCB project to Launchpad App Studio
+### From DXCB project to Launchpad Studio
 
 Once you have implemented your component in the DXCB project:
 
@@ -183,7 +229,7 @@ Once you have implemented your component in the DXCB project:
 3. **Publish the component**  
    Run the publish script (for example, `npm run publish`) to register the component in the Provider.
 
-After a successful publish, your component will appear in App Studio as:
+After a successful publish, your component will appear in Launchpad Studio as:
 
 - A **Widget** in widget pickers (Portal or Case / Utilities, depending on `type` and `subtype`).  
 - A **Template** in view layout pickers (Details, Form, Page).  
@@ -194,10 +240,8 @@ After a successful publish, your component will appear in App Studio as:
 When a developer asks Astro to build a **new custom component**, the agent should:
 
 1. **Identify the closest matching example**  
-    - Look at:
-       - `examples/dxcb-examples/*` for simple patterns, and
-       - `assets/Pega_Extensions_*` for full, production-ready implementations.
-    - Choose the example whose `config.json.type` and `subtype` (Field / Widget / Template) and overall behavior best match the request.
+    - Browse the Launchpad reference repository: `https://github.com/pegasystems/constellation-ui-gallery/tree/next/src/components`
+    - Choose the component whose `config.json` type and subtype (Field / Widget / Template) and overall behavior best match the request.
 
 2. **Use `config.json.properties` as the question checklist**  
     - Treat the `properties` array in the chosen example’s `config.json` as **view metadata that must be filled in**.  
@@ -238,14 +282,21 @@ For deeper **code-level** guidance when building DXCB components, use the consol
 
 This `SKILL.md` stays focused on **when and how** to design custom components and how DXCB fits into Launchpad. The `references/` document is for detailed implementation patterns.
 
-For full, production-ready component examples that were previously published, see `assets/` (for example, the `Pega_Extensions_*` components listed below).
+### Reference repository for Launchpad components
+
+> **Important**: For Launchpad, use the **`next` branch** of the Constellation UI Gallery repository as the reference for component patterns and examples:
+> 
+> **https://github.com/pegasystems/constellation-ui-gallery/tree/next/src/components**
+>
+> Do NOT use the `master` branch or Infinity-specific repositories, as they may contain patterns not applicable to Launchpad.
 
 When generating **new custom components**, the agent should:
 
-- First look at the `assets/Pega_Extensions_*` folders to reuse folder structure, build scripts, and publishing patterns.
-- Prefer to **clone and adapt** an existing prebuilt component that matches the requested pattern (template, widget, or field) instead of starting from scratch.
+- First browse the components at `https://github.com/pegasystems/constellation-ui-gallery/tree/next/src/components` to find similar patterns.
+- Clone and adapt an existing component that matches the requested pattern (template, widget, or field) instead of starting from scratch.
+- Follow the folder structure, naming conventions, and implementation patterns from that repository.
 
-Examples of prebuilt components under `assets/`:
+Examples of component patterns available in the repository:
 
 - `Pega_Extensions_BarCode` – barcode display/input component.
 - `Pega_Extensions_Calendar` – calendar/scheduling widget.
@@ -263,7 +314,7 @@ Examples of prebuilt components under `assets/`:
 
 When generating a new **Field** component (such as a password input, text input, or similar single-value control), Astro should:
 
-- **Clone the pattern of an existing field component** under `assets/Pega_Extensions_*` (for example, `Pega_Extensions_StarRatingInput`) instead of inventing a new structure.
+- **Clone the pattern of an existing field component** from the reference repository (for example, `Pega_Extensions_StarRatingInput`) instead of inventing a new structure.
    - Define a named component like `PegaExtensionsPasswordInput`.
    - Export it as default via `export default withConfiguration(PegaExtensionsPasswordInput);` using `withConfiguration` from `@pega/cosmos-react-core`.
 - **Use Cosmos field components instead of raw HTML inputs**:
@@ -276,8 +327,8 @@ When generating a new **Field** component (such as a password input, text input,
 - **Use PConnect Actions API and state mapping for data binding**:
    - Get the PConnect instance from `getPConnect()` and derive:
       - `const actions = pConn.getActionsApi();`
-      - `const propName = pConn.getStateProps().value;` (the case property name backing the field).
-   - On change, update the case property using `actions.updateFieldValue(propName, newValue)` only when the value actually changes.
+      - `const propName = pConn.getStateProps().value;` (the case field name backing the field).
+   - On change, update the case field using `actions.updateFieldValue(propName, newValue)` only when the value actually changes.
    - On blur, trigger validation and suggestions handling using `actions.triggerFieldChange(propName, newValue)` and, when applicable, `pConn.ignoreSuggestion()`.
 - **Respect Constellation display modes and status**:
    - If `displayMode === 'DISPLAY_ONLY'`, do not render an editable input; return a non-editable representation (for passwords, a masked `Text` value).
@@ -285,13 +336,172 @@ When generating a new **Field** component (such as a password input, text input,
 
 ### Preferred frontend packages
 
-When generating or adapting React components for Launchpad Custom UX, the agent should:
+When generating or adapting React components for Launchpad Custom UX, the agent should follow this **priority order**:
 
-- **Prefer Pega's public NPM packages** for Constellation UI instead of introducing generic UI libraries.
-- Inspect `import` statements in existing examples (for example, components under `assets/Pega_Extensions_*`) and **reuse those packages and components** in new code.
+1. **First, check `@pega/cosmos-react-core`** (https://www.npmjs.com/package/@pega/cosmos-react-core) for existing components that match the requirement. Common components include: `Input`, `Button`, `Text`, `Flex`, `Grid`, `Card`, `Badge`, `Icon`, `FormField`, `Select`, `Checkbox`, `DatePicker`, `Modal`, `Table`, `Tabs`, and many more. **Use these directly instead of creating custom implementations.**
+
+2. **Second, compose using multiple Cosmos components** if no single component matches. Combine layout, form, and display components from `@pega/cosmos-react-core`.
+
+3. **Third, only create a custom component** when no existing Cosmos component or composition meets the requirement.
+
+- Inspect `import` statements in existing components from the reference repository and **reuse those packages and components** in new code.
 - Ensure any imported packages are added to the target project's `package.json` dependencies.
 
-For a detailed list of preferred packages, see `references/frontend-packages.md`. In particular:
+For a detailed list of preferred packages and the full priority guidelines, see `references/frontend-packages.md`.
 
-- Treat `@pega/cosmos-react-core` as the **primary UI library** for layout, form controls, typography, and basic visualization.
-- Add additional Cosmos feature packages only when the use case needs them, and avoid adding tooling/SDK packages as runtime dependencies of individual DXCB components unless there is a clearly documented advanced scenario.
+## Repository conventions and file structure
+
+When creating DXCB components, follow these **naming and structure conventions** to ensure consistency and discoverability:
+
+### Folder and file naming
+
+- **Component folder**: Use `Pega_Extensions_<Name>` format (e.g., `Pega_Extensions_StarRatingInput`, `Pega_Extensions_Calendar`).
+- **Folder name must match** the `name` and `componentKey` values in `config.json`.
+- **Standard files per component**:
+
+| File | Purpose | Required |
+|------|---------|----------|
+| `index.tsx` | Main React component implementation | ✅ Yes |
+| `config.json` | DX component metadata (type, subtype, properties) | ✅ Yes |
+| `Docs.mdx` | Documentation for Storybook/gallery | ✅ Yes |
+| `demo.stories.tsx` | Storybook stories for previewing the component | ✅ Yes |
+| `demo.test.tsx` | Jest unit tests | ✅ Yes |
+| `styles.ts` | Styled-components / CSS-in-JS | Optional |
+| `localizations.json` | i18n strings | Optional |
+
+### Component implementation conventions
+
+- **React imports**: Always include the React default import at the top of the file. This ensures JSX works correctly with the DXCB TypeScript configuration:
+  ```tsx
+  import React, { useState, useEffect, useCallback } from 'react';
+  ```
+  > **Important**: Never use `import { useState } from 'react'` without the default React import. The DXCB project's tsconfig uses `"jsx": "react"` which requires React to be in scope for JSX transformation.
+
+- **Export with `withConfiguration`**: Always wrap the component using `withConfiguration` from `@pega/cosmos-react-core`:
+  ```tsx
+  import React from 'react';
+  import { withConfiguration } from '@pega/cosmos-react-core';
+  
+  const PegaExtensionsMyComponent = (props) => { /* ... */ };
+  
+  export default withConfiguration(PegaExtensionsMyComponent);
+  ```
+
+- **TypeScript React patterns**: Use functional components with TypeScript.
+- **`getPConnect` typing**: Use `getPConnect?: any` for component props unless a shared stronger type already exists in the repo. Avoid creating duplicate one-off `PegaConnect`, `PegaActionsApi`, or `PegaStateProps` interfaces.
+- **Field-style components**:
+  - Keep `hideLabel` as the public prop name.
+  - Pass `labelHidden={hideLabel}` only to Cosmos controls internally.
+  - Type `disabled`, `readOnly`, and `required` as booleans, but coerce runtime string `'true'` values using the shared pattern:
+    ```tsx
+    const [readOnlyBool, requiredBool, disabledBool] = [readOnly, required, disabled].map(
+      (v) => v === true || v === 'true'
+    );
+    ```
+
+### config.json structure
+
+Ensure your `config.json` follows this structure:
+
+```json
+{
+  "name": "Pega_Extensions_MyComponent",
+  "componentKey": "Pega_Extensions_MyComponent",
+  "label": "My Custom Component",
+  "description": "A custom component for...",
+  "type": "Field",
+  "subtype": "Text",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Label",
+      "format": "TEXT"
+    },
+    {
+      "name": "value",
+      "label": "Value",
+      "format": "PROPERTY"
+    }
+  ]
+}
+```
+
+### Storybook conventions
+
+When creating `demo.stories.tsx` for your component:
+
+- Use `select` controls for props with constrained values instead of free-text inputs.
+- Set sensible defaults for common props like `testId`, `hideLabel`, `disabled`, `readOnly`, `required`.
+- Document additional stories in `Docs.mdx` if needed.
+- Mock PConnect/PCore only as much as needed for the story to render.
+
+## Validation and testing
+
+Before considering a component complete, run these **validation steps** to ensure quality:
+
+### Linting
+
+Run the linter to catch code style issues and potential errors:
+
+```bash
+npm run lint
+```
+
+To auto-fix issues:
+
+```bash
+npm run fix
+```
+
+### Build validation
+
+Before publishing, verify the component builds correctly:
+
+```bash
+npm run buildComponent
+```
+
+### Component delivery checklist
+
+Use this checklist before concluding a component implementation:
+
+- [ ] Folder name follows `Pega_Extensions_<Name>` convention
+- [ ] `config.json` `name` and `componentKey` match the folder name
+- [ ] `index.tsx` exports a typed component wrapped with `withConfiguration`
+- [ ] Field-style components use `hideLabel` (not `labelHidden`) as the public prop
+- [ ] Boolean props (`disabled`, `readOnly`, `required`) handle string `'true'` values
+- [ ] `getPConnect` follows repo conventions (`getPConnect?: any`)
+- [ ] PConnect/PCore usage verified against repo examples or official docs
+- [ ] `Docs.mdx` explains the component and matches live props
+- [ ] `demo.stories.tsx` renders with appropriate mocks
+- [ ] Storybook controls use `select` for constrained props
+- [ ] Additional stories documented in `Docs.mdx` under `## Examples`
+- [ ] `demo.test.tsx` covers key rendering, behavior, and edge cases
+- [ ] `styles.ts` and `localizations.json` exist only when justified
+- [ ] Source registration files updated if component must appear in gallery
+- [ ] `npm run lint` passes (or issues explicitly reported)
+- [ ] Relevant tests pass via `npm run test`
+- [ ] Any skipped validation steps are explicitly documented
+
+## Guardrails
+
+When building custom components, follow these rules to avoid common pitfalls:
+
+- **Do not invent DX component metadata.** Mirror the shape and naming patterns from existing components in the repository.
+- **Do not hand-edit generated bundles or release artifacts** unless explicitly requested.
+- **Do not add package dependencies for convenience** if the repository already has an adequate option. Check existing `package.json` first.
+- **Do not leave the component half-finished.** If the request implies a usable component, deliver a complete implementation with all required files.
+- **Do not bypass Constellation patterns.** Use Cosmos components instead of raw HTML; respect theming, accessibility, and responsive behavior.
+- **Do not skip validation.** Always run `npm run lint` and relevant tests, or explicitly report why validation was skipped.
+
+## Official Pega documentation
+
+For the most up-to-date guidance, refer to these official Pega resources:
+
+| Topic | Documentation Link |
+|-------|-------------------|
+| **Extending Launchpad with DX components** | https://docs.pega.com/bundle/launchpad/page/platform/launchpad/extend-applications-constellation-dx-components.html |
+| **Working with DX components in Launchpad** | https://docs.pega.com/bundle/launchpad/page/platform/launchpad/working-constellation-dx-component-launchpad.html |
+| **Initialize a DXCB project** | https://docs.pega.com/bundle/constellation-dx-components/page/constellation-dx-components/custom-components/initialize-project.html |
+| **Constellation DX components overview** | https://docs.pega.com/bundle/constellation-dx-components/page/constellation-dx-components/custom-components/custom-components.html |
+| **Launchpad vs Infinity differences** | https://docs.pega.com/bundle/launchpad/page/platform/launchpad/differences-constellation-dx-components-launchpad-infinity.html |

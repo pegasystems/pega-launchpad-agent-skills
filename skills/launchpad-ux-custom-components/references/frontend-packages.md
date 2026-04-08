@@ -9,7 +9,7 @@ This reference lists the **preferred public NPM packages** that should be used w
 - **Package:** `@pega/cosmos-react-core`
 - **NPM:** https://www.npmjs.com/package/@pega/cosmos-react-core
 - **Purpose:** Primary Cosmos React UI library used by Constellation and Launchpad custom UX. Provides layout, form controls, typography, icons, and common widgets.
-- **Examples of commonly used components (see `assets/Pega_Extensions_*`):**
+- **Examples of commonly used components (see reference repository):**
   - `Flex`, `Grid` – layout containers.
   - `FormControl`, `FormField` – form field wrappers with labels, status, and helper text.
   - `Text`, `Icon`, `Badge` – text and decorative display components.
@@ -22,7 +22,7 @@ This reference lists the **preferred public NPM packages** that should be used w
   - Layout and structure.
   - Forms and validation surfaces.
   - Basic visualization and typography.
-- Start from how these components are used in `assets/Pega_Extensions_*` (for example, QR code, rating, meter, calendar) and follow the same composition patterns.
+- Browse components at `https://github.com/pegasystems/constellation-ui-gallery/tree/next/src/components` and follow the same composition patterns.
 - Ensure `@pega/cosmos-react-core` is present in the DXCB project's `package.json` dependencies with a compatible version.
 
 ---
@@ -126,10 +126,40 @@ These packages are related to the broader React SDK and DX component tooling eco
 
 ## How Astro should use this reference
 
-When generating a new Launchpad custom component, Astro should:
+When generating a new Launchpad custom component, Astro should follow this **priority order**:
 
-1. **Always start with `@pega/cosmos-react-core`** for layout, forms, and basic visualization. Only add additional Cosmos feature packages if the use case truly requires them.
-2. Inspect imports in existing examples (for example, `assets/Pega_Extensions_QRCode/index.tsx`) and reuse the same packages and components where possible.
-3. Ensure required packages are present in the DXCB project's `package.json` dependencies with compatible versions.
-4. Avoid pulling in tooling/config packages or SDK/build utilities as runtime dependencies unless the scenario is clearly advanced and documented.
-5. Consult the NPM documentation linked above for each package when composing new UIs or deciding between available components.
+### Priority 1: Use existing `@pega/cosmos-react-core` components
+
+**Before writing any custom code**, check if `@pega/cosmos-react-core` already provides a component that meets the requirement:
+
+- **Browse the package:** https://www.npmjs.com/package/@pega/cosmos-react-core
+- **Check available exports:** Review the package documentation and type definitions to find existing components.
+- **Common components available:** `Input`, `Button`, `Text`, `Flex`, `Grid`, `Card`, `Badge`, `Icon`, `FormField`, `FormControl`, `Select`, `Checkbox`, `RadioButton`, `DatePicker`, `Modal`, `Table`, `Tabs`, and many more.
+
+**If a Cosmos component exists that matches the need, USE IT directly instead of creating a custom implementation.**
+
+### Priority 2: Compose using multiple Cosmos components
+
+If no single component matches, compose the UI using **multiple `@pega/cosmos-react-core` components** together:
+
+- Combine layout components (`Flex`, `Grid`, `Card`) with form components (`Input`, `Select`, `Button`).
+- Use `FormField` and `FormControl` wrappers for proper labeling, validation, and accessibility.
+- Leverage Cosmos design tokens for consistent styling.
+
+### Priority 3: Create custom component only when necessary
+
+**Only create a custom component** when:
+- No existing Cosmos component or composition meets the requirement.
+- The use case requires specialized visualization, third-party library integration, or unique interaction patterns.
+
+When creating custom components:
+- Browse `https://github.com/pegasystems/constellation-ui-gallery/tree/next/src/components` for similar patterns.
+- Still use Cosmos components internally wherever possible.
+- Follow the same coding patterns and conventions.
+
+### Additional guidelines
+
+1. Ensure `@pega/cosmos-react-core` is present in the DXCB project's `package.json` dependencies with a compatible version.
+2. Only add additional Cosmos feature packages (`@pega/cosmos-react-work`, etc.) if the use case truly requires them.
+3. Avoid pulling in tooling/config packages or SDK/build utilities as runtime dependencies.
+4. Consult the NPM documentation linked above for each package when composing new UIs.
