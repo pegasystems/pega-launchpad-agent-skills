@@ -1,5 +1,5 @@
 ## Object input
-Assuming a Field rule of the form [assets/field.json](../assets/field.json), it is uniquely identifable by
+Assuming a Field rule of the form [assets/field.json](../assets/Field.json), it is uniquely identifable by
 - RuleResolutionID
 - Namespace
 - AppliesTo
@@ -8,6 +8,17 @@ When input is passed as an object to a Custom Function the object is of the type
 To reference the Field from the object you MUST specify BOTH
 - RuleResoluTionID
 - Namespace
+
+
+### UI
+UI representation of keys defined JSON.
+
+| Key in JSON       | UI        |
+| ----------------- | --------- |    
+| Namespace         | RuleSet   |
+| RuleResolutionID  | ID        |
+| AppliesTo         | Scope     |
+
 
 ### Record types
 LaunchPad Field with mode of `SingleRecord` or `ListOfRecord` are object or colection inputs. To determine the set of 
@@ -31,3 +42,4 @@ The DOUBLE_UNDERSCORE is the default format.
 
 ### JVM
 Use `@Field` annotation for Java based languages
+

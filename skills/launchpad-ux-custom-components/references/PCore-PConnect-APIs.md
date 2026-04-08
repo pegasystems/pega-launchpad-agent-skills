@@ -346,4 +346,3 @@ When designing or generating a new DXCB component, apply these combined patterns
 	 - Use PCore’s data APIs, pub/sub, events, and semantic URLs for loading data and navigation.
 
 By consistently distinguishing when to use **PConnect** vs **PCore**, your custom Launchpad components will integrate cleanly with Constellation, behave predictably, and remain easy to evolve as PCore grows.
-
