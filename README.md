@@ -42,6 +42,8 @@ Embed Launchpad application experiences (case creation, assignments, full case p
 
 Introduces Custom UX for Pega Launchpad on the Constellation design system: when to build custom components, what design and data inputs are needed, and how they fit into Launchpad and DX. Describes the DXCB framework for building Constellation-compatible custom components (e.g. React-based extensions).
 
+[Blog Post on Custom UX Components](https://launchpad.io/blog/custom-ux-components-teaching-your-ai-agent-build-launchpad-ux-extensions)
+
 ### Creating Custom Functions
 
 Extend Launchpad with logic implemented in high-level languages (Java, Python, Node.js) by uploading JAR or Python artifacts and referencing the method to invoke. The Custom Function signature must match the HLL method; use when functionality cannot be implemented in other rule types such as Automation.
