@@ -1,18 +1,7 @@
 ---
 name: launchpad-ux-custom-components
 description: Introduces Custom UX in Pega Launchpad / Constellation, when to build custom components, and what design information is needed.
-tags: [launchpad, constellation, custom-ux, componen       -                    - Context / filter fields (for example, `contextField`, `setCaseID`):
-             - *"Should the widget filter by the current case? If yes, which field carries the context?"*
-          - Layout-specific fields (for example, `groups`, `groupField`):
-             - *"Which statuses or groups should appear as columns, and which field drives grouping?"*ELD bindings (for example, `inputProperty`, `minValueProperty`, `maxValueProperty`):
-             - *"Which case field should this component read and update?"*or **Field** components:
-          - FIELD bindings (for example, `inputProperty`, `minValueProperty`, `maxValueProperty`):
-             - *"Which case field should this component read and update?"*
-          - LABEL / helper text fields (for example, `label`, `helperText`):
-             - *"What label and helper text should users see for this control?"*
-          - SELECT options (for example, `format`, `maxRating`):
-             - *"Which option do you prefer for [config name]? (list valid values from `source`.)"*
-       - For **Widget** components:tend]
+tags: [launchpad, constellation, custom-ux, components, dxcb]
 ---
 
 ## Overview
