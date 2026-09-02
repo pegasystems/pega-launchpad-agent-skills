@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "launchpad-ux-custom-builder",
+  "version": "0.1.0",
+  "description": "Build, preview, and publish Pega Launchpad Custom UX (Constellation DX / DXCB) components end-to-end from a natural-language request.",
+  "author": {
+    "name": "Pegasystems"
+  },
+  "homepage": "https://github.com/pegasystems/pega-launchpad-agent-skills/tree/main/plugins/launchpad-ux-builder",
+  "repository": "https://github.com/pegasystems/pega-launchpad-agent-skills",
+  "license": "Apache-2.0",
+  "keywords": ["pega", "launchpad", "constellation", "dxcb", "custom-ux", "mcp"]
+}
