@@ -2,7 +2,7 @@
 
 A collection of skills for AI coding agents to assist with development of specific Launchpad capabilities.
 
-These skills are designed to help providers using Pega Launchpad use existing AI agents and vibe coding tools to integrate with Launchpad.
+These skills are designed to help providers using Launchpad use existing AI agents and vibe coding tools to integrate with Launchpad.
 
 Skills follow the [Agent Skills](https://agentskills.io/) specification.
 
