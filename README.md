@@ -58,6 +58,21 @@ It also includes:
 
 Use this skill when you want a fully custom React shell around Launchpad case workflows while still letting the SDK handle Constellation rendering, data binding, assignments, and case creation.
 
+## Plugins
+
+Plugins are self-contained packages, each with installation and usage instructions in its own README.
+
+- [Launchpad UX Builder](plugins/launchpad-ux-builder/README.md)
+
+Install the marketplace and then the UX Builder plugin with GitHub Copilot CLI:
+
+```bash
+copilot plugin marketplace add pegasystems/pega-launchpad-agent-skills
+copilot plugin install launchpad-ux-custom-builder@pega-launchpad
+```
+
+Installing the plugin also installs its bundled `launchpad-ux-custom-builder` skill.
+
 ## Installing Skills
 
 These skills use the [Agent Skills](https://agentskills.io/) open standard (`SKILL.md` + optional `references/`).

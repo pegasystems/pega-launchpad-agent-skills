@@ -1,0 +1,17 @@
+{
+  "name": "pega-launchpad",
+  "owner": {
+    "name": "Pegasystems",
+    "url": "https://github.com/pegasystems"
+  },
+  "metadata": {
+    "description": "Agent plugins for building solutions with Pega Launchpad."
+  },
+  "plugins": [
+    {
+      "name": "launchpad-ux-custom-builder",
+      "source": "./plugins/launchpad-ux-builder",
+      "description": "Build, preview, and publish Pega Launchpad Custom UX components from natural-language requests."
+    }
+  ]
+}

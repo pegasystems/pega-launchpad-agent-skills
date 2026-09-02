@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Assistant-specific remote OAuth MCP configuration metadata. Values are templates only; never add credentials or environment URLs here.",
+  "assistants": {
+    "opencode": {
+      "aliases": ["open-code"],
+      "config": {
+        "scope": "project",
+        "path": "opencode.json",
+        "key": "mcp",
+        "format": "json",
+        "entry": {
+          "type": "remote",
+          "url": "<MCP_URL>",
+          "enabled": true,
+          "oauth": {
+            "clientId": "<CLIENT_ID>"
+          }
+        }
+      },
+      "redirectUri": "http://127.0.0.1:19876/mcp/oauth/callback",
+      "auth": {
+        "command": "opencode mcp auth <SERVER_NAME>",
+        "restart": "opencode --continue"
+      }
+    },
+    "vscode": {
+      "aliases": ["visual studio code", "vs code"],
+      "config": {
+        "scope": "project",
+        "path": ".vscode/mcp.json",
+        "key": "servers",
+        "format": "json",
+        "entry": {
+          "type": "http",
+          "url": "<MCP_URL>",
+          "enabled": true,
+          "oauthClientId": "<CLIENT_ID>"
+        }
+      },
+      "redirectUri": "http://127.0.0.1:62629/",
+      "auth": {
+        "command": "Host-specific MCP OAuth flow",
+        "restart": "Reload the VS Code MCP session"
+      }
+    },
+    "copilot": {
+      "aliases": ["github copilot"],
+      "config": {
+        "scope": "project-or-user",
+        "path": "<Copilot MCP config>",
+        "key": "servers",
+        "format": "json",
+        "entry": {
+          "type": "http",
+          "url": "<MCP_URL>",
+          "enabled": true,
+          "oauthClientId": "<CLIENT_ID>"
+        }
+      },
+      "redirectUri": "http://127.0.0.1:62629/",
+      "auth": {
+        "command": "Host-specific MCP OAuth flow",
+        "restart": "Reload the Copilot MCP session"
+      }
+    },
+    "claude": {
+      "aliases": ["claude code"],
+      "config": {
+        "scope": "project-or-user",
+        "path": ".mcp.json or ~/.claude.json",
+        "key": "mcpServers",
+        "format": "json",
+        "entry": {
+          "type": "http",
+          "url": "<MCP_URL>",
+          "oauth": {
+            "clientId": "<CLIENT_ID>",
+            "callbackPort": 55620
+          }
+        }
+      },
+      "redirectUri": "http://localhost:55620/callback",
+      "auth": {
+        "command": "Host-specific MCP OAuth flow",
+        "restart": "Reload the Claude MCP session"
+      }
+    },
+    "codex": {
+      "aliases": ["codex cli"],
+      "config": {
+        "scope": "user",
+        "path": "~/.codex/config.toml",
+        "key": "mcp_servers.<SERVER_NAME>",
+        "format": "toml",
+        "entry": {
+          "mcp_oauth_callback_port": 5555,
+          "url": "<MCP_URL>",
+          "enabled": true,
+          "oauth": {
+            "client_id": "<CLIENT_ID>"
+          }
+        }
+      },
+      "redirectUri": "http://127.0.0.1:5555/callback/<RUNTIME_ID>",
+      "auth": {
+        "command": "Host-specific MCP OAuth flow",
+        "restart": "Reload the Codex MCP session"
+      }
+    },
+    "cursor": {
+      "aliases": [],
+      "config": {
+        "scope": "project-or-user",
+        "path": ".cursor/mcp.json",
+        "key": "mcpServers",
+        "format": "json",
+        "entry": {
+          "url": "<MCP_URL>",
+          "auth": {
+            "CLIENT_ID": "<CLIENT_ID>"
+          }
+        }
+      },
+      "redirectUri": "cursor://anysphere.cursor-mcp/oauth/callback",
+      "auth": {
+        "command": "Host-specific MCP OAuth flow",
+        "restart": "Reload the Cursor MCP session"
+      }
+    }
+  }
+}
