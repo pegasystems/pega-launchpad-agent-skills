@@ -1,10 +1,21 @@
-# Pega Launchpad Agent Skills
+# Pega Launchpad Agent Skills and UX Builder
 
-A collection of skills for AI coding agents to assist with development of specific Launchpad capabilities.
+Tools for AI coding agents that help teams build with Pega Launchpad. This repository provides two complementary installation options:
 
-These skills are designed to help providers using Pega Launchpad use existing AI agents and vibe coding tools to integrate with Launchpad.
+| Install | Best for | Includes |
+| --- | --- | --- |
+| **Launchpad agent skills** | Getting guided help with a specific Launchpad integration or extension task | Five standalone [Agent Skills](https://agentskills.io/) |
+| **Launchpad UX Builder plugin** | Building, previewing, and publishing a Custom UX component from a natural-language request | The end-to-end UX Builder skill, component templates, and publishing workflow |
 
-Skills follow the [Agent Skills](https://agentskills.io/) specification.
+You can install either option independently, or install both. The UX Builder plugin's bundled skill is separate from the five standalone skills below.
+
+## Choose What to Install
+
+- Install **agent skills** when you want help calling DX APIs, embedding Launchpad, creating custom functions, creating Custom UX components, or building a custom React front end.
+- Install the **UX Builder plugin** when you want an agent to take a request such as "Build a custom UX component for my Launchpad app" through discovery, design preview, generation, and publishing.
+- Install **both** when you want the UX Builder workflow as well as the standalone skills for broader Launchpad work.
+
+For agent-assisted installation requests such as "install Launchpad skills" or "install the UX Builder plugin," use the decision guide in [INSTALL.md](INSTALL.md).
 
 **Skills in this collection:**
 1. [Calling Launchpad via DX API](#calling-launchpad-via-dx-api)
@@ -58,22 +69,23 @@ It also includes:
 
 Use this skill when you want a fully custom React shell around Launchpad case workflows while still letting the SDK handle Constellation rendering, data binding, assignments, and case creation.
 
-## Plugins
+## Launchpad UX Builder Plugin
 
-Plugins are self-contained packages, each with installation and usage instructions in its own README.
+[Launchpad UX Builder](plugins/launchpad-ux-builder/README.md) is a self-contained Agent Plugin for Pega Launchpad Custom UX (Constellation DX / DXCB). It guides an MCP-capable assistant through app discovery, component selection, a theme-accurate preview, component generation, and publishing.
 
-- [Launchpad UX Builder](plugins/launchpad-ux-builder/README.md)
+Install the plugin directory with your assistant's Agent Plugin mechanism. In VS Code, add the local plugin root to `chat.pluginLocations`:
 
-Install the marketplace and then the UX Builder plugin with GitHub Copilot CLI:
-
-```bash
-copilot plugin marketplace add pegasystems/pega-launchpad-agent-skills
-copilot plugin install launchpad-ux-custom-builder@pega-launchpad
+```json
+{
+	"chat.pluginLocations": {
+		"/absolute/path/to/pega-launchpad-agent-skills/plugins/launchpad-ux-builder": true
+	}
+}
 ```
 
-Installing the plugin also installs its bundled `launchpad-ux-custom-builder` skill.
+Then start a matching request in your assistant, for example: `Build a custom UX component for my Launchpad app.` The plugin details, requirements, and MCP setup behavior are documented in the [plugin README](plugins/launchpad-ux-builder/README.md).
 
-## Installing Skills
+## Launchpad Agent Skills
 
 These skills use the [Agent Skills](https://agentskills.io/) open standard (`SKILL.md` + optional `references/`).
 

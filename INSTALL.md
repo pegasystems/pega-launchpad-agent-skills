@@ -1,6 +1,40 @@
-# Installing Skills
+# Installing Launchpad Skills and the UX Builder Plugin
 
-These skills use the [Agent Skills](https://agentskills.io/) open standard (`SKILL.md` + optional `references/`). Install them in the way that matches your AI coding tool; the same skill files work across supported platforms.
+This repository has two installable offerings. They can be installed independently or together:
+
+| Developer asks for | Install | What to do |
+| --- | --- | --- |
+| "install Launchpad skills", "help with Launchpad APIs", or "add the web embed skill" | **Launchpad agent skills** | Follow the platform-specific skill instructions below. |
+| "install the UX Builder plugin", "I want to use UX Builder", or "set up the Custom UX builder" | **Launchpad UX Builder plugin** | Follow [Install the UX Builder Plugin](#install-the-ux-builder-plugin). |
+| "install everything" or asks for both kinds of capability | **Both** | Install the standalone skills, then install the plugin. |
+
+For an AI agent handling an installation request: identify whether the developer means standalone skills, the UX Builder plugin, or both. If their wording names only "Launchpad skills," install the standalone skills; if it explicitly mentions "UX Builder" or an end-to-end Custom UX build/publish workflow, install the plugin. Ask one clarifying question only when neither intent is clear.
+
+## Install the UX Builder Plugin
+
+The [Launchpad UX Builder plugin](plugins/launchpad-ux-builder/README.md) is an Agent Plugin that bundles the `launchpad-ux-custom-builder` skill, templates, and an end-to-end DXCB build/publish workflow. It requires an MCP-capable assistant, Launchpad access with Custom UX publishing permission, Node.js, npm, and network access.
+
+Install the directory containing `plugin.json` through your assistant's Agent Plugin mechanism. For a local checkout in VS Code, add the plugin root to the `chat.pluginLocations` setting:
+
+```json
+{
+  "chat.pluginLocations": {
+    "/absolute/path/to/pega-launchpad-agent-skills/plugins/launchpad-ux-builder": true
+  }
+}
+```
+
+Restart or reload the host assistant if it does not discover the plugin. Then make a natural-language request such as:
+
+```text
+Build a custom UX component for my Launchpad app.
+```
+
+The skill configures or verifies its required Launchpad MCP connection as part of the workflow. See the [plugin README](plugins/launchpad-ux-builder/README.md) for host-specific behavior and requirements.
+
+## Install Launchpad Agent Skills
+
+The standalone skills use the [Agent Skills](https://agentskills.io/) open standard (`SKILL.md` plus optional `references/`). Install them in the way that matches your AI coding tool; the same skill files work across supported platforms.
 
 ## By platform
 
