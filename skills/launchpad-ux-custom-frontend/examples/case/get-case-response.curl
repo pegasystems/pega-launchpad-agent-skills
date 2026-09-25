@@ -1,0 +1,913 @@
+{
+    "data": {
+        "caseInfo": {
+            "assignments": [
+                {
+                    "actions": [
+                        {
+                            "ID": "ReviewTicket",
+                            "links": {
+                                "submit:Submit": {
+                                    "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg/actions/ReviewTicket?outcome=Submit",
+                                    "rel": "self",
+                                    "title": "Submit",
+                                    "type": "PATCH"
+                                },
+                                "open": {
+                                    "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg/actions/ReviewTicket",
+                                    "rel": "self",
+                                    "title": "Get assignment action details",
+                                    "type": "GET"
+                                }
+                            },
+                            "name": "Review Ticket",
+                            "type": "FlowAction"
+                        },
+                        {
+                            "ID": "ReassignTask",
+                            "links": {
+                                "open": {
+                                    "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg/actions/ReassignTask",
+                                    "rel": "self",
+                                    "title": "Get assignment action details",
+                                    "type": "GET"
+                                }
+                            },
+                            "name": "Transfer Assignment",
+                            "type": "Assignment"
+                        }
+                    ],
+                    "ID": "STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg",
+                    "links": {
+                        "open": {
+                            "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg",
+                            "rel": "self",
+                            "title": "Get assignment details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Review Ticket",
+                    "canPerform": false,
+                    "urgency": "10",
+                    "assigneeInfo": {
+                        "name": "Support Agent",
+                        "ID": "SupportAgent",
+                        "type": "WorkQueue"
+                    },
+                    "sla": {
+                        "deadline": "",
+                        "goal": ""
+                    },
+                    "instructions": "",
+                    "processID": "TriageReview",
+                    "processName": "Triage Review",
+                    "priority": "low"
+                }
+            ],
+            "availableActions": [
+                {
+                    "ID": "Edit",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/Edit",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Edit",
+                    "type": "Case"
+                },
+                {
+                    "ID": "pyChangeStage",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/pyChangeStage",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Change Stage",
+                    "type": "Case"
+                },
+                {
+                    "ID": "RestartCurrentStage",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/RestartCurrentStage",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Restart current Stage",
+                    "type": "Case"
+                },
+                {
+                    "ID": "ResolveCase",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/ResolveCase",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Resolve Case",
+                    "type": "Case"
+                }
+            ],
+            "availableProcesses": [],
+            "caseTypeID": "TicketWorkflow",
+            "caseTypeName": "Ticket",
+            "createTime": "2026-06-22T12:39:31.619Z",
+            "createdBy": "user@example.com",
+            "ID": "{{caseID}}",
+            "businessID": "Ticket-659GFX",
+            "lastUpdateTime": "2026-06-22T12:57:33.790Z",
+            "lastUpdatedBy": "user@example.com",
+            "name": "",
+            "owner": "user@example.com",
+            "sla": {
+                "deadline": "",
+                "goal": ""
+            },
+            "stageID": "AssessmentPrioritization",
+            "stageLabel": "Assessment Prioritization",
+            "stages": [
+                {
+                    "entryTime": "2026-06-22T12:39:31.631Z",
+                    "ID": "TicketSubmission",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/TicketSubmission",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Ticket Submission",
+                    "type": "Primary",
+                    "visited_status": "completed",
+                    "transitionType": "create"
+                },
+                {
+                    "entryTime": "2026-06-22T12:57:33.790Z",
+                    "ID": "AssessmentPrioritization",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/AssessmentPrioritization",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Assessment Prioritization",
+                    "type": "Primary",
+                    "visited_status": "active",
+                    "transitionType": "automatic"
+                },
+                {
+                    "ID": "DiagnosisResolution",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/DiagnosisResolution",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Diagnosis Resolution",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "automatic"
+                },
+                {
+                    "ID": "ClosureFeedback",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/ClosureFeedback",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Closure Feedback",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "resolution"
+                },
+                {
+                    "ID": "Withdrawn",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/Withdrawn",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Withdrawn",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "resolution"
+                },
+                {
+                    "ID": "ReworkInfo",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/ReworkInfo",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Rework Info",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "manual"
+                },
+                {
+                    "ID": "Escalation",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/Escalation",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Escalation",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "manual"
+                }
+            ],
+            "status": "Pending-Assessment Prioritization",
+            "urgency": "10",
+            "content": {
+                "classID": "TicketWorkflow",
+                "BusinessID": "Ticket-659GFX",
+                "pyViewName": "pzToDo",
+                "pyViewContext": "",
+                "ResolvedTimestamp": "",
+                "CreateUserID": "user@example.com",
+                "IssueCategory": "",
+                "CreateUser": {
+                    "Name": "Example User",
+                    "classID": "SupportManagerPersona"
+                },
+                "CreateDateTime": "2026-06-22T12:39:31.619Z",
+                "UpdateUser": {
+                    "Name": "Example User",
+                    "classID": "SupportManagerPersona"
+                },
+                "ResolvedUser": {
+                    "Name": "",
+                    "classID": "User"
+                },
+                "ResolvedUserID": "",
+                "Status": "Pending-Assessment Prioritization",
+                "IssueSummary": "Test",
+                "PriorityLevel": "",
+                "UpdateUserID": "user@example.com",
+                "UpdateDateTime": "2026-06-22T12:57:33.790Z",
+                "Name": ""
+            },
+            "associations": {
+                "follows": false
+            }
+        }
+    },
+    "uiResources": {
+        "resources": {
+            "views": {
+                "pyDetails": [
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "name": "pyCaseSummary",
+                                            "type": "view"
+                                        }
+                                    }
+                                ],
+                                "name": "Summary",
+                                "type": "Region"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "name": "pyStages",
+                                            "type": "view"
+                                        }
+                                    }
+                                ],
+                                "name": "Stages",
+                                "type": "Region"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "name": "pyCaseWorkarea",
+                                            "type": "view"
+                                        }
+                                    }
+                                ],
+                                "name": "Todo",
+                                "type": "Region"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "type": "DeferLoad",
+                                        "config": {
+                                            "name": "pyDetailsTabContent",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@L Details"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "DeferLoad",
+                                        "config": {
+                                            "name": "pyCasePulse",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@L Pulse"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "DeferLoad",
+                                        "config": {
+                                            "name": "CommunicationLogs",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@L Communication Logs"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "DeferLoad",
+                                        "config": {
+                                            "name": "EscalationManagements",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@L Escalation Managements"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "DeferLoad",
+                                        "config": {
+                                            "name": "FeedbackCollections",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@L Feedback Collections"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "DeferLoad",
+                                        "config": {
+                                            "name": "Agents",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@L Agents"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "DeferLoad",
+                                        "config": {
+                                            "name": "CommunicationLogs2",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@L Communication Logs"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "DeferLoad",
+                                        "config": {
+                                            "name": "History",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@L History"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "name": "Tabs",
+                                "type": "Region"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "type": "FileUtility",
+                                        "config": {
+                                            "iconName": "paper-clip",
+                                            "label": "@L Attachments"
+                                        }
+                                    },
+                                    {
+                                        "type": "Followers",
+                                        "config": {
+                                            "iconName": "user-star",
+                                            "label": "@L Followers"
+                                        }
+                                    },
+                                    {
+                                        "type": "GenAICoach",
+                                        "config": {
+                                            "coaches": [
+                                                {
+                                                    "type": "AIAgentObject",
+                                                    "config": {
+                                                        "label": "@L Process Ticket",
+                                                        "ruleNamespace": "SupportManagement",
+                                                        "coach": "@AIAGENT ProcessTicket"
+                                                    }
+                                                }
+                                            ],
+                                            "iconName": "polaris"
+                                        }
+                                    }
+                                ],
+                                "name": "Utilities",
+                                "type": "Region"
+                            }
+                        ],
+                        "name": "pyDetails",
+                        "ID": "9d346828-3489-4b7c-b82a-3d89eeb38c3d",
+                        "type": "View",
+                        "config": {
+                            "template": "CaseView",
+                            "subheader": "@P .BusinessID",
+                            "showCaseLifecycle": true,
+                            "icon": "clipboard-solid",
+                            "header": "@P .Name",
+                            "localeReference": "@LR TICKETWORKFLOW!VIEW!PYDETAILS",
+                            "showIconInHeader": true,
+                            "type": "page",
+                            "ruleClass": "TicketWorkflow",
+                            "showPromotedAction": true
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ],
+                "pyStages": [
+                    {
+                        "children": [
+                            {
+                                "type": "Stages",
+                                "config": {
+                                    "currentStage": "@P .CurrentStage"
+                                }
+                            }
+                        ],
+                        "name": "pyStages",
+                        "type": "View",
+                        "config": {
+                            "localeReference": "@LR BUSINESSOBJECT!VIEW!PYSTAGES"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ],
+                "pyCaseWorkarea": [
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "name": "pzFlowContainer",
+                                            "type": "view"
+                                        }
+                                    }
+                                ],
+                                "name": "A",
+                                "type": "Region"
+                            }
+                        ],
+                        "name": "pyCaseWorkarea",
+                        "type": "View",
+                        "config": {
+                            "localeReference": "@LR BUSINESSOBJECT!VIEW!PYCASEWORKAREA"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ],
+                "pzFlowContainer": [
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "name": "@P .pyViewName",
+                                            "context": "@P .pyViewContext",
+                                            "type": "view"
+                                        }
+                                    }
+                                ],
+                                "type": "FlowContainer",
+                                "config": {
+                                    "routingInfo": "@ROUTING_INFO",
+                                    "name": "workarea"
+                                }
+                            }
+                        ],
+                        "name": "pzFlowContainer",
+                        "type": "View",
+                        "config": {
+                            "localeReference": "@LR OBJECT!VIEW!PZFLOWCONTAINER"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ],
+                "pzToDo": [
+                    {
+                        "children": [
+                            {
+                                "type": "Todo",
+                                "config": {
+                                    "showList": "true",
+                                    "assignmentsListPropsMap": [
+                                        {
+                                            "name": "Name",
+                                            "id": "pzInsKey",
+                                            "priority": "pxUrgencyAssign",
+                                            "value": "pxRefObjectKey",
+                                            "operator": "pxAssignedOperatorID"
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                        "name": "pzToDo",
+                        "type": "View",
+                        "config": {
+                            "localeReference": "@LR OBJECT!VIEW!PZTODO"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ],
+                "pyCaseSummary": [
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .Status",
+                                            "value": "@P .Status"
+                                        }
+                                    }
+                                ],
+                                "name": "Primary fields",
+                                "type": "Region"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .IssueSummary",
+                                            "value": "@P .IssueSummary",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Dropdown",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "datasource": "@ASSOCIATED .IssueCategory",
+                                            "datasourceMetadata": "@FIELD_META .IssueCategory",
+                                            "deferDatasource": true,
+                                            "label": "@FL .IssueCategory",
+                                            "placeholder": "Select...",
+                                            "value": "@P .IssueCategory",
+                                            "listType": "associated",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Dropdown",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "datasource": "@ASSOCIATED .PriorityLevel",
+                                            "datasourceMetadata": "@FIELD_META .PriorityLevel",
+                                            "deferDatasource": true,
+                                            "label": "@FL .PriorityLevel",
+                                            "placeholder": "Select...",
+                                            "value": "@P .PriorityLevel",
+                                            "listType": "associated",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "CaseOperator",
+                                        "config": {
+                                            "resolveOperator": "@P .ResolvedUser.Name",
+                                            "resolveDateTime": "@P .ResolvedTimestamp",
+                                            "createOperator": "@P .CreateUser.Name",
+                                            "CreateUserID": "@P .CreateUserID",
+                                            "updateOperator": "@P .UpdateUser.Name",
+                                            "label": "@L Create operator",
+                                            "createDateTime": "@P .CreateDateTime",
+                                            "ResolvedUserID": "@P .ResolvedUserID",
+                                            "updateLabel": "@L Updated",
+                                            "createLabel": "@L Created",
+                                            "UpdateUserID": "@P .UpdateUserID",
+                                            "updateDateTime": "@P .UpdateDateTime",
+                                            "resolveLabel": "@L Resolved"
+                                        }
+                                    },
+                                    {
+                                        "type": "CaseOperator",
+                                        "config": {
+                                            "resolveOperator": "@P .ResolvedUser.Name",
+                                            "resolveDateTime": "@P .ResolvedTimestamp",
+                                            "createOperator": "@P .CreateUser.Name",
+                                            "CreateUserID": "@P .CreateUserID",
+                                            "updateOperator": "@P .UpdateUser.Name",
+                                            "label": "@L Update operator",
+                                            "createDateTime": "@P .CreateDateTime",
+                                            "ResolvedUserID": "@P .ResolvedUserID",
+                                            "updateLabel": "@L Updated",
+                                            "createLabel": "@L Created",
+                                            "UpdateUserID": "@P .UpdateUserID",
+                                            "updateDateTime": "@P .UpdateDateTime",
+                                            "resolveLabel": "@L Resolved"
+                                        }
+                                    }
+                                ],
+                                "name": "Secondary fields",
+                                "type": "Region"
+                            }
+                        ],
+                        "name": "pyCaseSummary",
+                        "ID": "3db1c806-d429-4ad7-817d-7effbbac8dfe",
+                        "type": "View",
+                        "config": {
+                            "template": "CaseSummary",
+                            "localeReference": "@LR TICKETWORKFLOW!VIEW!PYCASESUMMARY",
+                            "ruleClass": "TicketWorkflow"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ]
+            },
+            "fields": {
+                "BusinessID": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Business ID",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "Name": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "isDeclarativeTarget": true,
+                        "label": "Name",
+                        "definedOnClassID": "TicketWorkflow"
+                    },
+                    {
+                        "classID": "User",
+                        "type": "Text",
+                        "label": "Name",
+                        "definedOnClassID": "Object"
+                    }
+                ],
+                "pyViewName": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "pyViewName",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "pyViewContext": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "pyViewContext",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "ResolvedTimestamp": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Date Time",
+                        "label": "Resolved Timestamp",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "CreateUserID": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Create User ID (Deprecated)",
+                        "definedOnClassID": "Auditable"
+                    }
+                ],
+                "IssueCategory": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "datasource": {
+                            "tableType": "PromptList",
+                            "records": [
+                                {
+                                    "key": "Hardware",
+                                    "value": "Hardware"
+                                },
+                                {
+                                    "key": "Software",
+                                    "value": "Software"
+                                },
+                                {
+                                    "key": "Network",
+                                    "value": "Network"
+                                },
+                                {
+                                    "key": "Access",
+                                    "value": "Access"
+                                },
+                                {
+                                    "key": "Other",
+                                    "value": "Other"
+                                }
+                            ]
+                        },
+                        "label": "Issue category",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "CreateUser": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Page",
+                        "pageClass": "User",
+                        "label": "Create User",
+                        "definedOnClassID": "Auditable"
+                    }
+                ],
+                "CreateDateTime": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Date Time",
+                        "label": "Create DateTime",
+                        "definedOnClassID": "Auditable"
+                    }
+                ],
+                "UpdateUser": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Page",
+                        "pageClass": "User",
+                        "label": "Update User",
+                        "definedOnClassID": "Auditable"
+                    }
+                ],
+                "ResolvedUser": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Page",
+                        "pageClass": "User",
+                        "label": "Resolved User",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "ResolvedUserID": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Resolved User ID",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "Status": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Status",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "IssueSummary": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Issue summary",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "PriorityLevel": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "datasource": {
+                            "tableType": "PromptList",
+                            "records": [
+                                {
+                                    "key": "Low",
+                                    "value": "Low"
+                                },
+                                {
+                                    "key": "Medium",
+                                    "value": "Medium"
+                                },
+                                {
+                                    "key": "High",
+                                    "value": "High"
+                                },
+                                {
+                                    "key": "Critical",
+                                    "value": "Critical"
+                                }
+                            ]
+                        },
+                        "label": "Priority level",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "UpdateUserID": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Update User ID (Deprecated)",
+                        "definedOnClassID": "Auditable"
+                    }
+                ],
+                "UpdateDateTime": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Date Time",
+                        "label": "Update DateTime",
+                        "definedOnClassID": "Auditable"
+                    }
+                ]
+            }
+        },
+        "components": [
+            "GenAICoach",
+            "Region",
+            "DeferLoad",
+            "FileUtility",
+            "Followers",
+            "CaseView",
+            "Stages",
+            "FlowContainer",
+            "Todo",
+            "Dropdown",
+            "TextInput",
+            "CaseOperator",
+            "CaseSummary"
+        ],
+        "root": {
+            "config": {
+                "name": "pyDetails",
+                "context": "caseInfo.content",
+                "type": "view"
+            },
+            "type": "reference"
+        },
+        "context_data": {}
+    }
+}

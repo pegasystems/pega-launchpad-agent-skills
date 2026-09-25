@@ -1,0 +1,388 @@
+{
+    "data": {
+        "caseInfo": {
+            "assignments": [
+                {
+                    "actions": [
+                        {
+                            "ID": "SpecifyIssueDetails",
+                            "links": {
+                                "submit:Submit": {
+                                    "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMGUwYTZhODFkMTk3MDgzMTIzNA/actions/SpecifyIssueDetails?outcome=Submit",
+                                    "rel": "self",
+                                    "title": "Submit",
+                                    "type": "PATCH"
+                                },
+                                "open": {
+                                    "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMGUwYTZhODFkMTk3MDgzMTIzNA/actions/SpecifyIssueDetails",
+                                    "rel": "self",
+                                    "title": "Get assignment action details",
+                                    "type": "GET"
+                                }
+                            },
+                            "name": "Specify Issue Details",
+                            "type": "FlowAction"
+                        },
+                        {
+                            "ID": "ReassignTask",
+                            "links": {
+                                "open": {
+                                    "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMGUwYTZhODFkMTk3MDgzMTIzNA/actions/ReassignTask",
+                                    "rel": "self",
+                                    "title": "Get assignment action details",
+                                    "type": "GET"
+                                }
+                            },
+                            "name": "Transfer Assignment",
+                            "type": "Assignment"
+                        }
+                    ],
+                    "ID": "STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMGUwYTZhODFkMTk3MDgzMTIzNA",
+                    "links": {
+                        "open": {
+                            "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMGUwYTZhODFkMTk3MDgzMTIzNA",
+                            "rel": "self",
+                            "title": "Get assignment details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Specify Issue Details",
+                    "canPerform": true,
+                    "urgency": "10",
+                    "assigneeInfo": {
+                        "name": "Example User",
+                        "ID": "user@example.com",
+                        "type": "WorkList"
+                    },
+                    "sla": {
+                        "deadline": "",
+                        "goal": ""
+                    },
+                    "instructions": "",
+                    "processID": "CaptureIssue",
+                    "processName": "Capture Issue",
+                    "priority": "low"
+                }
+            ],
+            "availableActions": [
+                {
+                    "ID": "Edit",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/Edit",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Edit",
+                    "type": "Case"
+                },
+                {
+                    "ID": "pyChangeStage",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/pyChangeStage",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Change Stage",
+                    "type": "Case"
+                },
+                {
+                    "ID": "RestartCurrentStage",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/RestartCurrentStage",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Restart current Stage",
+                    "type": "Case"
+                },
+                {
+                    "ID": "ResolveCase",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/ResolveCase",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Resolve Case",
+                    "type": "Case"
+                }
+            ],
+            "availableProcesses": [],
+            "caseTypeID": "TicketWorkflow",
+            "caseTypeName": "Ticket",
+            "createTime": "2026-06-22T12:39:31.619Z",
+            "createdBy": "user@example.com",
+            "ID": "{{caseID}}",
+            "businessID": "Ticket-659GFX",
+            "lastUpdateTime": "2026-06-22T12:56:00.484Z",
+            "lastUpdatedBy": "user@example.com",
+            "name": "",
+            "owner": "user@example.com",
+            "sla": {
+                "deadline": "",
+                "goal": ""
+            },
+            "stageID": "TicketSubmission",
+            "stageLabel": "Ticket Submission",
+            "stages": [
+                {
+                    "entryTime": "2026-06-22T12:39:31.631Z",
+                    "ID": "TicketSubmission",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/TicketSubmission",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Ticket Submission",
+                    "type": "Primary",
+                    "visited_status": "active",
+                    "transitionType": "create"
+                },
+                {
+                    "ID": "AssessmentPrioritization",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/AssessmentPrioritization",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Assessment Prioritization",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "automatic"
+                },
+                {
+                    "ID": "DiagnosisResolution",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/DiagnosisResolution",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Diagnosis Resolution",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "automatic"
+                },
+                {
+                    "ID": "ClosureFeedback",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/ClosureFeedback",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Closure Feedback",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "resolution"
+                },
+                {
+                    "ID": "Withdrawn",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/Withdrawn",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Withdrawn",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "resolution"
+                },
+                {
+                    "ID": "ReworkInfo",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/ReworkInfo",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Rework Info",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "manual"
+                },
+                {
+                    "ID": "Escalation",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/Escalation",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Escalation",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "manual"
+                }
+            ],
+            "status": "New-Ticket Submission",
+            "urgency": "10",
+            "content": {
+                "classID": "TicketWorkflow",
+                "pyViewName": "SupportManagement__SpecifyIssueDetails",
+                "DetailDescription": ""
+            },
+            "associations": {
+                "follows": false
+            }
+        }
+    },
+    "uiResources": {
+        "resources": {
+            "views": {
+                "pzCreateDetails": [
+                    {
+                        "isDynamicView": "true",
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "name": "@P .pyViewName",
+                                            "type": "view"
+                                        }
+                                    }
+                                ],
+                                "name": "A",
+                                "type": "CaseCreateStage"
+                            }
+                        ],
+                        "name": "pzCreateDetails",
+                        "type": "View",
+                        "config": {
+                            "template": "OneColumn",
+                            "localeReference": "@LR BUSINESSOBJECT!VIEW!PZCREATEDETAILS",
+                            "type": "page",
+                            "ruleClass": "BusinessObject"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ],
+                "SupportManagement__SpecifyIssueDetails": [
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .DetailDescription",
+                                            "value": "@P .DetailDescription",
+                                            "required": true
+                                        }
+                                    }
+                                ],
+                                "name": "Fields",
+                                "type": "Region"
+                            }
+                        ],
+                        "name": "SupportManagement__SpecifyIssueDetails",
+                        "type": "View",
+                        "config": {
+                            "template": "DefaultForm",
+                            "NumCols": "2",
+                            "localeReference": "@LR TICKETWORKFLOW!VIEW!SPECIFYISSUEDETAILS",
+                            "ruleClassNamespace": "SupportManagement",
+                            "label": "@L Specify Issue Details",
+                            "ruleClass": "TicketWorkflow"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ]
+            },
+            "fields": {
+                "pyViewName": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "pyViewName",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "DetailDescription": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Detail description",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ]
+            }
+        },
+        "components": [
+            "CaseCreateStage",
+            "OneColumn",
+            "Region",
+            "TextInput",
+            "DefaultForm"
+        ],
+        "root": {
+            "config": {
+                "name": "pzCreateDetails",
+                "context": "caseInfo.content",
+                "type": "view"
+            },
+            "type": "reference"
+        },
+        "context_data": {},
+        "actionButtons": {
+            "main": [
+                {
+                    "jsAction": "finishAssignment",
+                    "name": "Submit",
+                    "actionID": "submit",
+                    "outcomeID": "Submit"
+                }
+            ],
+            "secondary": [
+                {
+                    "jsAction": "cancelAssignment",
+                    "name": "Cancel",
+                    "actionID": "cancel"
+                }
+            ]
+        }
+    },
+    "nextAssignmentInfo": {
+        "context": "this_case",
+        "ID": "STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMGUwYTZhODFkMTk3MDgzMTIzNA",
+        "links": {
+            "open": {
+                "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMGUwYTZhODFkMTk3MDgzMTIzNA",
+                "rel": "self",
+                "title": "Get assignment details",
+                "type": "GET"
+            }
+        }
+    }
+}

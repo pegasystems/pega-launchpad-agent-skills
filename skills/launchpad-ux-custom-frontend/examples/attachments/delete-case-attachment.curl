@@ -1,0 +1,3 @@
+curl '{{baseUrl}}/dx/api/application/v2/attachments/{{attachmentID}}' \
+  -X 'DELETE' \
+  -H 'accept: application/json, text/plain, */*' \

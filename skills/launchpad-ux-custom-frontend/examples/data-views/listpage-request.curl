@@ -1,0 +1,5 @@
+curl '{{baseUrl}}/dx/api/application/v2/data_views/TicketWorkflowList' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/json' \
+  --data-raw '{"query":{"select":[{"field":"Status"},{"field":"BusinessID"},{"field":"Description"},{"field":"TicketName"},{"field":"IssueCategory"},{"field":"IssueSummary"},{"field":"PriorityLevel"},{"field":"ID"},{"field":"@class"}],"distinctResultsOnly":false},"paging":{"pageNumber":1,"pageSize":61},"useExtendedTimeout":false}'

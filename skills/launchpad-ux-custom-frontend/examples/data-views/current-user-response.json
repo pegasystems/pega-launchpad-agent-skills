@@ -1,0 +1,33 @@
+{
+  "data": [
+    {
+      "@version": 320,
+      "@class": "APIUser",
+      "ID": "",
+      "Name": "FieloCMS",
+      "UpdateDateTime": "2026-06-22T15:44:14.470Z",
+      "CreateDateTime": "2026-02-03T08:06:49.541Z",
+      "ApplicationName": "",
+      "UpdateUserID": "SYSTEMUSER_p78CVEJK6vylpFgQ",
+      "CreateUserID": "SYSTEMUSER_p78CVEJK6vylpFgQ",
+      "ApplicationVersion": "0.2.0-1",
+      "Urgency": 10.0,
+      "Assignments": [],
+      "HistoryCounter": 320,
+      "Status": "Open-Active",
+      "BusinessID": "",
+      "pzCaseTypeID": "",
+      "CaseSLAEventID": "",
+      "pzActiveStates": [],
+      "PersonaID": "",
+      "IsActive": true,
+      "Persona": "APIUser",
+      "Type": "SYSTEM",
+      "Email": "",
+      "AccessGroup": "",
+      "AccessGroupID": ""
+    }
+  ],
+  "resultCount": 1,
+  "fetchDateTime": "2026-06-22T15:46:35.737Z"
+}

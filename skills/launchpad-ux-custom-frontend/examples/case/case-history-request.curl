@@ -1,0 +1,5 @@
+curl '{{baseUrl}}/dx/api/application/v2/data_views/ObjectHistory' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/json' \
+  --data-raw '{"dataViewParameters":{"ObjectID":{{caseID}}},"paging":{"pageNumber":1,"pageSize":61},"query":{"select":[{"field":"CreateDateTime"},{"field":"MessageText"},{"field":"PerformerUserName"},{"field":"ID"}],"sortBy":[{"field":"CreateDateTime","type":"DESC"}]}}'
