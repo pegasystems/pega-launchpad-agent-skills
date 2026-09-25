@@ -1,0 +1,2 @@
+curl '{{baseUrl}}/dx/api/application/v2/cases/{{caseID}}/attachments' \
+  -H 'accept: application/json, text/plain, */*' \

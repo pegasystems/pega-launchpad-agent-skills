@@ -1,0 +1,5 @@
+curl '{{baseUrl}}/dx/api/application/v2/cases/{{caseID}}/actions/Edit?viewType=form' \
+  -X 'PATCH' \
+  -H 'if-match: w/"1"' \
+  -H 'accept: application/json, text/plain, */*' \
+  --data-raw '{"content":{"TicketName":"","IssueSummary":"Test","IssueCategory":"","PriorityLevel":"","DetailDescription":"sd","ImpactAssessment":"ds","TargetResolutionDate":"","ResolutionEffectivenessRating":"","ReopenFlag":false,"FollowupRequired":false,"AssignedAgent":{"ID":""},"Customer":{"ID":""}},"pageInstructions":[]}'

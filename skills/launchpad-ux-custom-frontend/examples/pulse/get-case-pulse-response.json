@@ -1,0 +1,92 @@
+
+{
+    "data": {
+        "FeedList": {
+            "classID": "PegaSocial-Message",
+            "pxResults": [
+                {
+                    "PegaPlatform__pyMessageViewReference": "pzPostDetails",
+                    "classID": "PegaSocial-Message",
+                    "pxContextType": "case",
+                    "pyContextDescription": "Ticket-659GFX",
+                    "pyPostContextClass": "SupportManagement__TicketWorkflow",
+                    "pzInsKey": "STE6UGVnYVBsYXRmb3JtX19QZWdhU29jaWFsLU1lc3NhZ2VfNmEzOTNlZWYwN2UyM2U0NzFhMjNiY2Jl",
+                    "pyMessageViewReference": "pzPostDetails",
+                    "pyMessage": "test",
+                    "pyContext": "{{caseID}}",
+                    "pyLikes": {
+                        "pxLikeCount": 0,
+                        "pxIsLiked": false
+                    },
+                    "pxUpdateDateTime": "2026-06-22T13:55:59.515Z",
+                    "pyIsEdited": false,
+                    "pyHasAttachment": false,
+                    "pxCreateDateTime": "2026-06-22T13:55:59.515Z",
+                    "mentions": [],
+                    "postedByUser": {
+                        "name": "Example User",
+                        "ID": "user@example.com"
+                    },
+                    "pyFeed": {
+                        "pyIconReference": "user@example.com",
+                        "pyIconType": "user",
+                        "pyCommentContext": ".pzInsKey",
+                        "pyPostedOn": "2026-06-22T13:55:59.515Z",
+                        "pyFeedTitle": "Example User"
+                    }
+                }
+            ]
+        }
+    },
+    "uiResources": {
+        "resources": {
+            "views": {
+                "pyPulseFeedX": [
+                    {
+                        "children": [],
+                        "name": "pyPulseFeedX",
+                        "type": "View",
+                        "config": {
+                            "localeReference": "@LR OBJECT!VIEW!PYPULSEFEEDX"
+                        },
+                        "classID": "PegaSocial-Message"
+                    }
+                ],
+                "pzPostDetails": [
+                    {
+                        "children": [],
+                        "name": "pzPostDetails",
+                        "type": "View",
+                        "config": {
+                            "localeReference": "@LR OBJECT!VIEW!PZPOSTDETAILS"
+                        },
+                        "classID": "PegaSocial-Message"
+                    }
+                ]
+            },
+            "fields": {
+                "pyFeedList": [
+                    {
+                        "classID": "PegaSocial-Message",
+                        "type": "Page List",
+                        "pageClass": "PegaSocial-Message",
+                        "dataRetrievalType": "manual",
+                        "label": "pyFeedList"
+                    }
+                ]
+            }
+        },
+        "root": {
+            "config": {
+                "name": "pyPulseFeedX",
+                "context": "FeedList",
+                "type": "view"
+            },
+            "type": "reference"
+        },
+        "context_data": {}
+    },
+    "hideAttachment": true,
+    "entryCount": 1,
+    "pageLastEntry": "2026-06-22T13:55:59.515Z"
+}

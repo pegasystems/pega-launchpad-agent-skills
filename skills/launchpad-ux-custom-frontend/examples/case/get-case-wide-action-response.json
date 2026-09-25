@@ -1,0 +1,1195 @@
+{
+    "data": {
+        "caseInfo": {
+            "assignments": [
+                {
+                    "actions": [
+                        {
+                            "ID": "ReviewTicket",
+                            "links": {
+                                "submit:Submit": {
+                                    "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg/actions/ReviewTicket?outcome=Submit",
+                                    "rel": "self",
+                                    "title": "Submit",
+                                    "type": "PATCH"
+                                },
+                                "open": {
+                                    "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg/actions/ReviewTicket",
+                                    "rel": "self",
+                                    "title": "Get assignment action details",
+                                    "type": "GET"
+                                }
+                            },
+                            "name": "Review Ticket",
+                            "type": "FlowAction"
+                        },
+                        {
+                            "ID": "ReassignTask",
+                            "links": {
+                                "open": {
+                                    "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg/actions/ReassignTask",
+                                    "rel": "self",
+                                    "title": "Get assignment action details",
+                                    "type": "GET"
+                                }
+                            },
+                            "name": "Transfer Assignment",
+                            "type": "Assignment"
+                        }
+                    ],
+                    "ID": "STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg",
+                    "links": {
+                        "open": {
+                            "href": "/assignments/STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzZhMzkzMTNkMDdlMjNlNDcxYTIxNDQxNg",
+                            "rel": "self",
+                            "title": "Get assignment details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Review Ticket",
+                    "canPerform": false,
+                    "urgency": "10",
+                    "assigneeInfo": {
+                        "name": "Support Agent",
+                        "ID": "SupportAgent",
+                        "type": "WorkQueue"
+                    },
+                    "sla": {
+                        "deadline": "",
+                        "goal": ""
+                    },
+                    "instructions": "",
+                    "processID": "TriageReview",
+                    "processName": "Triage Review",
+                    "priority": "low"
+                }
+            ],
+            "availableActions": [
+                {
+                    "ID": "Edit",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/Edit",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Edit",
+                    "type": "Case"
+                },
+                {
+                    "ID": "pyChangeStage",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/pyChangeStage",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Change Stage",
+                    "type": "Case"
+                },
+                {
+                    "ID": "RestartCurrentStage",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/RestartCurrentStage",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Restart current Stage",
+                    "type": "Case"
+                },
+                {
+                    "ID": "ResolveCase",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/ResolveCase",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Resolve Case",
+                    "type": "Case"
+                }
+            ],
+            "availableProcesses": [],
+            "caseTypeID": "TicketWorkflow",
+            "caseTypeName": "Ticket",
+            "createTime": "2026-06-22T12:39:31.619Z",
+            "createdBy": "user@example.com",
+            "ID": "{{caseID}}",
+            "businessID": "Ticket-659GFX",
+            "lastUpdateTime": "2026-06-22T12:57:33.790Z",
+            "lastUpdatedBy": "user@example.com",
+            "name": "",
+            "owner": "user@example.com",
+            "sla": {
+                "deadline": "",
+                "goal": ""
+            },
+            "stageID": "AssessmentPrioritization",
+            "stageLabel": "Assessment Prioritization",
+            "stages": [
+                {
+                    "entryTime": "2026-06-22T12:39:31.631Z",
+                    "ID": "TicketSubmission",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/TicketSubmission",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Ticket Submission",
+                    "type": "Primary",
+                    "visited_status": "completed",
+                    "transitionType": "create"
+                },
+                {
+                    "entryTime": "2026-06-22T12:57:33.790Z",
+                    "ID": "AssessmentPrioritization",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/AssessmentPrioritization",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Assessment Prioritization",
+                    "type": "Primary",
+                    "visited_status": "active",
+                    "transitionType": "automatic"
+                },
+                {
+                    "ID": "DiagnosisResolution",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/DiagnosisResolution",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Diagnosis Resolution",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "automatic"
+                },
+                {
+                    "ID": "ClosureFeedback",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/ClosureFeedback",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Closure Feedback",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "resolution"
+                },
+                {
+                    "ID": "Withdrawn",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/Withdrawn",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Withdrawn",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "resolution"
+                },
+                {
+                    "ID": "ReworkInfo",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/ReworkInfo",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Rework Info",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "manual"
+                },
+                {
+                    "ID": "Escalation",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/Escalation",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Escalation",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "manual"
+                }
+            ],
+            "status": "Pending-Assessment Prioritization",
+            "urgency": "10",
+            "content": {
+                "classID": "TicketWorkflow",
+                "IssueCategory": "",
+                "ImpactAssessment": "ds",
+                "TargetResolutionDate": "",
+                "IssueSummary": "Test",
+                "ReopenFlag": false,
+                "TicketName": "",
+                "ResolutionEffectivenessRating": "",
+                "DetailDescription": "sd",
+                "PriorityLevel": "",
+                "FollowupRequired": false,
+                "Customer": {
+                    "BusinessID": "",
+                    "classID": "CustomerData",
+                    "ID": "",
+                    "CustomerName": ""
+                },
+                "CommunicationLog": [],
+                "AssignedAgent": {
+                    "BusinessID": "",
+                    "classID": "AgentData",
+                    "AgentName": "",
+                    "ID": ""
+                },
+                "Attachments": {},
+                "ResolutionSummary": "",
+                "NumberOfEscalations": 0,
+                "ResolutionDate": "2026-06-22",
+                "RootCauseAnalysis": ""
+            },
+            "associations": {
+                "follows": false
+            }
+        },
+        "CustomerDataList": [],
+        "CommunicationLogDataList": [],
+        "AgentDataList": []
+    },
+    "uiResources": {
+        "resources": {
+            "views": {
+                "PegaPlatform__Edit": [
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .TicketName",
+                                            "value": "@P .TicketName",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .IssueSummary",
+                                            "value": "@P .IssueSummary",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Dropdown",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "datasource": "@ASSOCIATED .IssueCategory",
+                                            "datasourceMetadata": "@FIELD_META .IssueCategory",
+                                            "deferDatasource": true,
+                                            "label": "@FL .IssueCategory",
+                                            "placeholder": "Select...",
+                                            "value": "@P .IssueCategory",
+                                            "listType": "associated",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Dropdown",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "datasource": "@ASSOCIATED .PriorityLevel",
+                                            "datasourceMetadata": "@FIELD_META .PriorityLevel",
+                                            "deferDatasource": true,
+                                            "label": "@FL .PriorityLevel",
+                                            "placeholder": "Select...",
+                                            "value": "@P .PriorityLevel",
+                                            "listType": "associated",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .DetailDescription",
+                                            "value": "@P .DetailDescription",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .ImpactAssessment",
+                                            "value": "@P .ImpactAssessment",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .RootCauseAnalysis",
+                                            "value": "@P .RootCauseAnalysis",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .ResolutionSummary",
+                                            "value": "@P .ResolutionSummary",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Date",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .ResolutionDate",
+                                            "value": "@P .ResolutionDate",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Attachment",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "allowMultiple": "false",
+                                            "label": "@FL .Attachments",
+                                            "value": "@ATTACHMENT .Attachments"
+                                        }
+                                    },
+                                    {
+                                        "type": "Date",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .TargetResolutionDate",
+                                            "value": "@P .TargetResolutionDate",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Integer",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .ResolutionEffectivenessRating",
+                                            "value": "@P .ResolutionEffectivenessRating",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Checkbox",
+                                        "config": {
+                                            "trueLabel": "@L Yes",
+                                            "labelOption": "default",
+                                            "falseLabel": "@L No",
+                                            "caption": "@FL .ReopenFlag",
+                                            "captionOption": "default",
+                                            "value": "@P .ReopenFlag",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Integer",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .NumberOfEscalations",
+                                            "value": "@P .NumberOfEscalations",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "Checkbox",
+                                        "config": {
+                                            "trueLabel": "@L Yes",
+                                            "labelOption": "default",
+                                            "falseLabel": "@L No",
+                                            "caption": "@FL .FollowupRequired",
+                                            "captionOption": "default",
+                                            "value": "@P .FollowupRequired",
+                                            "required": false
+                                        }
+                                    },
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "name": "Edit_AssignedAgent",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@FL .AssignedAgent"
+                                                }
+                                            ],
+                                            "referenceType": "Case",
+                                            "ruleClassNamespace": "SupportManagement",
+                                            "authorContext": ".AssignedAgent",
+                                            "ruleClass": "TicketWorkflow",
+                                            "ruleNamespace": "SupportManagement",
+                                            "type": "view"
+                                        }
+                                    },
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "name": "Edit_Customer",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@FL .Customer"
+                                                }
+                                            ],
+                                            "referenceType": "Case",
+                                            "ruleClassNamespace": "SupportManagement",
+                                            "authorContext": ".Customer",
+                                            "ruleClass": "TicketWorkflow",
+                                            "ruleNamespace": "SupportManagement",
+                                            "type": "view"
+                                        }
+                                    },
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "name": "Edit_CommunicationLog2",
+                                            "inheritedProps": [
+                                                {
+                                                    "prop": "label",
+                                                    "value": "@FL .CommunicationLog"
+                                                }
+                                            ],
+                                            "ruleClassNamespace": "SupportManagement",
+                                            "authorContext": ".CommunicationLog",
+                                            "ruleClass": "CommunicationLogData",
+                                            "ruleNamespace": "SupportManagement",
+                                            "type": "view"
+                                        }
+                                    }
+                                ],
+                                "name": "Fields",
+                                "type": "Region"
+                            }
+                        ],
+                        "name": "PegaPlatform__Edit",
+                        "type": "View",
+                        "config": {
+                            "template": "DefaultForm",
+                            "NumCols": "2",
+                            "localeReference": "@LR TICKETWORKFLOW!VIEW!EDIT",
+                            "ruleClassNamespace": "SupportManagement",
+                            "label": "@L Edit",
+                            "ruleClass": "TicketWorkflow"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ],
+                "Edit_Customer": [
+                    {
+                        "children": [
+                            {
+                                "type": "AutoComplete",
+                                "config": {
+                                    "showSecondaryInfo": true,
+                                    "contextPage": "@P .Customer",
+                                    "previewKey": "@P .Customer.ID",
+                                    "datasource": "CustomerDataList",
+                                    "columns": [
+                                        {
+                                            "setProperty": "Associated property",
+                                            "value": ".ID",
+                                            "key": "true"
+                                        },
+                                        {
+                                            "display": "true",
+                                            "value": ".CustomerName",
+                                            "useForSearch": true,
+                                            "primary": "true"
+                                        },
+                                        {
+                                            "secondary": "true",
+                                            "display": "true",
+                                            "value": ".BusinessID",
+                                            "useForSearch": true
+                                        }
+                                    ],
+                                    "primaryField": "@P .Customer.CustomerName",
+                                    "deferDatasource": true,
+                                    "label": "@L ",
+                                    "placeholder": "Select...",
+                                    "value": "@P .Customer.ID",
+                                    "listType": "datapage",
+                                    "secondaryField": "@P .Customer.BusinessID"
+                                }
+                            },
+                            {
+                                "children": [],
+                                "name": "Views",
+                                "type": "Region"
+                            }
+                        ],
+                        "name": "Edit_Customer",
+                        "type": "View",
+                        "config": {
+                            "template": "DataReference",
+                            "mode": "singleselect",
+                            "referenceList": "CustomerDataList",
+                            "isCreationOfNewRecordAllowedForReference": true,
+                            "name": "Customer",
+                            "localeReference": "@LR TICKETWORKFLOW!VIEW!EDIT_CUSTOMER",
+                            "ruleClassNamespace": "SupportManagement",
+                            "classKeys": [
+                                {
+                                    "name": "ID"
+                                }
+                            ],
+                            "ruleClass": "TicketWorkflow",
+                            "ruleNamespace": "SupportManagement",
+                            "contextClass": "CustomerData",
+                            "selectionMode": "single"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ],
+                "Edit_CommunicationLog2": [
+                    {
+                        "children": [
+                            {
+                                "type": "SimpleTableSelect",
+                                "config": {
+                                    "referenceList": "CommunicationLogDataList",
+                                    "presets": [
+                                        {
+                                            "template": "Table",
+                                            "children": [
+                                                {
+                                                    "children": [
+                                                        {
+                                                            "type": "TextArea",
+                                                            "config": {
+                                                                "labelOption": "default",
+                                                                "readOnly": true,
+                                                                "label": "@FL .Description",
+                                                                "value": "@P .Description"
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "TextInput",
+                                                            "config": {
+                                                                "labelOption": "default",
+                                                                "readOnly": true,
+                                                                "label": "@FL .CommunicationLogName",
+                                                                "value": "@P .CommunicationLogName"
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "Dropdown",
+                                                            "config": {
+                                                                "labelOption": "default",
+                                                                "datasource": "@ASSOCIATED .InteractionType",
+                                                                "deferDatasource": true,
+                                                                "readOnly": true,
+                                                                "label": "@FL .InteractionType",
+                                                                "placeholder": "Select...",
+                                                                "value": "@P .InteractionType",
+                                                                "listType": "associated"
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "TextInput",
+                                                            "config": {
+                                                                "labelOption": "default",
+                                                                "readOnly": true,
+                                                                "label": "@FL .LogEntryID",
+                                                                "value": "@P .LogEntryID"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "name": "Columns",
+                                                    "type": "Region"
+                                                }
+                                            ],
+                                            "name": "presets",
+                                            "label": "",
+                                            "id": "P_",
+                                            "config": {}
+                                        }
+                                    ],
+                                    "selectionKey": ".ID",
+                                    "referenceType": "Case",
+                                    "primaryField": ".CommunicationLogName",
+                                    "selectionList": ".CommunicationLog",
+                                    "label": "@L Communication log",
+                                    "readonlyContextList": "@P .CommunicationLog",
+                                    "rowHeader": {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .Name",
+                                            "value": "@P .Name"
+                                        }
+                                    },
+                                    "contextClass": "CommunicationLogData",
+                                    "selectionMode": "multi",
+                                    "detailsDisplay": [
+                                        {
+                                            "type": "TextInput",
+                                            "config": {
+                                                "label": "@L Name",
+                                                "value": "@P .Name"
+                                            }
+                                        },
+                                        {
+                                            "type": "TextInput",
+                                            "config": {
+                                                "previewKey": "@P .ID",
+                                                "label": "@L Case ID",
+                                                "additionalDetails": {
+                                                    "type": "DISPLAY_LINK",
+                                                    "params": {}
+                                                },
+                                                "value": "@P .ID"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "children": [],
+                                "name": "Views",
+                                "type": "Region"
+                            }
+                        ],
+                        "name": "Edit_CommunicationLog2",
+                        "type": "View",
+                        "config": {
+                            "template": "DataReference",
+                            "referenceList": "CommunicationLogDataList",
+                            "parentContextClass": "TicketWorkflow",
+                            "isCreationOfNewRecordAllowedForReference": true,
+                            "localeReference": "@LR SUPPORTMANAGEMENT__COMMUNICATIONLOGDATA!VIEW!SUPPORTMANAGEMENT__EDIT_COMMUNICATIONLOG2",
+                            "classKeys": [
+                                {
+                                    "name": "ID"
+                                }
+                            ],
+                            "ruleNamespace": "SupportManagement",
+                            "contextClass": "CommunicationLogData",
+                            "mode": "multiselect",
+                            "displayAs": "table",
+                            "name": "CommunicationLog",
+                            "ruleClassNamespace": "SupportManagement",
+                            "ruleClass": "CommunicationLogData",
+                            "selectionMode": "multi"
+                        },
+                        "classID": "CommunicationLogData"
+                    }
+                ],
+                "Edit_AssignedAgent": [
+                    {
+                        "children": [
+                            {
+                                "type": "AutoComplete",
+                                "config": {
+                                    "showSecondaryInfo": true,
+                                    "contextPage": "@P .AssignedAgent",
+                                    "previewKey": "@P .AssignedAgent.ID",
+                                    "datasource": "AgentDataList",
+                                    "columns": [
+                                        {
+                                            "setProperty": "Associated property",
+                                            "value": ".ID",
+                                            "key": "true"
+                                        },
+                                        {
+                                            "display": "true",
+                                            "value": ".AgentName",
+                                            "useForSearch": true,
+                                            "primary": "true"
+                                        },
+                                        {
+                                            "secondary": "true",
+                                            "display": "true",
+                                            "value": ".BusinessID",
+                                            "useForSearch": true
+                                        }
+                                    ],
+                                    "primaryField": "@P .AssignedAgent.AgentName",
+                                    "deferDatasource": true,
+                                    "label": "@L ",
+                                    "placeholder": "Select...",
+                                    "value": "@P .AssignedAgent.ID",
+                                    "listType": "datapage",
+                                    "secondaryField": "@P .AssignedAgent.BusinessID"
+                                }
+                            },
+                            {
+                                "children": [],
+                                "name": "Views",
+                                "type": "Region"
+                            }
+                        ],
+                        "name": "Edit_AssignedAgent",
+                        "type": "View",
+                        "config": {
+                            "template": "DataReference",
+                            "mode": "singleselect",
+                            "referenceList": "AgentDataList",
+                            "isCreationOfNewRecordAllowedForReference": true,
+                            "name": "AssignedAgent",
+                            "localeReference": "@LR TICKETWORKFLOW!VIEW!EDIT_ASSIGNEDAGENT",
+                            "ruleClassNamespace": "SupportManagement",
+                            "classKeys": [
+                                {
+                                    "name": "ID"
+                                }
+                            ],
+                            "ruleClass": "TicketWorkflow",
+                            "ruleNamespace": "SupportManagement",
+                            "contextClass": "AgentData",
+                            "selectionMode": "single"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ]
+            },
+            "fields": {
+                "IssueCategory": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "datasource": {
+                            "tableType": "PromptList",
+                            "records": [
+                                {
+                                    "key": "Hardware",
+                                    "value": "Hardware"
+                                },
+                                {
+                                    "key": "Software",
+                                    "value": "Software"
+                                },
+                                {
+                                    "key": "Network",
+                                    "value": "Network"
+                                },
+                                {
+                                    "key": "Access",
+                                    "value": "Access"
+                                },
+                                {
+                                    "key": "Other",
+                                    "value": "Other"
+                                }
+                            ]
+                        },
+                        "label": "Issue category",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "ImpactAssessment": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Impact assessment",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "ResolutionSummary": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "isDeclarativeTarget": true,
+                        "label": "Resolution summary",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "TargetResolutionDate": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Date",
+                        "label": "Target resolution date",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "IssueSummary": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Issue summary",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "ReopenFlag": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "True-False",
+                        "label": "Reopen flag",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "NumberOfEscalations": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Integer",
+                        "isDeclarativeTarget": true,
+                        "label": "Number of escalations",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "TicketName": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Ticket name",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "ResolutionEffectivenessRating": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Integer",
+                        "label": "Resolution effectiveness rating",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "ResolutionDate": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Date",
+                        "isDeclarativeTarget": true,
+                        "label": "Resolution date",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "DetailDescription": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Detail description",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "PriorityLevel": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "datasource": {
+                            "tableType": "PromptList",
+                            "records": [
+                                {
+                                    "key": "Low",
+                                    "value": "Low"
+                                },
+                                {
+                                    "key": "Medium",
+                                    "value": "Medium"
+                                },
+                                {
+                                    "key": "High",
+                                    "value": "High"
+                                },
+                                {
+                                    "key": "Critical",
+                                    "value": "Critical"
+                                }
+                            ]
+                        },
+                        "label": "Priority level",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "RootCauseAnalysis": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "isDeclarativeTarget": true,
+                        "label": "Root cause analysis",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "FollowupRequired": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "True-False",
+                        "label": "Follow-up required",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "Customer": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Page",
+                        "datasource": {
+                            "name": "CustomerDataLookup",
+                            "parameters": {
+                                "ID": "@P .Customer.ID"
+                            }
+                        },
+                        "pageClass": "CustomerData",
+                        "dataRetrievalType": "refer",
+                        "label": "Customer",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "ID": [
+                    {
+                        "classID": "CustomerData",
+                        "type": "Text",
+                        "label": "ID",
+                        "definedOnClassID": "Object"
+                    },
+                    {
+                        "classID": "CommunicationLogData",
+                        "type": "Text",
+                        "label": "ID",
+                        "definedOnClassID": "Object"
+                    },
+                    {
+                        "classID": "AgentData",
+                        "type": "Text",
+                        "label": "ID",
+                        "definedOnClassID": "Object"
+                    }
+                ],
+                "BusinessID": [
+                    {
+                        "classID": "CustomerData",
+                        "type": "Text",
+                        "label": "Business ID",
+                        "definedOnClassID": "BusinessObject"
+                    },
+                    {
+                        "classID": "AgentData",
+                        "type": "Text",
+                        "label": "Business ID",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "CustomerName": [
+                    {
+                        "classID": "CustomerData",
+                        "type": "Text",
+                        "label": "Customer name",
+                        "definedOnClassID": "CustomerData"
+                    }
+                ],
+                "CommunicationLog": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Page List",
+                        "datasource": {
+                            "name": "CommunicationLogDataLookup",
+                            "parameters": {
+                                "ID": "@P .CommunicationLog.ID"
+                            }
+                        },
+                        "pageClass": "CommunicationLogData",
+                        "dataRetrievalType": "refer",
+                        "label": "Communication log",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "Name": [
+                    {
+                        "classID": "CommunicationLogData",
+                        "type": "Text",
+                        "isDeclarativeTarget": true,
+                        "label": "Name",
+                        "definedOnClassID": "CommunicationLogData"
+                    }
+                ],
+                "InteractionType": [
+                    {
+                        "classID": "CommunicationLogData",
+                        "type": "Text",
+                        "datasource": {
+                            "tableType": "PromptList",
+                            "records": [
+                                {
+                                    "key": "Call",
+                                    "value": "Call"
+                                },
+                                {
+                                    "key": "Email",
+                                    "value": "Email"
+                                },
+                                {
+                                    "key": "Chat",
+                                    "value": "Chat"
+                                },
+                                {
+                                    "key": "Notification",
+                                    "value": "Notification"
+                                }
+                            ]
+                        },
+                        "label": "Interaction type",
+                        "definedOnClassID": "CommunicationLogData"
+                    }
+                ],
+                "LogEntryID": [
+                    {
+                        "classID": "CommunicationLogData",
+                        "type": "Text",
+                        "isDeclarativeTarget": true,
+                        "label": "Log entry ID",
+                        "definedOnClassID": "CommunicationLogData"
+                    }
+                ],
+                "Description": [
+                    {
+                        "classID": "CommunicationLogData",
+                        "type": "Text",
+                        "label": "Description",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "CommunicationLogName": [
+                    {
+                        "classID": "CommunicationLogData",
+                        "type": "Text",
+                        "label": "Communication log name",
+                        "definedOnClassID": "CommunicationLogData"
+                    }
+                ],
+                "AssignedAgent": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Page",
+                        "datasource": {
+                            "name": "AgentDataLookup",
+                            "parameters": {
+                                "ID": "@P .AssignedAgent.ID"
+                            }
+                        },
+                        "pageClass": "AgentData",
+                        "dataRetrievalType": "refer",
+                        "label": "Assigned agent",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ],
+                "AgentName": [
+                    {
+                        "classID": "AgentData",
+                        "type": "Text",
+                        "label": "Agent name",
+                        "definedOnClassID": "AgentData"
+                    }
+                ],
+                "Attachments": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Page",
+                        "pageClass": "Attachment",
+                        "label": "Attachments",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ]
+            },
+            "datapages": {
+                "CustomerDataList": {
+                    "mode": "readonly",
+                    "structure": "list",
+                    "classID": "CustomerData",
+                    "isSearchable": false,
+                    "isQueryable": true
+                },
+                "CommunicationLogDataList": {
+                    "mode": "readonly",
+                    "structure": "list",
+                    "classID": "CommunicationLogData",
+                    "isSearchable": false,
+                    "isQueryable": true
+                },
+                "AgentDataList": {
+                    "mode": "readonly",
+                    "structure": "list",
+                    "classID": "AgentData",
+                    "isSearchable": false,
+                    "isQueryable": true
+                }
+            }
+        },
+        "components": [
+            "Integer",
+            "Checkbox",
+            "Dropdown",
+            "Region",
+            "Attachment",
+            "TextInput",
+            "Date",
+            "DefaultForm",
+            "AutoComplete",
+            "DataReference",
+            "TextArea",
+            "SimpleTableSelect",
+            "SemanticLink"
+        ],
+        "root": {
+            "config": {
+                "name": "PegaPlatform__Edit",
+                "context": "caseInfo.content",
+                "type": "view"
+            },
+            "type": "reference"
+        },
+        "context_data": {
+            "CommunicationLogData": {
+                "summary_of_when_conditions__": {
+                    "$TRUE": true
+                }
+            }
+        },
+        "actionButtons": {
+            "main": [
+                {
+                    "jsAction": "finishAssignment",
+                    "name": "Submit",
+                    "actionID": "submit"
+                }
+            ],
+            "secondary": [
+                {
+                    "jsAction": "cancelAssignment",
+                    "name": "Cancel",
+                    "actionID": "cancel"
+                }
+            ]
+        }
+    }
+}

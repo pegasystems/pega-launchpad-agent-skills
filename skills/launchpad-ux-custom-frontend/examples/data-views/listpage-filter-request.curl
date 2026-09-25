@@ -1,0 +1,5 @@
+curl '{{baseUrl}}/dx/api/application/v2/data_views/TicketWorkflowList' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/json' \
+  --data-raw '{"query":{"select":[{"field":"Status"},{"field":"BusinessID"},{"field":"Description"},{"field":"TicketName"},{"field":"IssueCategory"},{"field":"IssueSummary"},{"field":"PriorityLevel"},{"field":"ID"},{"field":"@class"}],"distinctResultsOnly":false,"filter":{"logic":"F1 AND F2 AND (F3 AND F4)","filterConditions":{"F1":{"comparator":"CONTAINS","lhs":{"field":"IssueSummary"},"rhs":{"value":"Test"},"ignoreCase":true},"F2":{"comparator":"IN","lhs":{"field":"Status"},"rhs":{"values":["Pending-Assessment Prioritization"]},"ignoreCase":true},"F3":{"lhs":{"field":"CreateDateTime"},"comparator":"GTE","rhs":{"value":"2026-06-14T18:30:00.000Z"}},"F4":{"lhs":{"field":"CreateDateTime"},"comparator":"LTE","rhs":{"value":"2026-06-25T18:30:59.999Z"}}}}},"paging":{"pageNumber":1,"pageSize":61},"useExtendedTimeout":false}'

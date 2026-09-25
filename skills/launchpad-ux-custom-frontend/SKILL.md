@@ -1,387 +1,201 @@
 ---
 name: launchpad-ux-custom-frontend
-description: "Guide for building custom React front-ends on Pega Launchpad using the Pega React SDK (@pega/react-sdk-components). Use this skill whenever users ask about building complete custom front-ends over a Launchpad application. Do not use this skill for questions about DX API methods unless they specifically relate to building a custom front-end. Do not use this skill for questions about custom UX components or the pega-embed web component."
-tags: [react, frontend, react-sdk, pega-launchpad, constellation, material-ui, webpack, oauth, pcore]
+description: "Guide for building a fully custom front-end application on top of Pega Launchpad's DX (Digital Experience) REST APIs — no Pega React SDK, no Constellation rendering, no pega-embed web component. Use this skill whenever a user wants a bespoke UI (their own framework, components, and design) driven by raw DX API calls, especially when they can supply screenshots, wireframes, or mockups the UI should match. Do not use this skill for the Pega React SDK/Constellation approach, and do not use it for the pega-embed web component — use the dedicated skills for those."
+tags: [dx-api, frontend, custom-ui, react, screenshots, wireframes, oauth, pkce, rest]
 ---
 
-# Building a React Front-End for Pega Launchpad with the Pega React SDK
+# Building a Custom Front-End on Pega Launchpad DX APIs
 
-A practical guide for building custom React UIs on top of Pega Launchpad using the **Pega React SDK** (`@pega/react-sdk-components`). This approach uses the SDK's Constellation engine to handle rendering, data binding, case management, and API communication — rather than making direct DX API calls.
+A practical guide for building a **fully custom** UI — your own components, your own styling, your own framework — that talks directly to Launchpad's DX REST APIs. There is no Constellation engine, no `PCore`, and no Pega-rendered views here: every screen, form, and interaction is code you write, calling the DX endpoints described in the [launchpad-dx-apis](../launchpad-dx-apis/SKILL.md) skill.
 
-Before proceeding, validate that building a custom front-end is necessary. Launchpad's out-of-the-box Constellation components and templates may meet requirements without this complexity.
+Use this approach when the business needs a UI that looks and behaves exactly like a provided design (screenshots, wireframes, Figma exports, a competitor app, brand guidelines) and Constellation's theming isn't enough to achieve that fidelity.
 
-When implementing a front-end, proceed incrementally. Always ask what folder to create the project in, don't assume or guess the location. 
-
-Ask for validation and questions at each step to ensure that the user understands what was built and why, and to confirm that it meets their needs before moving on to the next step.
-
----
-
-## 0. When to Build a Custom Frontend
-
-Prefer **out-of-the-box Constellation components and templates** whenever they meet the business and UX requirements.
-
-Consider a custom frontend only when:
-
-- The business needs **visualizations or interaction patterns** not available out of the box
-- You must use a specific design system (e.g., Material UI, shadcn/ui) or have strict branding requirements that cannot be met with Constellation's theming
-- You need **full control over the page layout** while still leveraging Pega's case management, assignments, and data views through the SDK
-
-Before deciding, validate that:
-
-- The required behavior cannot be modeled with standard Constellation views, region templates, and OOTB components
-- The long-term **maintenance cost** (SDK upgrades, security patches, library updates) is acceptable
+> **Not the right skill?** If the goal is to keep Pega's own rendering (Constellation views, OOTB components, out-of-the-box landing pages) and only customize branding/theming, prefer Launchpad's built-in theming — a fully custom front-end is more effort to build and maintain. If the goal is to embed a single Pega view/flow into an existing page via the `<pega-embed>` web component, use the [launchpad-webembed](../launchpad-webembed/SKILL.md) skill instead. This skill is for teams that want **zero Pega-rendered UI** — every pixel is custom, sourced only from DX API data.
 
 ---
 
-## 1. Architecture Overview
+## 0. Workflow (follow in order)
 
-The Pega React SDK approach works fundamentally differently from direct DX API calls. Instead of making raw HTTP requests to REST endpoints, you bootstrap the **Constellation engine** (`@pega/constellationjs`) which provides a global `PCore` object. The SDK's React components and bridge layer (`@pega/react-sdk-components`) render Pega-authored views automatically and expose hooks for creating cases and interacting with assignments.
+1. **Gather requirements** — tech stack/styling preferences, case types/data objects, which data views back which pages (§1).
+2. **Request and analyze screenshots or wireframes** of the desired UI before writing any code (§2). This is what drives the component/page plan.
+3. **Gather Launchpad connection details** and set up authentication (§3).
+4. **Confirm the design → DX API mapping** with the user (§2.3) before scaffolding.
+5. **Scaffold the app**: API client/service layer, then pages/components styled to match the provided designs (§4–§6).
+6. **Wire up actions** (create case, submit assignment/case actions, attachments, followers, pulse) using `If-Match`/ETag correctly (§7).
+
+Do not skip step 2. Building a "custom" front-end without first seeing what it should look like leads to generic UI that has to be redone.
+
+---
+
+## 1. Requirements to Gather from the Developer
+
+Ask directly — do not assume:
+
+1. **Tech stack and styling** — framework (React/Next.js, plain Node + HTML, Vue, etc.), language (TypeScript vs JavaScript), and styling approach (Tailwind CSS by default if unspecified, a component library, or plain CSS).
+2. **Case type(s) / data object(s)** the UI needs to create or work with (`caseTypeID` / `objectTypeID`).
+3. **Which data views power which landing/list pages**, and which fields each should display.
+4. **What folder** to generate the application into — ask, never assume.
+
+---
+
+## 2. Request and Analyze Screenshots / Wireframes
+
+Before scaffolding any code, **ask the user for sample screenshots, wireframes, or mockups** of the front-end they want. Phrase it directly, e.g.: *"Do you have any screenshots, wireframes, or design mockups of how you'd like this to look? Please drop the image file(s) into the workspace and point me to them."*
+
+If the user has no visuals, proceed without them but say so explicitly, and default to a clean, minimal layout (Tailwind by default) rather than guessing at a specific brand look.
+
+### 2.1 Analyzing provided images
+
+Once the user supplies image file(s) in the workspace, view them directly (the image-viewing tool) and extract:
+
+- **Screens/pages present** — e.g., a landing/dashboard list, a case detail view, a create-case form, an assignment/approval form, an attachments or comments panel.
+- **Layout structure** — header/nav placement, sidebar vs top nav, grid vs list, card-based vs table-based, number of columns.
+- **Components** — tables, cards, tabs, stepper/progress indicators, modals, buttons (primary/secondary), form field types (text, select, date, textarea, checkbox), badges/status chips.
+- **Visual design system** — brand colors (primary, accent, background, text), typography (font family/weights if legible), spacing density, border radius, shadows.
+- **Data implied by the mockup** — labels and columns shown (these usually map to case/data-object fields and hint at what the Allowed Fields and data view `select` list should contain).
+
+### 2.2 Handling multiple images
+
+If the user provides several screenshots (e.g., list page, detail page, form), analyze each individually and note which screen it represents. Ask for clarification if it's unclear which flow/state an image shows.
+
+### 2.3 Producing and confirming the design → DX API mapping
+
+Before generating any code, summarize your analysis back to the user as a short plan, mapping each screen to the DX APIs from [launchpad-dx-apis](../launchpad-dx-apis/SKILL.md) that will drive it, for example:
+
+| Screen (from screenshot) | Data source | DX API |
+| ------------------------- | ----------- | ------ |
+| Dashboard / case list | List/report data view | `POST /dx/api/application/v2/data_views/<DataPageName>` |
+| Case detail (read-only) | Full case | `GET /dx/api/application/v2/cases/{ID}?viewType=page` |
+| "New Request" form | Create case | `POST /dx/api/application/v2/cases` |
+| Approval / step form | Assignment | `GET/PATCH /dx/api/application/v2/assignments/{assignmentID}` |
+| Attachments panel | Attachments | see `examples/attachments/` |
+| Comments panel | Pulse | see `examples/pulse/` |
+| Followers/watchers control | Followers | see `examples/followers/` |
+
+Get explicit confirmation ("does this match what you had in mind?") before moving to scaffolding. This avoids building the wrong pages or wiring the wrong fields.
+
+---
+
+## 3. Authentication and Environment Setup
+
+Authentication, grant types, Client Registration/Persona setup, and the `.env.example` pattern are identical to the [launchpad-dx-apis](../launchpad-dx-apis/SKILL.md) skill — **do not duplicate that guidance here, follow it directly**:
+
+- Default to **PKCE** (Authorization Code with PKCE) for an interactive user; use **Client Credentials** only for true server-to-server calls with no interactive user.
+- Ask the hosting team for the **Application URL**, **Access Token URL**, **Client ID**, and (for Client Credentials) **Client Secret**.
+- Generate the application's own `.env.example` from [../launchpad-dx-apis/examples/.env.example](../launchpad-dx-apis/examples/.env.example) (or the local copy in [examples/.env.example](examples/.env.example)) — never commit a populated `.env`.
+- **Never ship a confidential client secret to the browser.** For a browser SPA, prefer a Public PKCE client with no secret. If a Confidential client is unavoidable, do the token exchange on a small backend/BFF and have the browser talk to that BFF instead of holding the secret.
+
+### CORS during local development
+
+Launchpad's DX endpoints typically do not send CORS headers for `localhost` origins. During development, proxy all `/dx/` calls through your dev server (e.g., a webpack-dev-server / Vite / Next.js API route proxy) to the Launchpad base URL. In production, request a CORS policy update from the Launchpad team that allows your app's origin (same process as any other externally-hosted app calling DX APIs).
+
+---
+
+## 4. Architecture
 
 ```
-Browser → React App → PCore (Constellation Engine) → Pega Launchpad Server
+Browser (your custom UI) → your API client/service layer → fetch() → Launchpad DX APIs (/dx/api/application/v2/...)
 ```
 
-### Key Packages
+There is no Constellation/`PCore` layer. Your code is responsible for: obtaining/refreshing tokens, calling DX endpoints, tracking the case/assignment `ID` and `eTag`, and rendering every field and action yourself.
 
-| Package | Purpose | Required Version |
-| ------- | ------- | --- |
-| `@pega/react-sdk-components` | React bridge for Constellation — renders DX components, provides `PCore` lifecycle hooks, component mapping | `^25.1.0` |
-| `@pega/constellationjs` | Constellation bootstrap shell — loads `PCore` into the browser, manages the server connection | `^25.1.0` |
-| `@pega/auth` | OAuth 2.0 authentication — `loginIfNecessary()`, token management, handles the redirect flow | `~0.2.0` |
+### Service layer
 
-### Package.json Generation Requirements
+Build one module that wraps every DX call needed by the app, e.g.:
 
-When generating a new React web application for this skill, **enforce the following package.json requirements strictly**:
-
-#### Required Pega Package Versions (Non-Negotiable)
-
-```json
-{
-  "dependencies": {
-    "@pega/auth": "~0.2.0",
-    "@pega/constellationjs": "^25.1.0",
-    "@pega/react-sdk-components": "^25.1.0"
-  }
-}
+```ts
+// src/api/launchpad.ts
+export async function getDataView(dataView: string, params: Record<string, unknown>, select: string[]) { /* POST /data_views/<dataView> */ }
+export async function createCase(caseTypeID: string, content: Record<string, unknown>) { /* POST /cases */ }
+export async function getCase(caseID: string) { /* GET /cases/{id}?viewType=page — returns data + eTag header */ }
+export async function getAssignment(assignmentID: string) { /* GET /assignments/{id}?viewType=form */ }
+export async function submitAssignment(assignmentID: string, actionID: string, outcome: string, content: Record<string, unknown>, eTag: string) { /* PATCH .../actions/<ActionID>?outcome=<Outcome>, If-Match: eTag */ }
+export async function submitCaseAction(caseID: string, actionID: string, content: Record<string, unknown>, eTag: string) { /* PATCH /cases/{id}/actions/<ActionID> */ }
+export async function getAttachments(caseID: string) { /* see examples/attachments */ }
+export async function getFollowers(caseID: string) { /* see examples/followers */ }
+export async function getPulse(caseID: string) { /* see examples/pulse */ }
 ```
 
-These versions must be enforced exactly as specified. They have been validated together with this skill's guidance and patterns. Using different versions may cause compatibility issues with authentication, rendering, or the Constellation engine.
+Every function should attach the bearer token, throw on non-2xx with the parsed error body, and — for case/assignment reads — return the `eTag` response header alongside the data so callers can use it on the next `PATCH`.
 
-#### Other Dependencies: Use Latest Stable, Avoid Deprecated Versions
+### Pages/components
 
-For all other dependencies (React, Material UI, TypeScript, webpack, build tools, etc.):
+Build one component per screen identified in §2.3, styled to match the analyzed screenshot (Tailwind utility classes by default, or the chosen library):
 
-1. **Default to the latest stable version** unless you have a specific reason to use an older version.
-2. **Before generating code, check for deprecation warnings** in npm registry for any specified versions.
-3. **If a dependency is deprecated**, substitute it with the latest stable version and adjust your generated code accordingly to accommodate any breaking changes.
-4. **Common examples**:
-   - `react` and `react-dom`: Use latest stable (e.g., `^18.3.0` or newer)
-   - `@mui/material` and `@mui/icons-material`: Use latest v6 (e.g., `^6.4.0` or newer)
-   - `typescript`: Use latest stable (e.g., `^5.9.0` or newer)
-   - `webpack` and related tools: Verify no deprecated versions are in use
-
-#### Code Adjustment Expectations
-
-When you upgrade a dependency to avoid deprecation, be prepared to adjust the generated code:
-- Update imports if package names or paths have changed
-- Update API calls if the library's interface has changed significantly
-- Test the generated application to ensure all features work with the new versions
-- Document any breaking changes in comments within the generated code
+- **List/landing page** — table or card grid rendered from a data view response (`data[]`). Support the filters/paging shown in the mockup by passing `dataViewParameters` / `query.select` / `paging`.
+- **Case detail (read-only)** — rendered from `GET /cases/{id}?viewType=page`, showing `content` fields, stage/status, and `availableActions` as buttons.
+- **Create-case form** — fields matching the case type's Allowed Fields; on submit, `POST /cases`, then render the next assignment from the response if present.
+- **Assignment/action form** — fields come from `uiResources.resources.fields` in the assignment response, but you render them with **your own** form components (not Pega's), mapping Pega field `type` → your input component (text → text input, date → date picker, etc.), matched to the screenshot's field styling.
+- **Attachments / Pulse / Followers panels** — thin components wrapping the corresponding service-layer calls; style as shown in the mockup (list, upload control, comment thread, avatar list).
 
 ---
 
-### Key Files in a Custom Frontend Project
+## 5. Rendering Dynamic Fields Without Constellation
 
-| File | Purpose |
-| ---- | ------- |
-| `sdk-config.json` | Central configuration: server URL, OAuth client IDs, app alias, portal name |
-| `sdk-local-component-map.js` | Maps custom component names to your React implementations (overrides Pega defaults) |
-| `src/context/PegaAuthProvider.tsx` | React context that wraps `@pega/auth`'s `loginIfNecessary()` and listens for `SdkConstellationReady` |
-| `src/context/PegaReadyContext.tsx` | React context that manages `PCore.onPCoreReady()`, initializes the SDK component map, and exposes `usePega()` |
-| `src/theme/index.ts` | MUI theme with CSS variable overrides that the SDK's Constellation components read |
-| `webpack.config.js` | Webpack build config that copies Constellation bootstrap assets from `node_modules` into `dist/` |
+Because there's no rendering engine, you must map Pega field metadata to your own components yourself:
 
----
-
-## 2. Information You'll Need from the developer
-
-before starting, gather this info from the developer and use it when generating the application:
-
-1. What UI framework do they want to use with the React SDK? The example uses Material UI, but the SDK is compatible with any React component library. The choice of UI framework will influence the structure of the React components and the theming approach.
-2. What are the brand colors they want to use?
-3. What folder do they want to generate the application into? The example uses `examples/workmanagement`, but it can be generated anywhere in the file system.
-
-## 3. Information You'll Need from Pega Launchpad
-
-Before starting, gather these from the Launchpad application owner:
-
-| Item | Example | Where to Find It |
-| ---- | ------- | ----------------- |
-| **Server URL** | `https://myapp-xyz-prod.pegalaunchpad.com` | Launchpad environment settings |
-| **Authorize URL** | `https://your-cluster.cluster.lp.pegaservice.net/uas/oauth/authorize` | Launchpad cluster — **different domain** from the server URL |
-| **Token URL** | `https://myapp-xyz-prod.pegalaunchpad.com/dx/uas/oauth/token` | Uses the app server URL |
-| **Revoke URL** | `https://myapp-xyz-prod.pegalaunchpad.com/dx/uas/oauth/revoke` | Uses the app server URL |
-| **OAuth Client ID** | `DUxcGyIt9QQjJBbk` | OAuth 2.0 Client Registration — used for both `portalClientId` and `mashupClientId` |
-| **OAuth Client Secret** | (stored securely) | Same registration — required for **Confidential** client type |
-| **App Alias** | `WorkManagement` | Application settings in Pega |
-| **Portal Name** | (optional) | Specific portal to load; blank uses operator's default |
-| **Case Type** | `WorkOrder` | Short case type name (not full class path in Launchpad) |
-
-### Important: Launchpad vs Infinity Differences
-
-- **API Base Path**: Launchpad uses `/dx/...` paths (not `/prweb/...` as in Infinity). The `infinityRestServerUrl` in `sdk-config.json` should point to the Launchpad server's base URL.
-- **Case Type IDs**: Use the short case type name (e.g., `WorkOrder`), not the full Pega class path. Launchpad resolves it via the app alias.
-- **OAuth URLs**: On Launchpad, the OAuth authorize endpoint may live on a **different domain** (the cluster frontend URL), while the token endpoint uses the application server URL.
+1. Read `uiResources.resources.fields` (from the assignment/case-action response) for each field's `label`, `type` (Text, Integer, Decimal, Date, DateTime, Dropdown/select with `options`, TextArea, Checkbox, etc.), and `required`.
+2. Bind fields to `content` keyed by field name — build the submit payload as `{ content: { ...values }, pageInstructions: [] }`.
+3. Only render/submit fields that are part of the current view — don't invent fields not present in the response.
+4. Validate `required` fields client-side before submit, but always handle server-side `400` validation errors too (see §7) since Launchpad may enforce case/stage validations you don't know about client-side.
+5. Style every field per the design pulled from the screenshots (§2.1) — labels, spacing, input styling, button placement — since none of this comes from Pega.
 
 ---
 
-## 4. SDK Configuration: `sdk-config.json`
-
-This is the central configuration file that the SDK reads at runtime. It is copied to the `dist/` output by webpack.
-
-### Critical: `serverType` must be `"launchpad"`
-
-The `@pega/auth` library defaults `serverType` to `"infinity"`, which uses Infinity-specific OAuth endpoints and auth service logic. For Launchpad, you **must** set `serverType: "launchpad"` in `serverConfig`. Without this, the Constellation bootstrap won't set `envType: 'LAUNCHPAD'` and auth service configuration will be wrong.
-
-### Critical: Dev Server Proxy for CORS
-
-Launchpad's DX API endpoints do not include CORS headers for `localhost` origins. During development, **all `/dx/` requests must be proxied** through the webpack dev server (see Section 7). This means `token`, `revoke`, and `infinityRestServerUrl` should point to `localhost` in `sdk-config.json` during development.
-
-### Critical: `mainRedirect: true` and Cognito
-
-Launchpad uses AWS Cognito for authentication. Cognito sets `X-Frame-Options: deny`, which prevents iframe-based login. You **must** use `mainRedirect: true` in the `loginIfNecessary()` call, which performs a full-page redirect to Cognito instead of trying an iframe/popup.
-
-When `mainRedirect: true` is set, the `@pega/auth` library reads `portalClientId` (not `mashupClientId`). You must set **both** `portalClientId` and `mashupClientId` in the config — they can be the same value.
-
-### Critical: `redirectUri` must point to the main page
-
-With `mainRedirect: true`, the `redirectUri` must be set to the main app URL (e.g., `http://localhost:3502/`), **not** `auth.html`. After OAuth login, the browser returns to the main page with a `?code=` parameter, and `loginIfNecessary()` detects this, exchanges the code for tokens, and then strips the query parameters.
-
-The `auth.html` page is only used for popup/iframe callback flows (which don't work with Cognito).
-
-```json
-{
-  "comment": "SDK configuration for your Pega Launchpad React application",
-  "theme": "light",
-  "authConfig": {
-    "authService": "pega",
-    "authorize": "https://your-cluster-frontend.cluster.lp.pegaservice.net/uas/oauth/authorize",
-    "token": "http://localhost:3502/dx/uas/oauth/token",
-    "revoke": "http://localhost:3502/dx/uas/oauth/revoke",
-    "mashupClientId": "YOUR_CLIENT_ID",
-    "mashupClientSecret": "YOUR_CLIENT_SECRET",
-    "portalClientId": "YOUR_CLIENT_ID",
-    "portalClientSecret": "YOUR_CLIENT_SECRET",
-    "mashupGrantType": "authCode",
-    "redirectUri": "http://localhost:3502/"
-  },
-  "serverConfig": {
-    "serverType": "launchpad",
-    "infinityRestServerUrl": "http://localhost:3502",
-    "appAlias": "WorkManagement",
-    "sdkContentServerUrl": "",
-    "appPortal": "",
-    "appMashupCaseType": "WorkOrder"
-  }
-}
-```
-
-> **Note:** The `token`, `revoke`, and `infinityRestServerUrl` values above use `localhost` because they are proxied through the webpack dev server (see Section 7). For production deployments, these should point directly to the Launchpad server.
-
-| Field | Notes |
-| ----- | ----- |
-| `serverType` | **Must be `"launchpad"`** — defaults to `"infinity"` which breaks Launchpad auth |
-| `infinityRestServerUrl` | Base URL — use `http://localhost:<port>` for dev (proxied), production Launchpad URL for prod |
-| `authorize` | Full path to the OAuth 2.0 authorization endpoint. This is the **cluster frontend URL** (e.g., `https://your-cluster.cluster.lp.pegaservice.net/uas/oauth/authorize`), **not** the app server URL. This must **not** be proxied — it's a browser redirect |
-| `token` | OAuth 2.0 token endpoint. Points to localhost in dev (proxied to `https://your-app.pegalaunchpad.com/dx/uas/oauth/token`) |
-| `revoke` | OAuth 2.0 revocation endpoint. Same proxy pattern as `token` |
-| `mashupClientId` / `portalClientId` | OAuth client IDs — **both must be set** (can be the same value). The library reads `portalClientId` when `mainRedirect: true` |
-| `mashupClientSecret` / `portalClientSecret` | Client secrets — required for **Confidential** client type. Both must be set |
-| `mashupGrantType` | Must be `"authCode"` for the OAuth authorization code flow |
-| `redirectUri` | Must be the main page URL (e.g., `http://localhost:3502/`), **not** `auth.html` |
-| `appMashupCaseType` | Short case type name (e.g., `WorkOrder`), not the full Pega class path |
-| `appPortal` | Leave blank to use the operator's default portal |
-| `theme` | `"light"`, `"dark"`, or a custom theme key — controls which MUI theme is selected |
-
----
-
-## 5. Pega Launchpad Configuration Prerequisites
-
-### CORS Policy (Production Only)
-
-For **production deployments** where the browser makes requests directly to the Launchpad server, your Launchpad application must have a **CORS policy** that includes your web app's origin.
-
-For **local development**, CORS is bypassed entirely by the webpack dev server proxy (see Section 7), so no CORS configuration is needed in Launchpad during development.
-
-For production:
-
-1. Create a new CORS Policy rule in Launchpad. Set availability to **public overridable**.
-2. Leave the origins list blank initially, save the rule.
-3. Update the App Settings rule — add your CORS policy as the default CORS policy.
-4. Create a Configuration Set rule and include your CORS policy.
-5. Commit and merge to main, publish the application.
-6. Update a subscriber with the latest version.
-7. In the subscriber configuration portal, override the CORS policy and add your production app's origin (e.g., `https://your-app.example.com`).
-
-### OAuth Client Registration (Subscriber System)
-
-In your Launchpad subscriber system, set up an OAuth 2.0 client registration:
-
-1. Register a client. The client ID and secret are used for both `mashupClientId`/`portalClientId` and `mashupClientSecret`/`portalClientSecret` in `sdk-config.json`.
-2. **Add the redirect URI** — for development this is `http://localhost:3502/` (the main app URL, not `auth.html`). For production, use your production URL.
-3. The client can be **Confidential** (requires a client secret) or **Public** (no secret needed).
-
-This gives you the client IDs needed for `sdk-config.json`.
-
----
-
-## 6. Authentication Flow
-
-> Read [references/authentication-flow.md](references/authentication-flow.md) for full code examples of PegaAuthProvider, PegaReadyProvider, and case creation via PCore.
-
-Key points:
-- Two React context providers work together: **PegaAuthProvider** (OAuth login) → **PegaReadyProvider** (PCore lifecycle).
-- `PegaAuthProvider` listens for the `SdkConstellationReady` DOM event and calls `loginIfNecessary({ appName: 'embedded', mainRedirect: true })`.
-- `mainRedirect: true` is **required** for Launchpad — Cognito blocks iframes. When set, `@pega/auth` reads `portalClientId` (not `mashupClientId`).
-- `PegaReadyProvider` registers `PCore.onPCoreReady()` **before** calling `myLoadMashup()`, initializes the SDK component map, and exposes `usePega()` hook.
-- Case creation: `PCore.getMashupApi().createCase(mashupCaseType, PCore.getConstants().APP.APP, options)` — replaces manual DX API POST/PATCH calls.
-- Always add `.catch()` error handling to `loginIfNecessary()` to surface auth failures.
-
----
-
-## 7. Key Architectural Patterns
-
-> Read [references/key-architectural-patterns.md](references/key-architectural-patterns.md) for embedded vs portal mode, the SDK component map, and MUI theme + Pega CSS variable integration.
-
-Key points:
-- **Embedded mode** (recommended): You control the layout, use `<PegaContainer />` for Pega content. Use `myLoadMashup('pega-root', false)`.
-- **Portal mode**: Pega controls the full layout. Use `myLoadPortal('pega-root', portalName, [])`.
-- On Launchpad, `mainRedirect` must always be `true` (Cognito blocks iframes).
-- Custom components override Pega defaults via `sdk-local-component-map.js`.
-- MUI themes must set Pega CSS variables in `MuiCssBaseline.styleOverrides` and declare module augmentation for `@mui/material/styles`.
-
----
-
-## 8. Webpack Configuration — Critical Details
-
-> Read [references/webpack-configuration.md](references/webpack-configuration.md) for full CopyWebpackPlugin patterns, module rules, dev server proxy config, and HMR setup.
-
-Key points:
-- `CopyWebpackPlugin` must copy Constellation bootstrap shell, auth redirect pages, `sdk-config.json`, and `sdk-local-component-map.js` to `dist/`.
-- CSS rule must include both `@pega/react-sdk-components/lib` and `react-datepicker/dist`.
-- Dev server must proxy all `/dx/` requests to the Launchpad server (`changeOrigin: true`).
-- `token`, `revoke`, and `infinityRestServerUrl` point to `localhost` in dev (proxied); real server URLs in production.
-- Add `webpack.HotModuleReplacementPlugin()` for development mode if HMR is disabled.
-
----
-
-## 9. Project Structure
+## 6. Project Structure
 
 ```
-my-pega-app/
-├── assets/
-│   ├── css/appStyles.css              # Global styles
-│   └── img/                           # Static images
-├── keys/                              # SSL certs for HTTPS dev (optional)
+my-custom-frontend/
 ├── src/
+│   ├── api/
+│   │   └── launchpad.ts           # Service layer wrapping all DX calls (§4)
+│   ├── auth/
+│   │   └── pkce.ts                # Token acquisition/refresh (PKCE or client credentials)
 │   ├── components/
-│   │   ├── AppShell/index.tsx         # Top-level shell wrapping auth + SDK providers
-│   │   ├── Header/index.tsx           # MUI AppBar with app name and logout
-│   │   └── Dashboard/index.tsx        # Main view with case creation and PegaContainer
-│   ├── context/
-│   │   ├── PegaAuthProvider.tsx       # OAuth context, SdkConstellationReady listener
-│   │   └── PegaReadyContext.tsx       # PCore lifecycle, usePega() hook, createCase()
-│   ├── theme/
-│   │   └── index.ts                   # MUI theme with Pega CSS variable overrides
-│   ├── index.html                     # HTML template (webpack injects JS bundle)
-│   └── index.tsx                      # React entry point — renders <AppShell />
-├── sdk-config.json                    # Pega server URL, OAuth client IDs, app alias
-├── sdk-local-component-map.js         # Custom component overrides (local → Pega fallback)
-├── package.json
-├── tsconfig.json
-└── webpack.config.js                  # Build config with CopyWebpackPlugin for Constellation assets
+│   │   ├── CaseList/               # Landing/list page, styled per screenshots
+│   │   ├── CaseDetail/             # Read-only case detail view
+│   │   ├── AssignmentForm/         # Dynamic form driven by uiResources fields
+│   │   ├── AttachmentsPanel/
+│   │   ├── PulsePanel/
+│   │   └── FollowersPanel/
+│   ├── styles/                     # Tailwind config / brand tokens extracted from screenshots
+│   └── index.tsx
+├── .env.example                    # Copied/generated from launchpad-dx-apis examples/.env.example
+├── .gitignore                      # Must ignore .env, dist/build output, node_modules/
+└── package.json
 ```
 
 ---
 
-## 10. Common Errors & Troubleshooting
+## 7. Error Handling & ETag Discipline
 
-| Error | Cause | Fix |
-| ----- | ----- | --- |
-| `PCore is not defined` | Constellation bootstrap shell not loaded | Verify `CopyWebpackPlugin` copies `@pega/constellationjs/dist/bootstrap-shell.js` to `dist/constellation/` |
-| `SdkConstellationReady` never fires | Auth failed or `sdk-config.json` misconfigured | Check `serverType: "launchpad"`, client IDs, and browser console for 401/CORS errors |
-| CORS errors on token endpoint | `token`/`revoke` URLs pointing directly to Launchpad server from localhost | Set up the webpack dev server proxy for `/dx` and point `token`/`revoke`/`infinityRestServerUrl` to `localhost` in `sdk-config.json` |
-| CORS errors on DX API calls | `infinityRestServerUrl` pointing directly to Launchpad | Point `infinityRestServerUrl` to `http://localhost:<port>` and proxy all `/dx/` through webpack |
-| `X-Frame-Options: deny` / Cognito login blocked | Using `mainRedirect: false` which tries iframe auth | Use `mainRedirect: true` — Cognito does not allow iframe embedding |
-| Blank page after OAuth login redirect | `redirectUri` set to `auth.html` instead of main page | Set `redirectUri` to `http://localhost:3502/` (the main page), not `auth.html` |
-| Token exchange fails silently | `portalClientId` not set in `sdk-config.json` | When `mainRedirect: true`, the auth library reads `portalClientId` — set both `mashupClientId` and `portalClientId` |
-| `serverType` not set | Auth library defaults to `"infinity"` mode | Add `"serverType": "launchpad"` to `serverConfig` in `sdk-config.json` |
-| `Module parse failed: Unexpected character '@'` on CSS | CSS from `react-datepicker` not handled by loader | Add `path.resolve(__dirname, 'node_modules/react-datepicker/dist')` to CSS rule `include` array |
-| `Invalid module name in augmentation '@mui/styles/defaultTheme'` | MUI v6 uses `@mui/material/styles` for module augmentation | Change `declare module` to `'@mui/material/styles'` and augment both `Theme` and `ThemeOptions` |
-| `401 Unauthorized` | Expired or invalid OAuth token | Re-authenticate; check that client IDs match the Launchpad subscriber's OAuth registration |
-| `getSdkComponentMap` fails | `sdk-local-component-map.js` not found | Verify `CopyWebpackPlugin` copies it to the dist root; check the import path in `PegaReadyContext` |
-| `myLoadMashup is not defined` | Bootstrap shell didn't execute | The Constellation bootstrap shell declares `myLoadMashup` globally; ensure `bootstrap-shell.js` is loaded before your app bundle |
-| Blank screen after login | `PCore.onPCoreReady` callback not registered before `myLoadMashup` | Always call `PCore.onPCoreReady(...)` **before** `myLoadMashup(...)` |
-| Case type not found | Using full Pega class path instead of short name | On Launchpad, use the short case type name (e.g., `WorkOrder`) |
-| `[HMR] Hot Module Replacement is disabled` | Missing HMR plugin in webpack config | Add `new webpack.HotModuleReplacementPlugin()` to plugins array for development mode |
+Follow the same error semantics as [launchpad-dx-apis](../launchpad-dx-apis/SKILL.md):
+
+- `403` on create/action — the Persona on the Client Registration lacks access.
+- `404` on get/action — no access to that case/assignment, or it doesn't exist.
+- `400` on update — case/stage/step validation failed; surface the returned validation details to the user.
+- Always read the `eTag` from a `GET` (case or assignment) and send it back as `If-Match` on the following `PATCH`. Re-fetch and retry once if a `PATCH` fails due to a stale ETag (concurrent update).
+- Treat response shapes for Create Case and Submit Assignment as **representative, not fixed** — parse defensively by key path and drive follow-up calls from `links.*.href` rather than hardcoded URLs.
 
 ---
 
-## 11. Examples
+## 8. Examples
 
-### Complete Working Example
-
-A complete working example is available in the `examples/workmanagement` folder. This example demonstrates:
-
-- Full project scaffold with webpack, TypeScript, and Material UI
-- OAuth 2.0 authentication via `@pega/auth` with `PegaAuthProvider`
-- PCore lifecycle management via `PegaReadyProvider` and `usePega()` hook
-- Creating cases through `PCore.getMashupApi().createCase()`
-- Rendering Pega content via `<PegaContainer />` inside a custom MUI layout
-- Custom component overrides in `sdk-local-component-map.js`
-- MUI theme with full Pega CSS variable integration
-
-Use this as a starting point or reference.
+See [examples/](examples/) for captured request/response pairs (`case/`, `data-views/`, `attachments/`, `followers/`, `pulse/`, `agents/`) — the same shapes documented in [launchpad-dx-apis](../launchpad-dx-apis/SKILL.md). Use these as the source of truth for payload shapes when writing the service layer.
 
 ---
 
-## 12. Quick Start Checklist
+## 9. Quick Start Checklist
 
-- [ ] **Verify package.json versions**: Ensure `@pega/auth` is `~0.2.0`, `@pega/constellationjs` is `^25.1.0`, and `@pega/react-sdk-components` is `^25.1.0`. All other dependencies should use latest stable versions (check for deprecation warnings).
-- [ ] Gather server URL, authorize URL (cluster frontend), OAuth client ID + secret, app alias, case type name from Pega Launchpad
-- [ ] Register the redirect URI (`http://localhost:3502/`) in your Launchpad OAuth client
-- [ ] Set up `sdk-config.json` with:
-  - `serverType: "launchpad"` in `serverConfig`
-  - `mashupGrantType: "authCode"` in `authConfig`
-  - Both `mashupClientId`/`portalClientId` and secrets set (can be the same value)
-  - `redirectUri` set to `http://localhost:3502/` (main app URL, **not** `auth.html`)
-  - `token`, `revoke`, and `infinityRestServerUrl` pointing to `localhost` (for dev proxy)
-  - `authorize` pointing to the real cluster frontend URL (this is a browser redirect, not proxied)
-- [ ] Configure webpack dev server proxy: context `['/dx']`, target pointing to your Launchpad server, `changeOrigin: true`
-- [ ] Run `npm install` — this pulls `@pega/react-sdk-components`, `@pega/constellationjs`, `@pega/auth`, and MUI
-- [ ] Verify webpack `CopyWebpackPlugin` copies Constellation assets, `sdk-config.json`, and `auth.html`
-- [ ] Verify webpack CSS rule includes both `@pega/react-sdk-components/lib` and `react-datepicker/dist`
-- [ ] Wrap your app in `<PegaAuthProvider>` → `<PegaReadyProvider>` → your components
-- [ ] Use `loginIfNecessary({ appName: 'embedded', mainRedirect: true })` with `.catch()` error handling
-- [ ] Use `usePega()` hook to access `isPegaReady`, `createCase()`, and `<PegaContainer />`
-- [ ] Start with `npm start` — dev server runs on `http://localhost:3502`
-- [ ] Browser will redirect to Cognito login → after login, returns to app with `?code=` → SDK exchanges for tokens
-- [ ] For production: set up CORS on Launchpad and update `sdk-config.json` URLs to point to real server
-
----
-
-## 13. SDK Approach vs Direct DX API Approach
-
-| Concern | SDK Approach (this skill) | Direct DX API Approach |
-| ------- | ------------------------- | ---------------------- |
-| **API Calls** | Handled internally by PCore/Constellation | Manual `fetch()` to `/dx/api/application/v2/...` |
-| **Case Creation** | `PCore.getMashupApi().createCase(...)` | `POST /cases?viewType=page` with manual JSON body |
-| **Assignment Actions** | SDK manages ETags, PATCH calls, and outcomes | Manual PATCH with `If-Match` header, outcome in query string |
-| **Data Views** | PCore data page utilities | Manual `POST /data_views/{id}` |
-| **Rendering** | Constellation renders Pega-authored views automatically | You build every view from scratch |
-| **Component Overrides** | `sdk-local-component-map.js` — swap individual components | N/A — you own all rendering |
-| **Auth** | `loginIfNecessary()` + `SdkConstellationReady` event | Manual `PegaAuth` class with token storage |
-| **Complexity** | Lower for standard workflows; higher initial setup | Higher ongoing; lower initial conceptual overhead |
-| **Flexibility** | Moderate — you control layout, SDK controls Pega views | Full — you control everything |
-
-Choose the **SDK approach** when you want to leverage Pega's rendering pipeline and component library while customizing the surrounding UI shell. Choose the **direct DX API approach** when you need complete control over every pixel and don't want any SDK rendering dependencies.
+- [ ] Confirmed tech stack, styling approach, case type(s)/data object(s), and target folder (§1)
+- [ ] **Asked for and analyzed screenshots/wireframes** — extracted screens, layout, components, and brand/design tokens (§2.1)
+- [ ] Produced and got user confirmation on the design → DX API mapping table (§2.3)
+- [ ] Gathered Application URL, Access Token URL, Client ID (and secret if Client Credentials) from the Launchpad team
+- [ ] Generated `.env.example` from [examples/.env.example](examples/.env.example); `.env` gitignored, never committed
+- [ ] Confirmed Allowed Fields for each case type used in create/action payloads
+- [ ] Confirmed which data views back each landing/list page and which fields to `select`
+- [ ] Set up local dev proxy for `/dx/` calls to avoid CORS issues
+- [ ] Built the service layer (§4) wrapping every DX call the app needs, returning `eTag` alongside data
+- [ ] Built each page/component styled to match the provided screenshots, with dynamic forms driven by `uiResources.resources.fields` (§5)
+- [ ] Verified `If-Match`/ETag handling and defensive parsing of Create Case / Submit Assignment responses (§7)
+- [ ] For production: requested a CORS policy update from the Launchpad team for your app's origin, and confirmed no client secret ships to the browser
