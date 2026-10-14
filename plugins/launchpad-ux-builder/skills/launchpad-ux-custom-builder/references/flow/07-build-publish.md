@@ -34,8 +34,6 @@ Keychain (`copilot-mcp-oauth`, Step 3) — the user clicks **“Always Allow”*
 are silent. This is still reusing your existing connection's token — NOT a separate/confidential
 client, NOT a secret, NOT the DXCB `authenticate` task.
 
-
-
 ## Steps
 
 0. **PRECONDITION — mock confirmed.** Do not start this flow until the flow-06 SVG mock has
@@ -158,7 +156,7 @@ user's Launchpad app, so first present a one-line summary and ask for a clear go
 
 Once confirmed, use the OAuth access token as `Authorization: Bearer <access_token>`.
 
-```
+```http
 POST {frontendServer}/pegalaunchpad/c11n/isolations/{iso}/v102/assetsUpdate
 Authorization: Bearer {access_token}
 Content-Type: application/json

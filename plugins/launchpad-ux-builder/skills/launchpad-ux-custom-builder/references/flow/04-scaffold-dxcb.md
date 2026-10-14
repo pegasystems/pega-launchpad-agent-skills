@@ -36,7 +36,7 @@ CLI**. The agent creates the project structure directly — `package.json`,
 
 3. **Create the project structure directly (no interactive CLI).** Write these files:
 
-   ```
+   ```text
    <project-root>/
    ├── package.json            # scripts + dependencies
    ├── tasks.config.json       # DXCB config (server, library, serverType)
@@ -49,6 +49,7 @@ CLI**. The agent creates the project structure directly — `package.json`,
    ```
 
    ### `package.json`
+
    ```json
    {
      "name": "<project-name>",
@@ -73,6 +74,7 @@ CLI**. The agent creates the project structure directly — `package.json`,
    ```
 
    ### `tasks.config.json`
+
    ```json
    {
      "components-directory-path": "src/components",
@@ -105,6 +107,7 @@ CLI**. The agent creates the project structure directly — `package.json`,
    ```
 
    ### `tsconfig.json`
+
    ```json
    {
      "compilerOptions": {

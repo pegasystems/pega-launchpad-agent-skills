@@ -100,7 +100,7 @@ dependency of DXCB; if not, install it with `npm i -D https-proxy-agent`.
 
 Run the two controlled steps back-to-back (the token is short-lived):
 
-```
+```bash
 # 1) authenticate (controlled script, useNodeFetch:false honors the proxy)
 NODE_USE_ENV_PROXY=1 HTTPS_PROXY=http://127.0.0.1:9000 \
 HTTP_PROXY=http://127.0.0.1:9000 NO_PROXY=localhost,127.0.0.1 npm run lp-auth

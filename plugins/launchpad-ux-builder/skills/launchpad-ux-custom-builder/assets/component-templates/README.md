@@ -32,7 +32,7 @@ Gallery) and the examples already in this repo, for example:
 
 ## Layout
 
-```
+```text
 component-templates/
 ├── field/       # Pega_Extensions_StarRatingInput (Field / Integer)
 ├── widget/      # Pega_Extensions_Calendar (Widget / PAGE & CASE)

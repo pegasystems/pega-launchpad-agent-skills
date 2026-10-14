@@ -152,7 +152,7 @@ The user creates a "Coding Assistant" OAuth client in their Launchpad app **once
 3. **Register the redirect URIs up front — add ALL of these in one go.** Registering every
    assistant's callback now means the same client works everywhere and you never hit a
    mid-flow `redirect_uri mismatch`:
-   ```
+   ```text
    http://127.0.0.1:19876/mcp/oauth/callback     # opencode
    http://127.0.0.1:62629/                        # Copilot (VS Code + CLI)
    http://localhost:55620/callback                # Claude Code
@@ -170,7 +170,7 @@ The user creates a "Coding Assistant" OAuth client in their Launchpad app **once
 
 2. **Derive the MCP URL from the Studio app URL — never guess it.** Keep the host + iso + gw
    and replace the rest with `core-authoring/mcp`:
-   ```
+   ```text
    Studio: https://<host>/app/<iso>/<gw>/c11n/appauthoring/apps/<app>/branches/<branch>/overview
    MCP:    https://<host>/app/<iso>/<gw>/core-authoring/mcp
    ```
