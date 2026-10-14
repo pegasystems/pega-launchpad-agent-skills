@@ -19,12 +19,6 @@ provider-specific MCP connection is configured in the host client's native MCP s
 6. Show a **theme-accurate** SVG mock with sample data.
 7. Build, authenticate, and publish to the provider.
 
-Core Authoring MCP access is limited by the skill instructions to confirmed read-only
-operations. Local scaffold/build steps and the separately approved `assetsUpdate` component
-publish path remain part of the workflow; the publish path does not authorize Core Authoring
-MCP rule mutations. This is a skill-level instruction, not a host-enforced permission boundary;
-it cannot disable tools the assistant exposes.
-
 See `skills/launchpad-ux-custom-builder/SKILL.md` for the authoritative instructions.
 
 ## Structure (Agent Plugins v1.0.0)
