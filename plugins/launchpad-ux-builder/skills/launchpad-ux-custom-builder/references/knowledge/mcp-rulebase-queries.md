@@ -10,14 +10,22 @@ recommending or generating a component.
   OAuth login in flow step 1).
 - The target application namespace and branch are known.
 
-## Core MCP tools
+## Core MCP read allowlist
+
+Use only the following confirmed read operations for Core Authoring MCP. Tool names may have
+assistant/provider-specific prefixes; verify the operation's description and behavior before
+calling it. If a tool is missing from this list or its behavior is unclear, do not call it.
 
 | Tool | Purpose |
 |------|---------|
+| `find_application` | Resolve an app by name and identify its working branch. |
 | `getAppInfo` | Confirm connection; return the Application rule namespace, description, and platform version. Call this **first**. |
 | `list_rules_by_query` / `rulebase_list_rules_by_query` | List rules of a given type (CaseType, DataObject, View, Theme, etc.), optionally with content. |
-| `validate_rule_json` | Validate any rule JSON the agent generates. |
 | `rulebase_get_workspace_changes` | See pending changes in the working branch. |
+
+`validate_rule_json` is not an app read and is not needed for discovery; do not call it under
+this read-only policy. All Core Authoring MCP create, update, save, delete, and other mutating
+operations are prohibited, including when called through raw JSON-RPC or HTTP.
 
 ## Discovery sequence
 
