@@ -1,5 +1,5 @@
 ---
-name: launchpad-skill-installer
+name: launchpad-byoa-skills
 description: Find, preview, download, and install skills from a user-provided directory, repository, or archive for the user's chosen AI agent.
 metadata:
   tags: "skills, download, install, agents"

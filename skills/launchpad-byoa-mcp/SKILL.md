@@ -1,13 +1,13 @@
 ---
-name: byoa-launchpad-mcp
-description: Use when a user wants to connect a Pega Launchpad environment to an MCP-capable coding tool, register the Launchpad Vibe MCP server, configure OAuth, or troubleshoot Launchpad MCP setup in OpenCode, Cursor, Claude Code, Codex, GitHub Copilot, or VS Code.
+name: launchpad-byoa-mcp
+description: Use when a user wants to connect a Pega Launchpad environment to an MCP-capable coding tool, register the Launchpad Vibe MCP server, configure OAuth
 ---
 
 # BYOA Launchpad MCP Setup
 
 ## Overview
 
-Use this skill to register the Pega Launchpad Vibe MCP server in a coding tool. Collect the Launchpad URL, tool(s), server name, and OAuth Client ID; construct the Launchpad MCP endpoint; then merge the tool-specific server entry into the right configuration file. Never request, display, or store an OAuth client secret.
+Use this skill to register the Pega Launchpad Vibe MCP server in a AI coding assistant. Collect the Launchpad URL, tool(s), server name, and OAuth Client ID; construct the Launchpad MCP endpoint; then merge the tool-specific server entry into the right configuration file. Never request, display, or store an OAuth client secret.
 
 ## Setup
 
@@ -15,9 +15,10 @@ Use this skill to register the Pega Launchpad Vibe MCP server in a coding tool. 
 2. Collect the Launchpad URL and coding tool(s). Ask which configuration scope to use when the tool supports project and global settings. Use the available structured question tool when supported.
 3. Validate and normalize the URL:
    - It must start with `https://`.
-   - Remove a trailing `/apps`, `/home`, or slash; preserve the rest of the application path.
-   - Append `/core-authoring/mcp` to form the MCP URL.
-4. Ask for a short server name that does not collide with an existing server entry.
+   - Accept the application URL with or without a trailing `/apps`.
+   - Preserve the tenant and environment path. Use `/app/` when the hostname is `pegaservice.net` or ends in `.pegaservice.net`; do not add `/app/` for other hosts.
+   - Remove a trailing `/apps` if present, then append `/core-authoring/mcp` to form the MCP URL.
+4. Ask for a short server name that does not collide with an existing server entries.
 5. Read the target configuration file before changing it. Merge only the new server entry; preserve every other server and setting. If the file is malformed or the server name already exists, explain the conflict and ask before replacing anything.
 6. Write the tool-specific configuration below. Validate JSON or TOML syntax where possible, and report the exact file changed.
 7. Guide the user through browser authentication and verify the server is connected before saying setup is complete.
@@ -25,8 +26,11 @@ Use this skill to register the Pega Launchpad Vibe MCP server in a coding tool. 
 Example endpoint construction:
 
 ```text
-Application URL: https://cluster.example.net/app/tenant-123/env-456/apps
-MCP URL:         https://cluster.example.net/app/tenant-123/env-456/core-authoring/mcp
+Application URL: https://cluster.pegaservice.net/app/tenant-123/env-456/apps
+MCP URL:         https://cluster.pegaservice.net/app/tenant-123/env-456/core-authoring/mcp
+
+Application URL: https://cluster.example.net/tenant-123/env-456
+MCP URL:         https://cluster.example.net/tenant-123/env-456/core-authoring/mcp
 ```
 
 ## OAuth client registration
@@ -65,185 +69,14 @@ Cursor and VS Code callback URLs are not specified here. Check the tool's curren
 Ask for the Client ID only, not a secret. A single Client ID can be used across tools when its registration includes each tool's callback URL.
 
 ## Tool configuration
+Refer to publicly available documentation on how to configure OAuth for AI assistant tool that the user specified, i.e. [OAuth section of OpenCode](https://opencode.ai/v2/docs/mcp-servers#oauth).
 
-Use placeholders until the user has supplied their URL, Client ID if required, and server name. Follow the indicated transport and configuration key. For existing files, merge the shown server object into the existing top-level key rather than replacing the file.
+Prefer Project specific configuration when possible.
 
-### OpenCode
-
-Config file: project `opencode.json` or global `~/.config/opencode/opencode.json`.
-
-Merge under `mcp`:
-
-```json
-{
-  "mcp": {
-    "<SERVER_NAME>": {
-      "type": "remote",
-      "url": "<MCP_URL>",
-      "enabled": true,
-      "oauth": {
-        "clientId": "<CLIENT_ID>"
-      }
-    }
-  }
-}
-```
-
-After writing, have the user restart OpenCode or reload the session. Browser authentication should start on first connection.
-
-### Cursor
-
-Config file: `.cursor/mcp.json` in the project root. Create it if absent. Merge under `mcpServers`:
-
-```json
-{
-  "mcpServers": {
-    "<SERVER_NAME>": {
-      "type": "streamable-http",
-      "url": "<MCP_URL>",
-      "headers": {
-        "Content-Type": "application/json"
-      }
-    }
-  }
-}
-```
-
-Cursor normally handles OAuth through browser discovery when the server responds with 401; do not add `clientId` by default. If the environment requires an explicit ID, add:
-
-```json
-"oauth": {
-  "clientId": "<CLIENT_ID>"
-}
-```
-
-Restart Cursor or use **MCP: List Servers** from the Command Palette, then authenticate when prompted.
-
-### Claude Code
-
-Config file: project `.mcp.json` or global `~/.claude.json`. Merge under `mcpServers`:
-
-```json
-{
-  "mcpServers": {
-    "<SERVER_NAME>": {
-      "type": "http",
-      "url": "<MCP_URL>",
-      "oauth": {
-        "clientId": "<CLIENT_ID>"
-      }
-    }
-  }
-}
-```
-
-Alternatively, add the server with:
-
-```bash
-claude mcp add --transport http "<SERVER_NAME>" "<MCP_URL>"
-```
-
-Have the user run `/mcp` to check status and authenticate in the browser on first use.
-
-### Codex
-
-Global TOML config: `~/.codex/config.toml`. Merge:
-
-```toml
-[mcp_servers.<SERVER_NAME>]
-type = "remote"
-url = "<MCP_URL>"
-```
-
-Then authenticate with:
-
-```bash
-codex mcp login <SERVER_NAME>
-```
-
-Alternatively, use project `codex.json` and merge under `mcpServers`:
-
-```json
-{
-  "mcpServers": {
-    "<SERVER_NAME>": {
-      "type": "remote",
-      "url": "<MCP_URL>",
-      "oauth": {
-        "clientId": "<CLIENT_ID>"
-      }
-    }
-  }
-}
-```
-
-After browser login, restart Codex.
-
-### GitHub Copilot
-
-Recommended project config: `.github/copilot-mcp.json`. Global config: `~/.config/github-copilot/mcp.json`. Merge under `servers`:
-
-```json
-{
-  "servers": {
-    "<SERVER_NAME>": {
-      "type": "http",
-      "url": "<MCP_URL>",
-      "headers": {}
-    }
-  }
-}
-```
-
-Copilot normally discovers OAuth from the server, so omit `oauth.clientId` by default. Add it only when the Copilot host's setup instructions or authentication error explicitly requires an ID; having a Launchpad Client ID does not by itself mean it belongs in this config. If required, add:
-
-```json
-"oauth": {
-  "clientId": "<CLIENT_ID>"
-}
-```
-
-Restart the editor or run the MCP refresh command supported by the user's Copilot host, then authenticate when prompted. Verify through that host's MCP server list or status view. The refresh command is host-specific; do not invent a universal Copilot CLI command.
-
-### VS Code
-
-Recommended project config: `.vscode/mcp.json`. Alternatively, add the server under `mcp.servers` in VS Code `settings.json`.
-
-For `.vscode/mcp.json`, merge under `servers`:
-
-```json
-{
-  "servers": {
-    "<SERVER_NAME>": {
-      "type": "http",
-      "url": "<MCP_URL>",
-      "headers": {
-        "Content-Type": "application/json"
-      }
-    }
-  }
-}
-```
-
-For `settings.json`, merge under `mcp.servers`:
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "<SERVER_NAME>": {
-        "type": "http",
-        "url": "<MCP_URL>",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    }
-  }
-}
-```
-
-Use **MCP: List Servers** from the Command Palette to verify the server and authenticate in the browser when prompted.
+Most tools require the following:
+- Pre-registered LaunchPad client ID
+- Local callback port typically ranging from 1 through 65535, default may vary based on the AI assistant tool
+- Pre-registered loopback URI whose path and port reach the local callback listener
 
 ## Authentication and verification
 
@@ -255,7 +88,7 @@ Verify the connection using the tool's MCP status command or panel. Then test a 
 
 | Symptom | Checks |
 |---|---|
-| Server does not connect | Confirm the base URL and `/core-authoring/mcp` path, client ID, network/VPN access, and configuration file location. Opening the endpoint may return `401` before authentication; that alone is expected. |
+| Server does not connect | Confirm the HTTPS application URL, preserve its tenant/environment path, use `/app/` only when the hostname is `pegaservice.net` or ends in `.pegaservice.net`, and end the endpoint with `/core-authoring/mcp`. Opening the endpoint may return `401` before authentication; that alone is expected. |
 | `redirect_uri_mismatch` | Confirm the OAuth registration contains the exact callback URL for the tool, including hostname, port, path, and trailing slash. |
 | Authentication fails | Confirm the user can sign in to Launchpad and that the OAuth registration belongs to the correct environment. Clear cached tokens and retry if needed. |
 | Tool does not detect the server | Check JSON/TOML syntax, top-level config key, file location, and server name; restart or refresh the tool. |
@@ -264,7 +97,7 @@ Verify the connection using the tool's MCP status command or panel. Then test a 
 
 | Tool | Config file | Scope |
 |---|---|---|
-| OpenCode | `opencode.json` or `~/.config/opencode/opencode.json` | Project / global |
+| OpenCode | `.opencode/opencode.json` or `~/.config/opencode/opencode.json` | Project / global |
 | Cursor | `.cursor/mcp.json` | Project |
 | Claude Code | `.mcp.json` or `~/.claude.json` | Project / global |
 | Codex | `~/.codex/config.toml` or `codex.json` | Global / project |
@@ -273,7 +106,6 @@ Verify the connection using the tool's MCP status command or panel. Then test a 
 
 ## Common mistakes
 
-- Keeping the `/apps` or `/home` suffix in the MCP URL, or dropping the Launchpad application path before appending `/core-authoring/mcp`.
 - Creating a confidential client or putting a client secret in a local MCP config instead of using a public client with PKCE.
 - Replacing an existing config file instead of merging the new server entry.
 - Guessing callback URLs for Cursor or VS Code when they are not listed above.
