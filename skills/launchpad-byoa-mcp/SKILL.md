@@ -17,7 +17,7 @@ Use this skill to register the Pega Launchpad Vibe MCP server in a AI coding ass
    - It must start with `https://`.
    - Accept the application URL with or without a trailing `/apps`.
    - Preserve the tenant and environment path. Use `/app/` when the hostname is `pegaservice.net` or ends in `.pegaservice.net`; do not add `/app/` for other hosts.
-   - Remove a trailing `/apps` if present, then append `/core-authoring/mcp` to form the MCP URL.
+   - Remove a trailing `/apps` if present, then append `/authoring/mcp` to form the MCP URL.
 4. Ask for the preferred short server name and identify the configuration scope.
 5. Before editing, read and validate the target configuration and any other active scopes the tool combines with it. Confirm the files are parseable, use the tool's expected structure, and contain no pre-existing duplicate keys, server names, or normalized MCP URLs. If a file is malformed, ambiguous, or already invalid, stop and explain the issue; do not write into or replace it.
 6. Check existing server entries by name and normalized MCP URL:
@@ -32,10 +32,10 @@ Example endpoint construction:
 
 ```text
 Application URL: https://cluster.pegaservice.net/app/tenant-123/env-456/apps
-MCP URL:         https://cluster.pegaservice.net/app/tenant-123/env-456/core-authoring/mcp
+MCP URL:         https://cluster.pegaservice.net/app/tenant-123/env-456/authoring/mcp
 
 Application URL: https://cluster.example.net/tenant-123/env-456
-MCP URL:         https://cluster.example.net/tenant-123/env-456/core-authoring/mcp
+MCP URL:         https://cluster.example.net/tenant-123/env-456/authoring/mcp
 ```
 
 ## OAuth client registration
@@ -106,7 +106,7 @@ Verify the connection using the tool's MCP status command or panel. Then test a 
 
 | Symptom | Checks |
 |---|---|
-| Server does not connect | Confirm the HTTPS application URL, preserve its tenant/environment path, use `/app/` only when the hostname is `pegaservice.net` or ends in `.pegaservice.net`, and end the endpoint with `/core-authoring/mcp`. Opening the endpoint may return `401` before authentication; that alone is expected. |
+| Server does not connect | Confirm the HTTPS application URL, preserve its tenant/environment path, use `/app/` only when the hostname is `pegaservice.net` or ends in `.pegaservice.net`, and end the endpoint with `/authoring/mcp`. Opening the endpoint may return `401` before authentication; that alone is expected. |
 | `redirect_uri_mismatch` | Confirm the OAuth registration contains the exact callback URL for the tool, including hostname, port, path, and trailing slash. |
 | Authentication fails | Confirm the user can sign in to Launchpad and that the OAuth registration belongs to the correct environment. Clear cached tokens and retry if needed. |
 | Tool does not detect the server | Check JSON/TOML syntax, top-level config key, file location, and server name; restart or refresh the tool. |
