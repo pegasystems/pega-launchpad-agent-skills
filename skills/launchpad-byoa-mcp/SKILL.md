@@ -87,6 +87,10 @@ Use the selected assistant's official MCP documentation for its current OAuth co
 
 Prefer Project specific configuration when possible.
 
+Callback settings are required whenever the selected tool exposes them. Check the tool's current MCP configuration schema and, if its remote-server OAuth settings accept `redirectUri` or `callbackPort`, explicitly configure the supported callback field in the MCP entry; do not rely on a default. Prefer the full `redirectUri` when supported, since it pins the host, port, and path. If only `callbackPort` is supported, set the port from the registered redirect URI. If both are supported and `redirectUri` takes precedence, set `redirectUri`; otherwise follow the tool's schema for whether both are needed. The configured callback must exactly match a redirect URL registered in LaunchPad, including hostname, port, path, and trailing slash. If the tool exposes neither setting, use its documented callback URI and have the user register that exact URI.
+
+For OpenCode, the remote MCP `oauth` object accepts `redirectUri` and `callbackPort`. Prefer setting `redirectUri` to the registered URI; OpenCode documents `callbackPort` as a shorthand that is ignored when `redirectUri` is set.
+
 Most tools require the following:
 - Pre-registered LaunchPad client ID
 - Local callback port typically ranging from 1 through 65535, default may vary based on the AI assistant tool
