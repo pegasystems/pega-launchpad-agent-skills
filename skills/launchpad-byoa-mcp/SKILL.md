@@ -18,10 +18,15 @@ Use this skill to register the Pega Launchpad Vibe MCP server in a AI coding ass
    - Accept the application URL with or without a trailing `/apps`.
    - Preserve the tenant and environment path. Use `/app/` when the hostname is `pegaservice.net` or ends in `.pegaservice.net`; do not add `/app/` for other hosts.
    - Remove a trailing `/apps` if present, then append `/core-authoring/mcp` to form the MCP URL.
-4. Ask for a short server name that does not collide with an existing server entries.
-5. Read the target configuration file before changing it. Merge only the new server entry; preserve every other server and setting. If the file is malformed or the server name already exists, explain the conflict and ask before replacing anything.
-6. Write the tool-specific configuration below. Validate JSON or TOML syntax where possible, and report the exact file changed.
-7. Guide the user through browser authentication and verify the server is connected before saying setup is complete.
+4. Ask for the preferred short server name and identify the configuration scope.
+5. Before editing, read and validate the target configuration and any other active scopes the tool combines with it. Confirm the files are parseable, use the tool's expected structure, and contain no pre-existing duplicate keys, server names, or normalized MCP URLs. If a file is malformed, ambiguous, or already invalid, stop and explain the issue; do not write into or replace it.
+6. Check existing server entries by name and normalized MCP URL:
+   - If a valid entry already points to the requested MCP URL, reuse it rather than adding a duplicate.
+   - If the preferred name is unused and the URL is not already registered, use that name.
+   - If the preferred name points to a different URL, leave that entry and all its settings unchanged. Add the new URL under a different, unique short name, preferably `<preferred-name>-<environment>`; if that name is taken, choose another distinguishing suffix and check again. Never overwrite, rename, or delete the existing entry, even if asked to reuse its name.
+   - If the URL is already registered under another name in an active scope, reuse that entry instead of creating a duplicate.
+7. Merge only the necessary new entry and preserve every other server and setting. Validate the proposed configuration against the tool's format and structure before writing, and write only if validation succeeds. After writing, reread and validate it again: confirm there are no duplicate keys, server names, or normalized MCP URLs; the MCP URL is registered exactly once in the effective configuration; the existing conflicting entry is unchanged; and unrelated settings are preserved. Use a validator that detects duplicate JSON keys; a permissive JSON parser may silently accept them. If reusing an existing entry, make no file change and verify that entry instead. If validation fails or cannot be performed, do not write an unvalidated configuration or claim setup is complete; report the exact file and issue, or that no change was needed.
+8. Guide the user through browser authentication and verify the server is connected before saying setup is complete.
 
 Example endpoint construction:
 
@@ -69,7 +74,16 @@ Cursor and VS Code callback URLs are not specified here. Check the tool's curren
 Ask for the Client ID only, not a secret. A single Client ID can be used across tools when its registration includes each tool's callback URL.
 
 ## Tool configuration
-Refer to publicly available documentation on how to configure OAuth for AI assistant tool that the user specified, i.e. [OAuth section of OpenCode](https://opencode.ai/v2/docs/mcp-servers#oauth).
+Use the selected assistant's official MCP documentation for its current OAuth configuration; server formats and callback behavior vary by tool.
+
+| AI assistant | Official MCP/OAuth configuration |
+|---|---|
+| GitHub Copilot CLI | [Adding MCP servers](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers) — documents HTTP server setup, but not a pre-registered OAuth client ID. |
+| VS Code | [MCP configuration reference](https://code.visualstudio.com/docs/agents/reference/mcp-configuration) |
+| Claude Code | [Connect Claude Code to tools via MCP](https://code.claude.com/docs/en/mcp) |
+| OpenCode | [MCP servers and OAuth](https://opencode.ai/docs/mcp-servers/) |
+| Cursor | [Model Context Protocol (MCP)](https://cursor.com/docs/mcp) |
+| Codex | [MCP documentation](https://developers.openai.com/codex/mcp/) |
 
 Prefer Project specific configuration when possible.
 
@@ -108,5 +122,8 @@ Verify the connection using the tool's MCP status command or panel. Then test a 
 
 - Creating a confidential client or putting a client secret in a local MCP config instead of using a public client with PKCE.
 - Replacing an existing config file instead of merging the new server entry.
+- Reusing a server name that points to a different Launchpad URL; preserve it and register the new URL with a unique name.
+- Adding a second entry for an MCP URL already registered in an active configuration scope.
+- Treating a successful permissive JSON parse as proof that the file has no duplicate keys or valid tool-specific structure.
 - Guessing callback URLs for Cursor or VS Code when they are not listed above.
 - Claiming the server is connected before authentication and a status check succeed.
