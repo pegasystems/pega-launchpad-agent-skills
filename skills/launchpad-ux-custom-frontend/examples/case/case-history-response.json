@@ -1,0 +1,15 @@
+{
+    "data": [
+        {
+            "@version": 1,
+            "@class": "History-TicketWorkflow",
+            "CreateDateTime": "2026-06-22T12:39:31.631Z",
+            "MessageText": "'Ticket' created in stage 'Ticket Submission' with status 'New-Ticket Submission'.",
+            "PerformerUserName": "Example User",
+            "ID": "STE6U3VwcG9ydE1hbmFnZW1lbnRfX0hpc3RvcnktVGlja2V0V29ya2Zsb3dfNmEzOTJkMDQ2N2M2NmQ1MDc1MDBiZGYw"
+        }
+    ],
+    "pageNumber": 1,
+    "pageSize": 11,
+    "fetchDateTime": "2026-06-22T13:53:52.863Z"
+}

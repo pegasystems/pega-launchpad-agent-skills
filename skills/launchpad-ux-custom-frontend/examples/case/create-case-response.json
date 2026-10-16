@@ -1,0 +1,389 @@
+{
+    "data": {
+        "caseInfo": {
+            "assignments": [
+                {
+                    "actions": [
+                        {
+                            "ID": "CollectIssueSummary",
+                            "links": {
+                                "submit:Submit": {
+                                    "href": "/assignments/{{assignmentID}}/actions/CollectIssueSummary?outcome=Submit",
+                                    "rel": "self",
+                                    "title": "Submit",
+                                    "type": "PATCH"
+                                },
+                                "open": {
+                                    "href": "/assignments/{{assignmentID}}/actions/CollectIssueSummary",
+                                    "rel": "self",
+                                    "title": "Get assignment action details",
+                                    "type": "GET"
+                                }
+                            },
+                            "name": "Collect Issue Summary",
+                            "type": "FlowAction"
+                        },
+                        {
+                            "ID": "ReassignTask",
+                            "links": {
+                                "open": {
+                                    "href": "/assignments/{{assignmentID}}/actions/ReassignTask",
+                                    "rel": "self",
+                                    "title": "Get assignment action details",
+                                    "type": "GET"
+                                }
+                            },
+                            "name": "Transfer Assignment",
+                            "type": "Assignment"
+                        }
+                    ],
+                    "ID": "{{assignmentID}}",
+                    "links": {
+                        "open": {
+                            "href": "/assignments/{{assignmentID}}",
+                            "rel": "self",
+                            "title": "Get assignment details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Collect Issue Summary",
+                    "canPerform": true,
+                    "urgency": "10",
+                    "assigneeInfo": {
+                        "name": "Example User",
+                        "ID": "user@example.com",
+                        "type": "WorkList"
+                    },
+                    "sla": {
+                        "deadline": "",
+                        "goal": ""
+                    },
+                    "instructions": "",
+                    "processID": "CaptureIssue",
+                    "processName": "Capture Issue",
+                    "priority": "low"
+                }
+            ],
+            "availableActions": [
+                {
+                    "ID": "Edit",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/Edit",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Edit",
+                    "type": "Case"
+                },
+                {
+                    "ID": "pyChangeStage",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/pyChangeStage",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Change Stage",
+                    "type": "Case"
+                },
+                {
+                    "ID": "RestartCurrentStage",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/RestartCurrentStage",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Restart current Stage",
+                    "type": "Case"
+                },
+                {
+                    "ID": "ResolveCase",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/actions/ResolveCase",
+                            "rel": "self",
+                            "title": "Get case action details",
+                            "type": "GET"
+                        }
+                    },
+                    "name": "Resolve Case",
+                    "type": "Case"
+                }
+            ],
+            "availableProcesses": [],
+            "caseTypeID": "TicketWorkflow",
+            "caseTypeName": "Ticket",
+            "createTime": "2026-06-22T12:39:31.619Z",
+            "createdBy": "user@example.com",
+            "ID": "{{caseID}}",
+            "businessID": "Ticket-659GFX",
+            "lastUpdateTime": "2026-06-22T12:39:31.619Z",
+            "lastUpdatedBy": "user@example.com",
+            "name": "Ticket",
+            "owner": "user@example.com",
+            "sla": {
+                "deadline": "",
+                "goal": ""
+            },
+            "stageID": "TicketSubmission",
+            "stageLabel": "Ticket Submission",
+            "stages": [
+                {
+                    "entryTime": "2026-06-22T12:39:31.631Z",
+                    "ID": "TicketSubmission",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/TicketSubmission",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Ticket Submission",
+                    "type": "Primary",
+                    "visited_status": "active",
+                    "transitionType": "create"
+                },
+                {
+                    "ID": "AssessmentPrioritization",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/AssessmentPrioritization",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Assessment Prioritization",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "automatic"
+                },
+                {
+                    "ID": "DiagnosisResolution",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/DiagnosisResolution",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Diagnosis Resolution",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "automatic"
+                },
+                {
+                    "ID": "ClosureFeedback",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/ClosureFeedback",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Closure Feedback",
+                    "type": "Primary",
+                    "visited_status": "future",
+                    "transitionType": "resolution"
+                },
+                {
+                    "ID": "Withdrawn",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/Withdrawn",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Withdrawn",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "resolution"
+                },
+                {
+                    "ID": "ReworkInfo",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/ReworkInfo",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Rework Info",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "manual"
+                },
+                {
+                    "ID": "Escalation",
+                    "links": {
+                        "open": {
+                            "href": "/cases/{{caseID}}/stages/Escalation",
+                            "rel": "self",
+                            "title": "Jump to this stage",
+                            "type": "PUT"
+                        }
+                    },
+                    "name": "Escalation",
+                    "type": "Alternate",
+                    "visited_status": "future",
+                    "transitionType": "manual"
+                }
+            ],
+            "status": "New-Ticket Submission",
+            "urgency": "10",
+            "content": {
+                "classID": "TicketWorkflow",
+                "pyViewName": "PegaPlatform__Create",
+                "IssueSummary": ""
+            },
+            "associations": {
+                "follows": false
+            }
+        }
+    },
+    "ID": "{{caseID}}",
+    "uiResources": {
+        "resources": {
+            "views": {
+                "pzCreateDetails": [
+                    {
+                        "isDynamicView": "true",
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "type": "reference",
+                                        "config": {
+                                            "name": "@P .pyViewName",
+                                            "type": "view"
+                                        }
+                                    }
+                                ],
+                                "name": "A",
+                                "type": "CaseCreateStage"
+                            }
+                        ],
+                        "name": "pzCreateDetails",
+                        "type": "View",
+                        "config": {
+                            "template": "OneColumn",
+                            "localeReference": "@LR BUSINESSOBJECT!VIEW!PZCREATEDETAILS",
+                            "type": "page",
+                            "ruleClass": "BusinessObject"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ],
+                "PegaPlatform__Create": [
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "type": "TextInput",
+                                        "config": {
+                                            "labelOption": "default",
+                                            "label": "@FL .IssueSummary",
+                                            "value": "@P .IssueSummary",
+                                            "required": true
+                                        }
+                                    }
+                                ],
+                                "name": "Fields",
+                                "type": "Region"
+                            }
+                        ],
+                        "name": "PegaPlatform__Create",
+                        "type": "View",
+                        "config": {
+                            "template": "DefaultForm",
+                            "NumCols": "2",
+                            "localeReference": "@LR TICKETWORKFLOW!VIEW!CREATE",
+                            "ruleClassNamespace": "PegaPlatform",
+                            "label": "@L View to collect details for Object creation.",
+                            "ruleClass": "TicketWorkflow"
+                        },
+                        "classID": "TicketWorkflow"
+                    }
+                ]
+            },
+            "fields": {
+                "pyViewName": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "pyViewName",
+                        "definedOnClassID": "BusinessObject"
+                    }
+                ],
+                "IssueSummary": [
+                    {
+                        "classID": "TicketWorkflow",
+                        "type": "Text",
+                        "label": "Issue summary",
+                        "definedOnClassID": "TicketWorkflow"
+                    }
+                ]
+            }
+        },
+        "components": [
+            "CaseCreateStage",
+            "OneColumn",
+            "Region",
+            "TextInput",
+            "DefaultForm"
+        ],
+        "root": {
+            "config": {
+                "name": "pzCreateDetails",
+                "context": "caseInfo.content",
+                "type": "view"
+            },
+            "type": "reference"
+        },
+        "context_data": {},
+        "actionButtons": {
+            "main": [
+                {
+                    "jsAction": "finishAssignment",
+                    "name": "Submit",
+                    "actionID": "submit",
+                    "outcomeID": "Submit"
+                }
+            ],
+            "secondary": [
+                {
+                    "jsAction": "cancelAssignment",
+                    "name": "Cancel",
+                    "actionID": "cancel"
+                }
+            ]
+        }
+    },
+    "nextAssignmentInfo": {
+        "context": "this_case",
+        "ID": "{{assignmentID}}",
+        "links": {
+            "open": {
+                "href": "/assignments/{{assignmentID}}",
+                "rel": "self",
+                "title": "Get assignment details",
+                "type": "GET"
+            }
+        }
+    }
+}

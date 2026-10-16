@@ -1,0 +1,6 @@
+curl '{{baseUrl}}/dx/api/application/v2/objects/{{caseID}}/followers/{{userID}}' \
+  -X 'DELETE' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/json' \
+  --data-raw '{}'

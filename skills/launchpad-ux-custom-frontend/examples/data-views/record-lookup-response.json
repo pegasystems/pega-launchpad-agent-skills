@@ -1,0 +1,157 @@
+{
+  "data": [
+    {
+      "@version": 1,
+      "@class": "Prospect",
+      "ID": "STE6TG95YWx0eUJ1aWxkZXJfX1Byb3NwZWN0XzY5ODFhZDI0YTAyNmU1MjJjMDI2ZmQwZQ",
+      "Name": "Prospect",
+      "UpdateDateTime": "2026-02-03T08:09:08.275Z",
+      "CreateDateTime": "2026-02-03T08:09:08.275Z",
+      "CreateUser": {
+        "@class": "User",
+        "ID": "STE6TG95YWx0eUJ1aWxkZXJfX0FQSVVzZXJfNjk4MWFjOTljZTEwMDc3MWRiNjQ5MDYx"
+      },
+      "UpdateUser": {
+        "@class": "User",
+        "ID": "STE6TG95YWx0eUJ1aWxkZXJfX0FQSVVzZXJfNjk4MWFjOTljZTEwMDc3MWRiNjQ5MDYx"
+      },
+      "ApplicationName": "Example App",
+      "UpdateUserID": "system-user",
+      "CreateUserID": "system-user",
+      "ApplicationVersion": "0.2.0-1",
+      "Urgency": 10.0,
+      "Assignments": [
+        {
+          "@class": "Assignment",
+          "ID": "STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzY5ODFhZDI0YTAyNmU1MjJjMDI2ZmQwZg",
+          "Name": "Prospect",
+          "UpdateDateTime": "2026-02-03T08:09:08.291Z",
+          "CreateDateTime": "2026-02-03T08:09:08.291Z",
+          "CreateUser": {
+            "@class": "User",
+            "ID": "STE6TG95YWx0eUJ1aWxkZXJfX0FQSVVzZXJfNjk4MWFjOTljZTEwMDc3MWRiNjQ5MDYx"
+          },
+          "UpdateUser": {
+            "@class": "User",
+            "ID": "STE6TG95YWx0eUJ1aWxkZXJfX0FQSVVzZXJfNjk4MWFjOTljZTEwMDc3MWRiNjQ5MDYx"
+          },
+          "ApplicationName": "Example App",
+          "UpdateUserID": "system-user",
+          "CreateUserID": "system-user",
+          "ApplicationVersion": "0.2.0-1",
+          "TaskName": "Collect Prospect info",
+          "BusinessID": "Prospect-XXXXXX",
+          "CaseName": "Prospect",
+          "QualifiedStageID": "ExampleApp__ProspectCreation",
+          "ProcessName": "Create new Prospect",
+          "UserAssignee": {
+            "@class": "User",
+            "ID": "STE6TG95YWx0eUJ1aWxkZXJfX0FQSVVzZXJfNjk4MWFjOTljZTEwMDc3MWRiNjQ5MDYx"
+          },
+          "Instructions": "",
+          "UserAssigneeID": "system-user",
+          "AssignType": "WorkList",
+          "ContextClass": "Prospect",
+          "TaskID": "Collect Prospect info",
+          "ActionID": "CollectProspectInfo",
+          "TopProcessName": "Create new Prospect",
+          "ProcessID": "CreateNewProspect",
+          "Status": "",
+          "StageID": "ProspectCreation",
+          "ShapeID": "00000000-0000-0000-0000-000000000000",
+          "TopProcessID": "CreateNewProspect",
+          "QualifiedActionID": "ExampleApp__CollectProspectInfo",
+          "StageName": "Prospect creation",
+          "Urgency": 10,
+          "UserAssigneeName": "System"
+        }
+      ],
+      "HistoryCounter": 2,
+      "StageHistory": [
+        {
+          "@class": "Embed-StageHistory",
+          "ID": "STE6UGVnYVBsYXRmb3JtX19FbWJlZC1TdGFnZUhpc3RvcnlfNjk4MWFkMjRhMDI2ZTUyMmMwMjZmZDEw",
+          "pyCategory": "create",
+          "pxEnterStageTime": "2026-02-03T08:09:08.283Z",
+          "pxStageName": "Prospect creation",
+          "pyStatusValue": "ACTIVE",
+          "QualifiedStageID": "ExampleApp__ProspectCreation",
+          "pxStageID": "ProspectCreation",
+          "pxStageType": "Primary"
+        }
+      ],
+      "Status": "New-Prospect creation",
+      "BusinessID": "Prospect-XXXXXX",
+      "CurrentStageName": "Prospect creation",
+      "QualifiedCurrentStageID": "ExampleApp__ProspectCreation",
+      "pzCaseTypeID": "CaseType-ExampleApp__Prospect-ExampleApp__Prospect",
+      "CaseSLAEventID": "goal:00000000-0000-0000-0000-000000000000",
+      "CurrentStageID": "ProspectCreation",
+      "pzActiveStates": [
+        {
+          "@class": "Embed-CaseState",
+          "ID": "STE6UGVnYVBsYXRmb3JtX19FbWJlZC1DYXNlU3RhdGVfNjk4MWFkMjRhMDI2ZTUyMmMwMjZmZDEx",
+          "pxStageLabel": "Prospect creation",
+          "QualifiedStageID": "ExampleApp__ProspectCreation",
+          "pxFlowType": "Create new Prospect",
+          "pxFlowID": "CreateNewProspect",
+          "ProcessCallStack": [],
+          "AssignmentObject": {
+            "@class": "Assignment",
+            "ID": "STE6UGVnYVBsYXRmb3JtX19Bc3NpZ25tZW50XzY5ODFhZDI0YTAyNmU1MjJjMDI2ZmQxMg",
+            "Name": "Prospect",
+            "UpdateDateTime": "2026-02-03T08:09:08.291Z",
+            "CreateDateTime": "2026-02-03T08:09:08.291Z",
+            "CreateUser": {
+              "@class": "User",
+              "ID": "STE6TG95YWx0eUJ1aWxkZXJfX0FQSVVzZXJfNjk4MWFjOTljZTEwMDc3MWRiNjQ5MDYx"
+            },
+            "UpdateUser": {
+              "@class": "User",
+              "ID": "STE6TG95YWx0eUJ1aWxkZXJfX0FQSVVzZXJfNjk4MWFjOTljZTEwMDc3MWRiNjQ5MDYx"
+            },
+            "ApplicationName": "Example App",
+            "UpdateUserID": "system-user",
+            "CreateUserID": "system-user",
+            "ApplicationVersion": "0.2.0-1",
+            "TaskName": "Collect Prospect info",
+            "BusinessID": "Prospect-XXXXXX",
+            "CaseName": "Prospect",
+            "QualifiedStageID": "ExampleApp__ProspectCreation",
+            "ProcessName": "Create new Prospect",
+            "UserAssignee": {
+              "@class": "User",
+              "ID": "STE6TG95YWx0eUJ1aWxkZXJfX0FQSVVzZXJfNjk4MWFjOTljZTEwMDc3MWRiNjQ5MDYx"
+            },
+            "Instructions": "",
+            "UserAssigneeID": "system-user",
+            "AssignType": "WorkList",
+            "ContextClass": "Prospect",
+            "TaskID": "Collect Prospect info",
+            "ActionID": "CollectProspectInfo",
+            "TopProcessName": "Create new Prospect",
+            "ProcessID": "CreateNewProspect",
+            "Status": "",
+            "StageID": "ProspectCreation",
+            "ShapeID": "00000000-0000-0000-0000-000000000000",
+            "TopProcessID": "CreateNewProspect",
+            "QualifiedActionID": "ExampleApp__CollectProspectInfo",
+            "StageName": "Prospect creation",
+            "Urgency": 10,
+            "UserAssigneeName": "System"
+          },
+          "pxStageID": "ProspectCreation"
+        }
+      ],
+      "Person": {
+        "@class": "Person",
+        "ID": "STE6TG95YWx0eUJ1aWxkZXJfX1BlcnNvbl82OTgxYWQyNGEwMjZlNTIyYzAyNmZkMTM",
+        "Name": "Example User",
+        "OrganizationName": "Example Organization",
+        "EmailID": "user@example.com"
+      }
+    }
+  ],
+  "resultCount": 1,
+  "fetchDateTime": "2026-06-22T14:18:34.730Z"
+}

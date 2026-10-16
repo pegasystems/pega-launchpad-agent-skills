@@ -1,0 +1,5 @@
+curl '{{baseUrl}}/dx/api/application/v2/data_views/TicketWorkflowList' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'content-type: application/json' \
+  --data-raw '{"query":{"distinctResultsOnly":false,"select":[{"aggregation":"IDCOUNT"},{"aggregation":"StatusCOUNT"}],"aggregations":{"IDCOUNT":{"field":"ID","summaryFunction":"COUNT"},"StatusCOUNT":{"field":"Status","summaryFunction":"COUNT"}}},"useExtendedTimeout":false}'

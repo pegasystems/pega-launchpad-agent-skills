@@ -1,0 +1,13 @@
+{
+    "data": [
+        {
+            "@version": 1,
+            "@class": "AgentFinalResponse",
+            "Status": "WaitingForPrompt",
+            "FinalResponse": "Based on the Ticket Case data, the case was created on **June 22, 2026 at 12:39:31 PM UTC**.\n\nHere are the key creation details:\n\n- **Business ID:** Ticket-659GFX\n- **Created On:** June 22, 2026 at 12:39:31 PM UTC\n- **Created By:** user@example.com\n- **Application:** Support Management (Version 0.1.0-1)",
+            "FinalResponseGeneratedAt": "2026-06-22T14:02:50.341Z"
+        }
+    ],
+    "resultCount": 1,
+    "fetchDateTime": "2026-06-22T14:02:50.995Z"
+}
