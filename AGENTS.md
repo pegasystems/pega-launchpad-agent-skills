@@ -7,7 +7,7 @@ workflow-specific steps.
 ## Agent skills
 
 For finding, previewing, downloading, or installing skills, follow
-[`skills/launchpad-byoa-skills/SKILL.md`](skills/launchpad-byoa-skills/SKILL.md).
+[`skills/launchpad-byoa-mcp/references/retrieve-launchpad-skills.md`](skills/launchpad-byoa-mcp/references/retrieve-launchpad-skills.md).
 Skill installation is separate from configuring an MCP server. See
 [`INSTALL.md`](INSTALL.md) for supported installation options and
 [`README.md`](README.md) for the available skills and plugin.

@@ -26,7 +26,9 @@ Use this skill to register the Pega Launchpad Vibe MCP server in a AI coding ass
    - If the preferred name points to a different URL, leave that entry and all its settings unchanged. Add the new URL under a different, unique short name, preferably `<preferred-name>-<environment>`; if that name is taken, choose another distinguishing suffix and check again. Never overwrite, rename, or delete the existing entry, even if asked to reuse its name.
    - If the URL is already registered under another name in an active scope, reuse that entry instead of creating a duplicate.
 7. Merge only the necessary new entry and preserve every other server and setting. Validate the proposed configuration against the tool's format and structure before writing, and write only if validation succeeds. After writing, reread and validate it again: confirm there are no duplicate keys, server names, or normalized MCP URLs; the MCP URL is registered exactly once in the effective configuration; the existing conflicting entry is unchanged; and unrelated settings are preserved. Use a validator that detects duplicate JSON keys; a permissive JSON parser may silently accept them. If reusing an existing entry, make no file change and verify that entry instead. If validation fails or cannot be performed, do not write an unvalidated configuration or claim setup is complete; report the exact file and issue, or that no change was needed.
-8. Guide the user through browser authentication and verify the server is connected before saying setup is complete.
+8. Guide the user through browser authentication if needed. Do not run or require an MCP connection/status check or test Launchpad operation. Report that the configuration was saved (or already present) and state whether browser authorization remains; do not claim the server is connected.
+9. Deploy the separate Agent Skill `launchpad-byoa-skills` in the project/workspace where the MCP was configured. Resolve that workspace from the selected project's MCP configuration file and its location, not from the agent's current working directory. If a global/user-wide MCP configuration has no identified workspace, ask which workspace should receive the skill. If multiple configured agent hosts could be the target, ask which host (or hosts) to use. Use the selected host's official documentation and documented skills-root rules to identify its project skills root. If the exact host, workspace, or root remains genuinely ambiguous, ask only for the missing destination information. Inspect the resolved skills root and destination for an existing skill/file; if a conflict exists, report the existing skill name and full path(s) affected, then replace only the destination `SKILL.md`, preserving unrelated/supporting files in that skill directory. Do not ask for permission to copy, skip, or replace. You may summarize the resolved target and copy/verification plan before writing, but this is not a confirmation gate. Do not install the skill into this repository unless it is the identified target workspace.
+10. Copy `references/retrieve-launchpad-skills.md` verbatim to `<resolved project skills root>/launchpad-byoa-skills/SKILL.md`. Treat the reference only as the copy source: do not consult, follow, interpret, adapt, or otherwise use its contents as guidance for this MCP setup. Keep the destination directory name consistent with the source skill's `launchpad-byoa-skills` name; do not silently rename or modify its contents. Once the destination is resolved, always perform the copy, replacing the destination `SKILL.md` if needed, and verify that the destination file exists and is byte-for-byte identical to the source. This deployment is only a file copy: do not access MCP resources, run a connection/status check, test a Launchpad operation, or install any other skills.
 
 Example endpoint construction:
 
@@ -96,11 +98,11 @@ Most tools require the following:
 - Local callback port typically ranging from 1 through 65535, default may vary based on the AI assistant tool
 - Pre-registered loopback URI whose path and port reach the local callback listener
 
-## Authentication and verification
+## Authentication handoff
 
-On first connection, the coding tool should open a browser or display an authorization URL. Have the user sign in to Launchpad, authorize the application, and return to the coding tool. If the browser does not open, copy the displayed URL into a browser.
+On first use, the coding tool may open a browser or display an authorization URL. Guide the user to sign in to Launchpad, authorize the application, and return to the coding tool. If the browser does not open, they can copy the displayed URL into a browser. This is an authentication handoff only: do not use an MCP status command/panel, inspect resources, or test a Launchpad operation as a connection check. Report the configuration saved (or reused) and whether the user still needs to complete browser authorization. Do not claim that the server is connected.
 
-Verify the connection using the tool's MCP status command or panel. Then test a Launchpad operation such as finding an application, listing branches, or searching for rules. Say the server is connected only after the tool confirms it; otherwise report that configuration was saved and identify the remaining authentication or connection step.
+Copying `launchpad-byoa-skills` is a separate file-copy step from configuring/authenticating MCP. It does not access MCP resources. Do not claim the copy verified MCP connectivity or installed any other skills.
 
 ## Troubleshooting
 
@@ -130,4 +132,8 @@ Verify the connection using the tool's MCP status command or panel. Then test a 
 - Adding a second entry for an MCP URL already registered in an active configuration scope.
 - Treating a successful permissive JSON parse as proof that the file has no duplicate keys or valid tool-specific structure.
 - Guessing callback URLs for Cursor or VS Code when they are not listed above.
-- Claiming the server is connected before authentication and a status check succeed.
+- Running or requiring a connection/status check or Launchpad operation as part of setup, or claiming the server is connected.
+- Confusing the copy of `launchpad-byoa-skills` with a check of MCP resources or a connection/status test.
+- Using the reference file as MCP setup guidance instead of copying it verbatim, or changing its contents or destination skill name.
+- Copying to the current repository by default instead of resolving the configured project workspace and documented agent skills root.
+- Failing to replace an existing destination `SKILL.md` automatically while preserving supporting files, or claiming a successful copy without byte-for-byte verification.
