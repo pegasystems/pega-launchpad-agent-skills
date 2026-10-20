@@ -3,10 +3,11 @@
 A concrete run of the five-task flow.
 
 1. **Connect** - The agent checks for existing Launchpad MCP tools. If none are available,
-   the user supplies the Studio app URL and, only when no matching server exists, a public
-   OAuth Client ID. The active assistant completes PKCE authentication and stores its token.
+   the user supplies the Launchpad app URL (legacy or vanity format) and, only when no
+   matching server exists, a public OAuth Client ID. The active assistant completes PKCE
+   authentication and stores its token.
 
-2. **Discover (MCP)** — `getAppInfo` → Platform '25. Agent lists case types, finds
+2. **Discover (MCP, read-only)** — `getAppInfo` → Platform '25. Agent lists case types, finds
    `Claim`, reads its data model (finds a numeric `satisfactionScore` field), lists views
    (Details region available), and resolves the theme (brand `#0b6cff`, Inter font).
 
@@ -27,5 +28,6 @@ A concrete run of the five-task flow.
 
 7. **Build and publish** - The agent calls `bundleComponent()` programmatically, summarizes
    the target, and asks for explicit publish approval. After approval it uses the cached OAuth
-   token and `assetsUpdate`; it never invokes the interactive DXCB commands. The agent reports
-   that the field now appears under the field's **Display as** options in Studio.
+   token and the separately permitted `assetsUpdate` component-publish path; it never invokes
+   Core Authoring MCP mutation tools or the interactive DXCB commands. The agent reports that
+   the field now appears under the field's **Display as** options in Studio.

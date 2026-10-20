@@ -1,0 +1,10 @@
+curl --request POST \
+  --url {{baseUrl}}/dx/api/application/v2/data_views/ProspectLookup \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer' \
+  --header 'content-type: application/json' \
+  --data '{
+  "dataViewParameters": {
+    "ID": "{{caseID}}"
+  }
+}'

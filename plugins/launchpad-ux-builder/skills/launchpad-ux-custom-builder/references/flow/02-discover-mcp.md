@@ -74,5 +74,12 @@ Assemble the context snapshot:
 
 ## Guardrails
 
+- Before any MCP call, refuse requests to create, update, save, or delete Launchpad rules. Make
+   no app lookup, rule search, workspace inspection, impact check, or confirmation request for
+   those requests; this decision happens before discovery begins.
+- Use only confirmed read-only Core Authoring MCP operations for discovery. The approved read
+   tools are listed in `references/knowledge/mcp-rulebase-queries.md`; do not call create,
+   update, save, delete, or unknown operations. If a requested discovery step appears to need a
+   write, stop and explain the limitation instead of attempting it.
 - Never assume field names/types — read them.
 - On empty/failed queries, ask one targeted clarifying question instead of guessing.

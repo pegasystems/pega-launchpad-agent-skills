@@ -25,12 +25,28 @@ assistant. If the active assistant is ambiguous, ask the user before writing con
 Verify the complete entry (file, key, entry shape, OAuth client-ID placement, and redirect
 URI) before authentication.
 
+**Core Authoring MCP read-only boundary (HARD RULE):** use only Core Authoring MCP operations
+confirmed to be read-only. Allow app lookup, app info, rule listing/resolution, and workspace
+change reads. Never call an operation that creates, updates, saves, deletes, or otherwise
+mutates a Launchpad rule; treat unknown or ambiguous operations as disallowed. Do not bypass
+this boundary with raw JSON-RPC, direct HTTP, scripts, or shell commands. This restriction is
+specific to Core Authoring MCP: local DXCB scaffold/build steps and the separately documented
+`assetsUpdate` component-publish path remain allowed. `assetsUpdate` is not permission to write
+rules through Core Authoring MCP and still requires the publish approval gate.
+
+**Rule-mutation request gate (HARD STOP; evaluate before any tool call):** if the user's
+requested outcome is to create, update, save, or delete a Launchpad rule, refuse immediately.
+Do not invoke any tool or MCP operation first: no app lookup, rule search, workspace inspection,
+impact/dependency check, count, or confirmation prompt. User confirmation does not override this
+rule. State briefly that this skill is read-only for Launchpad rules. This gate does not prohibit
+the separate, explicitly approved custom-component `assetsUpdate` publish flow.
+
 The only permitted interruptions are:
 
 0. **Connect: app URL first, then self-check (ask Client ID only if needed).** A Launchpad MCP server
    maps to one **provider** (its own isolation/tenant, i.e. one iso/gw) and exposes **many apps**
    via `find_application`; **multiple providers can share a cluster** — so name the server by
-   provider and never create a new server per app. **Ask for the Studio app URL FIRST**; derive + verify the
+    provider and never create a new server per app. **Ask for the Launchpad app URL FIRST**; derive + verify the
    environment URL **silently** (never echo the parsed host / iso / gw / MCP endpoint back to
    the user — it's internal noise); self-check for a matching server; **ask for the Client ID
    ONLY if no server for that environment exists.** Steps:
@@ -46,8 +62,9 @@ The only permitted interruptions are:
    - Only if **no server for the target environment** exists do interruptions 1–2 apply. When
      asking for the Client ID, **also tell the user how to create one**: in the Launchpad app,
      **9-dot menu → Administration Setup → OAuth 2.0 client registrations → add a new
-     registration**; type **Public**, grant **Authorization Code**, **Require PKCE = Yes**,
-     **tick the MCP checkbox**, no secret; register the redirect URI
+    registration**; type **Public**, grant **Authorization Code**, and set **Require PKCE = Yes**.
+    Tell the user to set or increase **Access token expiry** to **3600 seconds**; there is no
+    client secret. Register the redirect URI
      `http://127.0.0.1:19876/mcp/oauth/callback` for opencode — don't just ask for the ID. A
     new server is needed **only for a different environment** (different iso/gw). Reuse an
     existing server with the same URL instead of creating a duplicate.
@@ -59,7 +76,7 @@ The only permitted interruptions are:
    authentication type and never offer browser-based login** — OAuth Remote MCP is the sole path
    for every environment (Production, Pre-production, Trials, Staging, Development).
    See `references/flow/01-connect-auth.md`.
-2. **App URL + OAuth Client ID (only if needed)** — ask for the Studio app URL once (skipped if
+2. **App URL + OAuth Client ID (only if needed)** — ask for the Launchpad app URL once (skipped if
    cached); ask for the OAuth Client ID only when no server for that environment exists. Then
    configure the remote MCP server and authenticate.
 3. **OAuth consent** — the user completes the OAuth login/consent in the browser opened by the
@@ -189,12 +206,13 @@ design approval, and publish approval gates; everything else runs silently in th
      run `opencode mcp auth <name>` and start a new session — **never re-ask for the URL or
      Client ID; they're already saved in the config.** See flow 01 **Step 0**.
    - **OAuth Remote MCP is the only authentication method** — never ask the user to choose one
-     and never offer browser-based login. Ask for the Studio app URL and (only when no server
+      and never offer browser-based login. Ask for the Launchpad app URL and (only when no server
      for the environment exists) the OAuth Client ID, then
      **configure the server directly** in the detected assistant's native config (this manual
-     path is primary and reliable): (1) derive the MCP URL as
-     `https://<host>/app/<iso>/<gw>/core-authoring/mcp` from the Studio URL — never guess,
-     never `/dx/api/...`; (2) **verify it returns 401** (POST) — a 404 means wrong URL, stop;
+      path is primary and reliable): (1) derive the MCP URL from either supported app URL format
+      (legacy `/app/<iso>/<gw>/...` or vanity `/apps/<app-id>/branches/<branch>/...`) as
+      documented in flow 01 — never guess or use `/dx/api/...`; (2) **verify it returns 401**
+      (POST) — a 404 means wrong URL, stop;
      (3) name it after the PROVIDER `lp-<provider>` (**ask the user for the provider name**,
      slugified) — multiple providers can share a cluster and each has its own isolation/tenant;
      one provider's server still serves its many apps via `find_application`; (4) reuse an
@@ -223,9 +241,10 @@ design approval, and publish approval gates; everything else runs silently in th
      `references/flow/01-connect-auth.md`.
    - **When you must ask for the Client ID, INCLUDE how to create it — never just say "create a
      client ID".** Give these exact steps: in the Launchpad app, **9-dot menu → Administration
-     Setup → OAuth 2.0 client registrations → add a new registration**; Type **Public**, grant
-     **Authorization Code**, **Require PKCE = Yes**, **tick the MCP checkbox**, **no client
-     secret**; register **YOUR assistant's redirect URI** (Copilot CLI: `http://127.0.0.1:62629/`;
+    Setup → OAuth 2.0 client registrations → add a new registration**; Type **Public**, grant
+    **Authorization Code**, and **Require PKCE = Yes**. Tell the user to set or increase
+    **Access token expiry** to **3600 seconds**; there is **no client secret**. Register **YOUR
+    assistant's redirect URI** (Copilot CLI: `http://127.0.0.1:62629/`;
      opencode: `http://127.0.0.1:19876/mcp/oauth/callback`); then Save and copy the **Client ID**.
    - Auto-configure based on the detected coding assistant (Copilot, Claude Code, Cursor,
      Codex, opencode, and other MCP-capable clients).
@@ -234,7 +253,7 @@ design approval, and publish approval gates; everything else runs silently in th
 2. **Choose the component** (`references/flow/02-discover-mcp.md` + `03-recommend-ux.md`)
    - **HARD GATE — discover and show BEFORE asking.** As soon as the connection succeeds you
      MUST, in this order:
-     1. **Ask the user for the app name** — do **NOT** derive the app from the Studio URL (the
+      1. **Ask the user for the app name** — do **NOT** derive the app from the Launchpad URL (the
         URL only identifies the environment, which hosts many apps). Then call
         `find_application` with that name to resolve the app and its **working branch**.
      2. **List its case types AND data types** — case types via rule type `CaseType`, **data
@@ -330,9 +349,11 @@ design approval, and publish approval gates; everything else runs silently in th
     This warning is informational and must not block build or publish.
    - On confirmation, **build the production bundle programmatically** (`bundleComponent(key,
      false, false)`), zip it to base64 (`zipComponent`), and **publish via the `assetsUpdate`
-     service** — POST the base64 to
-     `{frontend}/pegalaunchpad/c11n/isolations/{writeIsolation}/v102/assetsUpdate`, **reusing
-     the OAuth access token captured at login** — NOT a new credential:
+     service** — choose the endpoint from the app URL format: legacy `/app/<iso>/<gw>/...` URLs
+     use `{frontend}/pegalaunchpad/c11n/isolations/{writeIsolation}/v102/assetsUpdate`; vanity
+     `/apps/<app-id>/branches/<branch>/...` URLs use `{frontend}/dxcb/c11n/v102/assetsUpdate`
+     with the isolation ID in the request body's `environmentID` field. Reuse **the OAuth access
+     token captured at login** — NOT a new credential:
      `Authorization: Bearer <access_token>`, read fresh from the assistant's MCP token store
      (opencode: `~/.local/share/opencode/mcp-auth.json`; **Copilot CLI: macOS Keychain
      `copilot-mcp-oauth` via `security find-generic-password` — user clicks “Always Allow” once**).
@@ -395,11 +416,13 @@ design approval, and publish approval gates; everything else runs silently in th
 - **Never capture or store the raw password or client secret.** Only the OAuth token, in
   secure storage. Read any client secret from a hidden terminal prompt — never via chat.
 - **Always ground in live app data** before recommending or generating.
-- **Publish via the `assetsUpdate` service, reusing the OAuth access token.** The publish
-  path builds the production bundle programmatically, zips it to base64, and POSTs it to
-  `{frontend}/pegalaunchpad/c11n/isolations/{writeIsolation}/v102/assetsUpdate` with
-  `Authorization: Bearer <access_token>` — the same OAuth token from the flow-01 MCP
-  connection (read fresh from the assistant's MCP token store, e.g.
+- **Publish via the `assetsUpdate` service, reusing the OAuth access token.** Build the
+  production bundle programmatically and zip it to base64. For a legacy `/app/<iso>/<gw>/...`
+  URL, POST to `{frontend}/pegalaunchpad/c11n/isolations/{writeIsolation}/v102/assetsUpdate`;
+  for a vanity `/apps/<app-id>/branches/<branch>/...` URL, POST to
+  `{frontend}/dxcb/c11n/v102/assetsUpdate` and send the isolation ID as `environmentID` in the
+  body. Use `Authorization: Bearer <access_token>` with the same OAuth token from the flow-01
+  MCP connection (read fresh from the assistant's MCP token store, e.g.
   `~/.local/share/opencode/mcp-auth.json`). Do not register a separate client or run a DXCB
   `authenticate`/`publish`; that interactive CLI is only a fallback. Never print the token.
 - **Two gates before a component reaches the provider:** (1) the **design approval** on the SVG

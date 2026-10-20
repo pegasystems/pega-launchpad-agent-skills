@@ -1,0 +1,6 @@
+curl '{{baseUrl}}/dx/api/application/v2/assignments/{{assignmentID}}/actions/CollectIssueSummary?viewType=page&outcome=Submit' \
+  -X 'PATCH' \
+  -H 'if-match: w/"1"' \
+  -H 'Accept: application/json, text/plain, */*' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"content":{"IssueSummary":"Test"},"pageInstructions":[]}'

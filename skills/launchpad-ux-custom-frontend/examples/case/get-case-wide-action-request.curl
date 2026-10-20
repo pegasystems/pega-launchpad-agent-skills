@@ -1,0 +1,3 @@
+curl '{{baseUrl}}/dx/api/application/v2/cases/{{caseID}}/actions/Edit?viewType=form' \
+  -H 'accept: application/json, text/plain, */*' \
+

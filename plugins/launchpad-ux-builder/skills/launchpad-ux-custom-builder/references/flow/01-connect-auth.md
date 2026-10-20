@@ -27,6 +27,11 @@ field does not match, stop and correct it before starting OAuth.
 
 ## Step 0 — Connect: app URL first, then self-check (ask Client ID only if needed)
 
+**Mutation-intent preflight (HARD STOP):** before checking whether MCP tools are available,
+classify the user's requested outcome. If it is to create, update, save, or delete a Launchpad
+rule, refuse without making any tool or MCP calls. Do not search for the rule, inspect branch
+changes, count affected rules, check dependencies, or ask for confirmation.
+
 > **STEP 0.0 — IDENTIFY YOUR ASSISTANT FIRST (HARD GATE).** You are running inside a specific
 > coding assistant and you know which one you are (e.g. **GitHub Copilot CLI**, **opencode**,
 > **Claude Code**, **Cursor**, **Codex**). Everything in this flow — the **MCP config file/key**,
@@ -51,11 +56,12 @@ in the config**:
    ID.** **Ask the user for the app name** (never derive it from a URL) and call
    `*_find_application` with it, then go straight to discovery (flow 02).
 
-2. **Otherwise, ask the user for the Studio app URL FIRST** (before asking for a Client ID).
-   Derive the environment MCP URL from it — `https://<host>/app/<iso>/<gw>/core-authoring/mcp`
-   — and verify it returns **401** (not 404). **Do this SILENTLY: never echo the parsed host,
-   iso/gw, or MCP endpoint back to the user — it's internal noise.** Just proceed to the next
-   step (or, if you must acknowledge, a simple "Got it" is enough).
+2. **Otherwise, ask the user for the Launchpad app URL FIRST** (before asking for a Client ID).
+    Support both legacy and vanity URLs; derive the environment MCP URL using the rules under
+    **OAuth Remote MCP setup → Step 2** and verify it returns **401** (not 404). **Do this
+    SILENTLY: never echo the parsed host, iso/gw, or MCP endpoint back to the user — it's internal
+    noise.** Just proceed to the next step (or, if you must acknowledge, a simple "Got it" is
+    enough).
 
 3. **Self-check the client config for a server matching this environment** (same URL / same
    iso+gw):
@@ -82,8 +88,9 @@ in the config**:
      > Launchpad app (takes a minute):
      > 1. In your Launchpad app, click the **9-dot menu → Administration Setup**, then open
      >    **OAuth 2.0 client registrations** and **add a new client registration**.
-     > 2. Create the client (any name). Type **Public**, grant type **Authorization Code**,
-     >    **Require PKCE = Yes**, and **tick the MCP checkbox** — there is **no client secret**.
+    > 2. Create the client (any name). Type **Public**, grant type **Authorization Code**,
+    >    set **Require PKCE = Yes**, and set or increase **Access token expiry** to **3600 seconds**.
+    >    There is **no client secret**.
      > 3. Add the **redirect URI** `<REDIRECT_URI>`. Tip:
      >    register the other assistants' callbacks too so the same client works everywhere
      >    (see the redirect-URI table / Prerequisites).
@@ -105,7 +112,7 @@ their Launchpad app, provides the **Client ID** (a public PKCE identifier — ne
 and the coding assistant handles the token exchange via its local OAuth callback. This applies
 to every environment (Production, Pre-production, Trials, Staging, Development).
 
-**Do NOT ask the user to "choose an authentication method."** Ask only for the Studio app URL
+**Do NOT ask the user to "choose an authentication method."** Ask only for the Launchpad app URL
 and — when no server for the environment exists yet — the OAuth Client ID.
 
 ---
@@ -148,7 +155,8 @@ The user creates a "Coding Assistant" OAuth client in their Launchpad app **once
 1. In the Launchpad app, click the **9-dot menu → Administration Setup**, then open
    **OAuth 2.0 client registrations** and **add a new client registration**.
 2. Create the client (any descriptive name). Type **Public**, grant type **Authorization Code**,
-   **Require PKCE = Yes**, and **select the MCP checkbox**. There is **no client secret**.
+  **Require PKCE = Yes**, and set or increase **Access token expiry** to **3600 seconds**.
+  There is **no client secret**.
 3. **Register the redirect URIs up front — add ALL of these in one go.** Registering every
    assistant's callback now means the same client works everywhere and you never hit a
    mid-flow `redirect_uri mismatch`:
@@ -164,16 +172,25 @@ The user creates a "Coding Assistant" OAuth client in their Launchpad app **once
 ### Steps
 
 1. **Ask the user for:**
-   - The Studio app URL (to extract the frontend host).
+    - The Launchpad app URL (to extract the frontend host).
    - The OAuth Client ID they created (the Client ID is a public PKCE identifier, not a
      secret — **never** ask for a Client Secret).
 
-2. **Derive the MCP URL from the Studio app URL — never guess it.** Keep the host + iso + gw
-   and replace the rest with `core-authoring/mcp`:
-   ```text
-   Studio: https://<host>/app/<iso>/<gw>/c11n/appauthoring/apps/<app>/branches/<branch>/overview
-   MCP:    https://<host>/app/<iso>/<gw>/core-authoring/mcp
+2. **Derive the MCP URL from the Launchpad app URL — never guess it.** Parse it as a URL and
+    ignore any query string or fragment. Support both formats:
    ```
+    Legacy app: https://<host>/app/<iso>/<gw>/c11n/appauthoring/apps/<app>/branches/<branch>/overview
+    MCP:        https://<host>/app/<iso>/<gw>/core-authoring/mcp
+
+    Vanity app: https://<vanity-host>/apps/<app-id>/branches/<branch>/overview
+    MCP:        https://<vanity-host>/core-authoring/mcp
+   ```
+    For a legacy URL, retain the host, `/app/<iso>/<gw>`, and replace the remaining path. For a
+    vanity URL, retain only the scheme and host, then append `/core-authoring/mcp`; do not carry
+    `/apps/...`, the branch, query, or fragment into the MCP URL. If the URL matches neither
+    shape, ask for a supported Launchpad app URL rather than guessing. Verify the derived MCP
+    endpoint with a POST: **401** confirms the endpoint exists and requires OAuth; **404** means
+    stop and re-check the URL before configuring a server.
    `/dx/api/application/v2/mcp` is WRONG for authoring/trials apps and 404s — never use it.
 
 3. **Register the server (configure it directly in the assistant's native config — this is the
@@ -321,7 +338,7 @@ The user creates a "Coding Assistant" OAuth client in their Launchpad app **once
 
 7. **Auto-discover the app and list case types/data types** (HARD GATE — do this before asking
    which component):
-   - **Ask the user for the app name** — do **NOT** derive the app from the Studio URL (it only
+    - **Ask the user for the app name** — do **NOT** derive the app from the Launchpad URL (it only
      identifies the environment). Then call `find_application` with that name to resolve the app
      and its **working branch**.
    - List **case types** via rule type `CaseType`, and **data types via rule type `DataObject`**
@@ -346,6 +363,9 @@ Writing the MCP config mid-conversation usually does **not** hot-load the server
 `<app-name>_*` tools may be absent in the current session. **Preferred (no reload):**
 - Call the remote MCP over raw JSON-RPC via `fetch()` (init → notify → tools/call), using the
   captured OAuth token — this lets the flow continue immediately.
+- For Core Authoring MCP, use this fallback only for confirmed read-only tools in
+  `references/knowledge/mcp-rulebase-queries.md`. Never call a write-capable or unknown tool,
+  even if it appears in `tools/list`; raw HTTP/JSON-RPC is not a bypass for this restriction.
 - The `Accept: application/json, text/event-stream` header is required for the Launchpad
   MCP endpoint.
 - In a new conversation, the tools are available natively as `<app-name>_find_application`,

@@ -4,6 +4,11 @@ Goal: compile the component and publish it to the provider, **reusing the OAuth 
 captured at login (flow 01)** as the publish credential (`Authorization: Bearer <access_token>`).
 **The DXCB interactive CLI is never used, and there is no browser/AAT path.**
 
+This flow's `assetsUpdate` request is the explicitly permitted component-publish path; it is
+separate from Core Authoring MCP. Keep the existing build, token-access, and publish approval
+steps, but never use Core Authoring MCP to create or update rules. Do not reuse the publish
+exception to make any other Core Authoring MCP write.
+
 ## CRITICAL — never use `npm run buildComponent` / `npm run publish` from the agent
 
 The DXCB CLI commands (`buildComponent`, `publish`, `authenticate`) are **interactive** — they
@@ -156,8 +161,13 @@ user's Launchpad app, so first present a one-line summary and ask for a clear go
 
 Once confirmed, use the OAuth access token as `Authorization: Bearer <access_token>`.
 
-```http
+```
+Legacy app URL (`/app/<iso>/<gw>/...`):
 POST {frontendServer}/pegalaunchpad/c11n/isolations/{iso}/v102/assetsUpdate
+
+Vanity app URL (`/apps/<app-id>/branches/<branch>/...`):
+POST {frontendServer}/dxcb/c11n/v102/assetsUpdate
+
 Authorization: Bearer {access_token}
 Content-Type: application/json
 
@@ -170,7 +180,12 @@ Content-Type: application/json
 }
 ```
 
-- `{frontendServer}` is the app's frontend URL (derived from the MCP/Studio URL host).
+- Select the endpoint from the app URL format. Do not use the legacy
+  `/pegalaunchpad/c11n/isolations/{iso}/v102/assetsUpdate` route for a vanity URL; it returns
+  `405 Method Not Allowed` on vanity hosts.
+- `{frontendServer}` is the app's frontend URL (derived from the Launchpad app URL host).
+- For vanity URLs, send the isolation ID in the request body's `environmentID` field; it is not
+  part of the `/dxcb/c11n/v102/assetsUpdate` path. The legacy route retains `{iso}` in its path.
 - **`201 Created`** with `"<ComponentKey> has been saved!!!"` = success.
 - Never print the token value.
 - If direct fetch fails with a network error, retry through corporate proxy with undici
