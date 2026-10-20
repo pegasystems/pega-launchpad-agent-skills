@@ -1,0 +1,46 @@
+{
+    "name": "Pega_Extensions_RatingLayout",
+    "label": "Rating Layout",
+    "description": "Rating Layout",
+    "organization": "Pega",
+    "version": "4.0.1",
+    "library": "Extensions",
+    "allowedApplications": [],
+    "componentKey": "Pega_Extensions_RatingLayout",
+    "type": "Template",
+    "subtype": "DETAILS",
+    "properties": [
+        {
+            "name": "minWidth",
+            "label": "Slider min width",
+            "format": "TEXT",
+            "defaultValue": "40ch"
+        },
+        {
+            "name": "A",
+            "label": "Region A",
+            "format": "CONTENTPICKER",
+            "addTypeList": [
+                "Fields"
+            ]
+        },
+        {
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_Extensions 4.0.1, Tue Dec 02 2025, 25.1.1-199",
+            "name": "PegaAboutData",
+            "variant": "primary"
+        }
+    ],
+    "defaultConfig": {
+        "minWidth": "40ch"
+    },
+    "buildDate": "2025-12-02T16:30:51.027Z",
+    "infinityVersion": "25.1.1-199",
+    "packageCosmosVersion": "8.9.4"
+}

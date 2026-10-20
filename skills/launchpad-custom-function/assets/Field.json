@@ -1,0 +1,14 @@
+{
+  "Type": "Field",
+  "Namespace": "UPlus",
+  "RuleResolutionID": "pyID",
+  "AppliesTo": {
+    "ReferenceID": "UPlusAgency",
+    "Namespace": "UPlus"
+  },
+  "Mode": "Text",
+  "RecordClass":{
+    "ReferenceID": "Address",
+    "Namespace": "UPlus" 
+  }
+}

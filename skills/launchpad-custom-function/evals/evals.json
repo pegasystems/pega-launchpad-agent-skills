@@ -1,0 +1,50 @@
+[
+  {
+    "id": "custom-function",
+    "question": "What are custom functions?",
+    "expectedSkills": [
+      "launchpad-general",
+      "launchpad-function"
+    ],
+    "mustMention": [
+      "Function",
+      "Custom Function",
+      "High level language",
+      "Java",
+      "Python",
+      "Node.js",
+      "extend Launchpad functionality",
+      "use when no other rule can perform the task",
+      "AWS Lambda"
+    ],
+    "mustNotMention": [
+      "Recommended approach"
+    ]
+  },
+  {
+    "id": "code-bundle",
+    "question": "What is a code bundle?",
+    "expectedSkills": [
+      "launchpad-function"
+    ],
+    "mustMention": [
+      "Python ZIP",
+      "Java JAR",
+      "Node.js ZIP"
+    ],
+    "mustNotMention": [
+      "@Field annotation"
+    ]
+  },
+  {
+    "id": "function-handler",
+    "question": "What is a function handler?",
+    "expectedSkills": [
+      "launchpad-function"
+    ],
+    "mustMention": [
+      "Java include package, Class name and method name",
+      "Launchpad function signature MUST match HLL signature"
+    ]
+  }
+]
