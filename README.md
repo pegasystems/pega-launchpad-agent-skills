@@ -4,27 +4,43 @@ Tools for AI coding agents that help teams build with Pega Launchpad. This repos
 
 | Install | Best for | Includes |
 | --- | --- | --- |
-| **Launchpad agent skills** | Getting guided help with a specific Launchpad integration or extension task | Five standalone [Agent Skills](https://agentskills.io/) |
+| **Launchpad agent skills** | Getting guided help with a specific Launchpad integration or extension task | Six standalone [Agent Skills](https://agentskills.io/) |
 | **Launchpad UX Builder plugin** | Building, previewing, and publishing a Custom UX component from a natural-language request | The end-to-end UX Builder skill, component templates, and publishing workflow |
 
-You can install either option independently, or install both. The UX Builder plugin's bundled skill is separate from the five standalone skills below.
+You can install either option independently, or install both. The UX Builder plugin's bundled skill is separate from the six standalone skills below.
 
 ## Choose What to Install
 
-- Install **agent skills** when you want help calling DX APIs, embedding Launchpad, creating custom functions, creating Custom UX components, or building a custom React front end.
+- Install **agent skills** when you want help connecting an MCP-capable tool to Launchpad, calling DX APIs, embedding Launchpad, creating custom functions, creating Custom UX components, or building a custom React front end.
 - Install the **UX Builder plugin** when you want an agent to take a request such as "Build a custom UX component for my Launchpad app" through discovery, design preview, generation, and publishing.
 - Install **both** when you want the UX Builder workflow as well as the standalone skills for broader Launchpad work.
 
 For agent-assisted installation requests such as "install Launchpad skills" or "install the UX Builder plugin," use the decision guide in [INSTALL.md](INSTALL.md).
 
+## Configure MCP and Install LaunchPad Skills
+
+1. Ask your coding tool to configure LaunchPad MCP for the desired project and agent, for example:
+   > Configure LaunchPad MCP for OpenCode in `~/Downloads/BYOA`.
+2. Open or switch to that project in the coding tool.
+3. Complete LaunchPad sign-in and authorization in the browser if prompted.
+4. Ask the tool to download and install the skills:
+   > Download and install LaunchPad skills.
+
+See the [LaunchPad MCP setup skill](skills/launchpad-byoa-mcp/SKILL.md) for setup details.
+
 **Skills in this collection:**
-1. [Calling Launchpad via DX API](#calling-launchpad-via-dx-api)
-2. [Embedding Launchpad with Web Embed](#embedding-launchpad-with-web-embed)
-3. [Creating Custom UX Components](#creating-custom-ux-components)
-4. [Creating Custom Functions](#creating-custom-functions)
-5. [Creating custom Front Ends](#creating-custom-front-ends)
+1. [Connecting Launchpad to MCP-capable tools](#connecting-launchpad-to-mcp-capable-tools)
+2. [Calling Launchpad via DX API](#calling-launchpad-via-dx-api)
+3. [Embedding Launchpad with Web Embed](#embedding-launchpad-with-web-embed)
+4. [Creating Custom UX Components](#creating-custom-ux-components)
+5. [Creating Custom Functions](#creating-custom-functions)
+6. [Creating custom Front Ends](#creating-custom-front-ends)
 
 ## Available Skills
+
+### Connecting Launchpad to MCP-capable tools
+
+Configure a Pega Launchpad environment as an MCP server in a supported AI coding tool. This skill guides OAuth client setup, constructs the environment-specific MCP endpoint, and merges a validated server entry into the tool's configuration without overwriting existing settings. It also guides the user through browser authorization without claiming that the server is connected.
 
 ### Calling Launchpad via DX API
 
@@ -102,6 +118,7 @@ npx skills add https://github.com/pegasystems/pega-launchpad-agent-skills
 ```
 
 Available skill names in this repo include:
+- `launchpad-byoa-mcp`
 - `launchpad-custom-function`
 - `launchpad-dx-apis`
 - `launchpad-ux-custom-components`
@@ -118,5 +135,3 @@ Each skill contains:
 
 ## Contact
 For any questions about these skills feel free to reach us via the [Support Portal](https://launchpad.io/LaunchpadSupport)
-
-
