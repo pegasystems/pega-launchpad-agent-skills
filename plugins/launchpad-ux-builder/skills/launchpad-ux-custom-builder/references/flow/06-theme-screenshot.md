@@ -42,7 +42,7 @@ link, because CLI environments cannot render SVGs.
    - macOS: `open <temp-svg-path>`
    - Linux: `xdg-open <temp-svg-path>`
    - Windows: `start <temp-svg-path>`
-   
+
    Then tell the user in the chat that the mock is now open in their browser and ask them to
    **confirm the look and feel**. This is the HARD GATE before build/publish (flow 07).
    - If changes are requested, loop back to flow 05 (develop) or flow 03 (design), re-author

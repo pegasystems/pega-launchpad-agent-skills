@@ -160,7 +160,7 @@ The user creates a "Coding Assistant" OAuth client in their Launchpad app **once
 3. **Register the redirect URIs up front — add ALL of these in one go.** Registering every
    assistant's callback now means the same client works everywhere and you never hit a
    mid-flow `redirect_uri mismatch`:
-   ```
+   ```text
    http://127.0.0.1:19876/mcp/oauth/callback     # opencode
    http://127.0.0.1:62629/                        # Copilot (VS Code + CLI)
    http://localhost:55620/callback                # Claude Code
