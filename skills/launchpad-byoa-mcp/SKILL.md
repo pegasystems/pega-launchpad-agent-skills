@@ -11,7 +11,7 @@ Use this skill to register the Pega Launchpad Vibe MCP server in a AI coding ass
 
 ## Setup
 
-1. Briefly explain that setup needs the Launchpad application URL, the coding tool(s), a server name, and an OAuth Client ID for the Launchpad registration. Ask whether the user already has a Client ID. If they do not, help them create a public OAuth client registration before requesting the ID. Some tools do not put the ID explicitly in their config.
+1. Briefly explain that setup needs the LaunchPad application URL, the coding tool(s), a server name, and an OAuth Client ID for the LaunchPad registration. Ask whether the user already has a Client ID. If they do not, help them create a public OAuth client registration using the [Client ID registration reference](references/oauth-client-registration.md) before requesting the ID. Some tools do not put the ID explicitly in their config.
 2. Collect the Launchpad URL and coding tool(s). Ask which configuration scope to use when the tool supports project and global settings. Use the available structured question tool when supported.
 3. Validate and normalize the URL:
    - It must start with `https://`.
@@ -42,38 +42,7 @@ MCP URL:         https://cluster.example.net/tenant-123/env-456/authoring/mcp
 
 ## OAuth client registration
 
-If the user has no OAuth Client ID, guide them through Launchpad:
-
-1. Open the Launchpad environment.
-2. Open the top-left menu and select **Administrator Setup**.
-3. Find **OAuth 2.0 client registrations** and select **Add**.
-4. Use the following values:
-
-| Field | Value |
-|---|---|
-| Client Type | `Public` |
-| MCP Client | `true` (checked) |
-| Access Token Expiry | `86400` seconds or lower |
-| Grant Type | `Authorization Code` |
-| Require PKCE | `true` (checked) |
-| Redirect URLs | Add the callback URL(s) for the coding tool(s) being configured |
-
-5. Save the registration and have the user copy the generated Client ID. Do not ask for or put a client secret in a local config file.
-
-Public clients use PKCE rather than a client secret because locally running coding tools cannot keep a secret confidential. MCP Client enables the MCP token behavior; an expiry of `86400` seconds is 24 hours. A shorter expiry is valid if required by the user's security policy.
-
-Register the callback URLs for the selected tools:
-
-| Tool | OAuth redirect URL |
-|---|---|
-| OpenCode | `http://127.0.0.1:19876/mcp/oauth/callback` |
-| Claude Code | `http://localhost:55620/callback` |
-| GitHub Copilot | `http://127.0.0.1:62629/` |
-| Codex | `http://127.0.0.1:5555/callback/RCVLxGBsohNB` |
-
-Cursor and VS Code callback URLs are not specified here. Check the tool's current MCP OAuth documentation instead of guessing. One Launchpad registration can serve multiple tools if all required callback URLs are added as a comma-separated list. A callback mismatch can cause `redirect_uri_mismatch`; compare the URI, including port and trailing slash, exactly.
-
-Ask for the Client ID only, not a secret. A single Client ID can be used across tools when its registration includes each tool's callback URL.
+If the user has no OAuth Client ID, follow the [Client ID registration reference](references/oauth-client-registration.md) to create a public client in LaunchPad and register the selected tool's exact callback URL. Ask for the generated Client ID only, never a client secret. One registration can serve multiple tools when all their callback URLs are registered.
 
 ## Tool configuration
 Use the selected assistant's official MCP documentation for its current OAuth configuration; server formats and callback behavior vary by tool.
