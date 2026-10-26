@@ -11,8 +11,8 @@ Use this skill to register the Pega Launchpad Vibe MCP server in a AI coding ass
 
 ## Setup
 
-1. Briefly explain that setup needs the LaunchPad application URL, the coding tool(s), a server name, and an OAuth Client ID for the LaunchPad registration. Ask whether the user already has a Client ID. If they do not, help them create a public OAuth client registration using the [Client ID registration reference](references/oauth-client-registration.md) before requesting the ID. Some tools do not put the ID explicitly in their config.
-2. Collect the Launchpad URL and coding tool(s). Ask which configuration scope to use when the tool supports project and global settings. Use the available structured question tool when supported.
+1. Briefly explain that setup needs the LaunchPad application URL, the coding tool(s), a server name, and an OAuth Client ID for the LaunchPad registration. Ask whether the user already has a Client ID. If they do not, do not ask for the ID yet.
+2. Collect the Launchpad URL and coding tool(s). If the user needs a Client ID, explain these creation steps before asking them to provide it: open that LaunchPad environment, select **Administrator Setup** from the top-left menu, open **OAuth 2.0 client registrations**, and select **Add**. Create a **Public** client with **MCP Client** enabled, **Authorization Code** grant, **Require PKCE** enabled, and access-token expiry of 86400 seconds or less. Add the exact redirect/callback URL for each selected tool using the [Client ID registration reference](references/oauth-client-registration.md) and the tool's current documentation; do not guess callback URLs. Save the registration and copy the generated Client ID. Let the user create it, then request only the Client ID, never a client secret. Ask which configuration scope to use when the tool supports project and global settings. Use the available structured question tool when supported.
 3. Validate and normalize the URL:
    - It must start with `https://`.
    - Accept the application URL with or without a trailing `/apps`.
