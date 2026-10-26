@@ -31,7 +31,7 @@ For agent-assisted installation requests such as "install Launchpad skills" or "
 
 Use these instructions to configure a Pega Launchpad environment as a Model Context Protocol (MCP) server in a supported AI coding tool. First, install the skills from this repository by following the [INSTALL](INSTALL.md) guide.
 
-The examples below use `OpenCode` and should apply to your preferred AI coding tool.
+The examples below use `OpenCode` but should apply to your preferred AI coding tool.
 
 1. Ask your AI tool to configure Launchpad MCP for the desired project and agent, for example:
    > Configure Launchpad MCP for `OpenCode` in `~/Documents/BYOA`.
@@ -42,7 +42,7 @@ The examples below use `OpenCode` and should apply to your preferred AI coding t
 5. Ask the tool to download and install the skills:
    > Download and install Launchpad skills.
 
-The skills in step 5 differ from the rules defined in this repository. They help you communicate effectively with the MCP server.
+The skills in step #5 differ from the rules defined in this repository. They help your agent effectively communicate with the LaunchPad MCP.
 
 
 ### Calling Launchpad via DX API

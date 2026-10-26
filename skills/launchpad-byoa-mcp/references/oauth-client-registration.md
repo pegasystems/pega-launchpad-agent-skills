@@ -1,6 +1,11 @@
 # LaunchPad OAuth Client ID Registration
 
-Use this reference when a user needs to create an OAuth Client ID for the LaunchPad Vibe MCP server. This covers the registration in LaunchPad; configure the selected coding tool's MCP server separately using the instructions in the parent [BYOA Launchpad MCP setup skill](../SKILL.md#tool-configuration). Some tools do not expose the Client ID as an explicit config field, so follow that tool's documented schema rather than adding an unsupported setting.
+Use this reference when a user needs to create an OAuth Client ID for the LaunchPad Vibe MCP server. 
+This covers the registration in LaunchPad; configure the selected coding tool's MCP server separately using the 
+instructions in the parent bring your own agent (BYOA) Launchpad MCP setup. 
+Some tools do not expose the Client ID as an explicit config field, so follow that tool's documented schema rather than adding an unsupported setting.
+
+OAuth Client ID can be shared, each user does not need their own client ID.
 
 ## Create the registration
 
