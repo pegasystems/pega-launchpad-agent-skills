@@ -4,27 +4,46 @@ Tools for AI coding agents that help teams build with Pega Launchpad. This repos
 
 | Install | Best for | Includes |
 | --- | --- | --- |
-| **Launchpad agent skills** | Getting guided help with a specific Launchpad integration or extension task | Five standalone [Agent Skills](https://agentskills.io/) |
+| **Launchpad agent skills** | Getting guided help with a specific Launchpad integration or extension task | Six standalone [Agent Skills](https://agentskills.io/) |
 | **Launchpad UX Builder plugin** | Building, previewing, and publishing a Custom UX component from a natural-language request | The end-to-end UX Builder skill, component templates, and publishing workflow |
 
-You can install either option independently, or install both. The UX Builder plugin's bundled skill is separate from the five standalone skills below.
+You can install either option independently, or install both. The UX Builder plugin's bundled skill is separate from the six standalone skills below.
 
 ## Choose What to Install
 
-- Install **agent skills** when you want help calling DX APIs, embedding Launchpad, creating custom functions, creating Custom UX components, or building a custom React front end.
+- Install **agent skills** when you want help connecting an MCP-capable tool to Launchpad, calling DX APIs, embedding Launchpad, creating custom functions, creating Custom UX components, or building a custom React front end.
 - Install the **UX Builder plugin** when you want an agent to take a request such as "Build a custom UX component for my Launchpad app" through discovery, design preview, generation, and publishing.
 - Install **both** when you want the UX Builder workflow as well as the standalone skills for broader Launchpad work.
 
 For agent-assisted installation requests such as "install Launchpad skills" or "install the UX Builder plugin," use the decision guide in [INSTALL.md](INSTALL.md).
 
 **Skills in this collection:**
-1. [Calling Launchpad via DX API](#calling-launchpad-via-dx-api)
-2. [Embedding Launchpad with Web Embed](#embedding-launchpad-with-web-embed)
-3. [Creating Custom UX Components](#creating-custom-ux-components)
-4. [Creating Custom Functions](#creating-custom-functions)
-5. [Creating custom Front Ends](#creating-custom-front-ends)
+1. [Connecting Launchpad to MCP-capable tools](#connecting-launchpad-to-mcp-capable-tools)
+2. [Calling Launchpad via DX API](#calling-launchpad-via-dx-api)
+3. [Embedding Launchpad with Web Embed](#embedding-launchpad-with-web-embed)
+4. [Creating Custom UX Components](#creating-custom-ux-components)
+5. [Creating Custom Functions](#creating-custom-functions)
+6. [Creating Custom Front Ends](#creating-custom-front-ends)
 
 ## Available Skills
+
+### Connecting Launchpad to MCP-capable tools
+
+Use these instructions to configure a Pega Launchpad environment as a Model Context Protocol (MCP) server in a supported AI coding tool. First, install the skills from this repository by following the [INSTALL](INSTALL.md) guide.
+
+The examples below use `OpenCode` but should apply to your preferred AI coding tool.
+
+1. Ask your AI tool to configure Launchpad MCP for the desired project and agent, for example:
+   > Configure Launchpad MCP for `OpenCode` in `~/Documents/BYOA`.
+2. Set up an [OAuth client for MCP](skills/launchpad-byoa-mcp/references/oauth-client-registration.md).
+3. Open or switch to the project where you configured MCP in your coding tool.
+    > opencode `~/Documents/BYOA`
+4. Complete MCP sign-in. This may launch a separate browser session.
+5. Ask the tool to download and install the skills:
+   > Download and install Launchpad skills.
+
+The skills in step #5 differ from the rules defined in this repository. They help your agent effectively communicate with the LaunchPad MCP.
+
 
 ### Calling Launchpad via DX API
 
@@ -59,7 +78,7 @@ Introduces Custom UX for Pega Launchpad on the Constellation design system: when
 
 Extend Launchpad with logic implemented in high-level languages (Java, Python, Node.js) by uploading JAR or Python artifacts and referencing the method to invoke. The Custom Function signature must match the HLL method; use when functionality cannot be implemented in other rule types such as Automation.
 
-### Creating custom Front Ends
+### Creating Custom Front Ends
 
 Build custom React front ends on top of Pega Launchpad using the Pega React SDK (`@pega/react-sdk-components`) and Constellation runtime, rather than calling DX APIs directly. This skill covers when a custom front end is justified, required Launchpad configuration (OAuth client, app alias, case type, and server URLs), SDK architecture, authentication with `@pega/auth`, `PCore` readiness patterns, webpack setup, theming, local component overrides, and common Launchpad-specific troubleshooting.
 
@@ -102,6 +121,7 @@ npx skills add https://github.com/pegasystems/pega-launchpad-agent-skills
 ```
 
 Available skill names in this repo include:
+- `launchpad-byoa-mcp`
 - `launchpad-custom-function`
 - `launchpad-dx-apis`
 - `launchpad-ux-custom-components`
@@ -117,6 +137,4 @@ Each skill contains:
 - `references/` – Supporting documentation (optional)
 
 ## Contact
-For any questions about these skills feel free to reach us via the [Support Portal](https://launchpad.io/LaunchpadSupport)
-
-
+For any questions about these skills, feel free to reach us via the [Support Portal](https://launchpad.io/LaunchpadSupport).
