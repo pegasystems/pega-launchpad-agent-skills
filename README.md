@@ -17,30 +17,33 @@ You can install either option independently, or install both. The UX Builder plu
 
 For agent-assisted installation requests such as "install Launchpad skills" or "install the UX Builder plugin," use the decision guide in [INSTALL.md](INSTALL.md).
 
-## Configure MCP and Install LaunchPad Skills
-
-1. Ask your coding tool to configure LaunchPad MCP for the desired project and agent, for example:
-   > Configure LaunchPad MCP for OpenCode in `~/Downloads/BYOA`.
-2. Open or switch to that project in the coding tool.
-3. Complete LaunchPad sign-in and authorization in the browser if prompted.
-4. Ask the tool to download and install the skills:
-   > Download and install LaunchPad skills.
-
-See the [LaunchPad MCP setup skill](skills/launchpad-byoa-mcp/SKILL.md) for setup details.
-
 **Skills in this collection:**
 1. [Connecting Launchpad to MCP-capable tools](#connecting-launchpad-to-mcp-capable-tools)
 2. [Calling Launchpad via DX API](#calling-launchpad-via-dx-api)
 3. [Embedding Launchpad with Web Embed](#embedding-launchpad-with-web-embed)
 4. [Creating Custom UX Components](#creating-custom-ux-components)
 5. [Creating Custom Functions](#creating-custom-functions)
-6. [Creating custom Front Ends](#creating-custom-front-ends)
+6. [Creating Custom Front Ends](#creating-custom-front-ends)
 
 ## Available Skills
 
 ### Connecting Launchpad to MCP-capable tools
 
-Configure a Pega Launchpad environment as an MCP server in a supported AI coding tool. This skill guides OAuth client setup, constructs the environment-specific MCP endpoint, and merges a validated server entry into the tool's configuration without overwriting existing settings. It also guides the user through browser authorization without claiming that the server is connected.
+Use these instructions to configure a Pega Launchpad environment as a Model Context Protocol (MCP) server in a supported AI coding tool. First, install the skills from this repository by following the [INSTALL](INSTALL.md) guide.
+
+The examples below use `OpenCode` and should apply to your preferred AI coding tool.
+
+1. Ask your AI tool to configure Launchpad MCP for the desired project and agent, for example:
+   > Configure Launchpad MCP for `OpenCode` in `~/Documents/BYOA`.
+2. Set up an [OAuth client for MCP](skills/launchpad-byoa-mcp/references/oauth-client-registration.md).
+3. Open or switch to the project where you configured MCP in your coding tool.
+    > opencode `~/Documents/BYOA`
+4. Complete MCP sign-in. This may launch a separate browser session.
+5. Ask the tool to download and install the skills:
+   > Download and install Launchpad skills.
+
+The skills in step 5 differ from the rules defined in this repository. They help you communicate effectively with the MCP server.
+
 
 ### Calling Launchpad via DX API
 
@@ -75,7 +78,7 @@ Introduces Custom UX for Pega Launchpad on the Constellation design system: when
 
 Extend Launchpad with logic implemented in high-level languages (Java, Python, Node.js) by uploading JAR or Python artifacts and referencing the method to invoke. The Custom Function signature must match the HLL method; use when functionality cannot be implemented in other rule types such as Automation.
 
-### Creating custom Front Ends
+### Creating Custom Front Ends
 
 Build custom React front ends on top of Pega Launchpad using the Pega React SDK (`@pega/react-sdk-components`) and Constellation runtime, rather than calling DX APIs directly. This skill covers when a custom front end is justified, required Launchpad configuration (OAuth client, app alias, case type, and server URLs), SDK architecture, authentication with `@pega/auth`, `PCore` readiness patterns, webpack setup, theming, local component overrides, and common Launchpad-specific troubleshooting.
 
@@ -134,4 +137,4 @@ Each skill contains:
 - `references/` – Supporting documentation (optional)
 
 ## Contact
-For any questions about these skills feel free to reach us via the [Support Portal](https://launchpad.io/LaunchpadSupport)
+For any questions about these skills, feel free to reach us via the [Support Portal](https://launchpad.io/LaunchpadSupport).
