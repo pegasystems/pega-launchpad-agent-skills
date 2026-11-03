@@ -79,7 +79,7 @@ Use the callback documented for the target agent:
 | VS Code | `http://127.0.0.1:33418` and `https://vscode.dev/redirect` |
 | AWS Kiro CLI | `http://localhost:8787/callback` |
 
-Present only the row for the selected harness. Verify the callback against available installed-version help or current documentation before asking the user to register it. If it cannot be verified, label it as the guide's expected callback and ask the user to confirm it against their client; do not silently substitute a URL. The source guide notes that Cursor, VS Code, and Kiro were not validated when it was written. Confirm current support with the agent's documentation if using one of these clients.
+Present only the row for the selected harness. Verify the callback against available installed-version help or current documentation before asking the user to register it. If it cannot be verified, label it as the guide's expected callback and ask the user to confirm it against their client; do not silently substitute a URL. The VS Code values in this table are unverified expected callbacks from this guide, not a guarantee for every VS Code version or harness. Confirm the current callback for the actual VS Code MCP client before registration; never use the GitHub Copilot CLI callback for VS Code. The source guide notes that Cursor, VS Code, and Kiro were not validated when it was written. Confirm current support with the agent's documentation if using one of these clients.
 
 Corrections from the current agent documentation:
 
@@ -164,9 +164,7 @@ Use the workspace file by default. Check whether the active Kiro custom agent su
 
 ### Visual Studio Code
 
-Warning: this configuration hasn't been validated yet.
-
-Add a workspace configuration in `.vscode/mcp.json` using VS Code's `servers` format:
+First confirm that the target is **Visual Studio Code**, not a separate GitHub Copilot CLI session. In VS Code, prefer its MCP setup flow so the server is added to the intended harness and scope: open **Chat: Open Customizations** > **MCP Servers** > **Add Server**, or run **MCP: Add Server**. Select the HTTP remote-server option, enter the exact Launchpad MCP endpoint, use `launchpad` as the server ID, and choose the workspace destination when the user requested workspace scope. Review any trust or authentication prompt. The equivalent workspace file is `.vscode/mcp.json`, using VS Code's `servers` format:
 
 ```json
 {
@@ -182,7 +180,11 @@ Add a workspace configuration in `.vscode/mcp.json` using VS Code's `servers` fo
 }
 ```
 
-Alternatively, run **MCP: Add Server** from the Command Palette and configure the remote HTTP server. VS Code opens a browser to authenticate on the first connection. Register the VS Code redirect URLs listed in Section 2 with the Launchpad OAuth client. The Launchpad integration has not been validated; verify the connection in your environment. The [VS Code configuration reference](https://code.visualstudio.com/docs/agents/reference/mcp-configuration) describes both the VS Code and portable formats; do not assume their OAuth fields are interchangeable.
+This is VS Code's configuration format, not the portable Copilot CLI format. Preserve existing server entries and use the exact `oauth.clientId` value for the public Launchpad client. If the installed VS Code version or selected harness rejects or does not recognize this OAuth property, do not switch formats or invent additional fields; inspect the server output and verify the supported schema for that client before changing the configuration. The VS Code guide's callback values in Section 2 are unverified; confirm the callback with current documentation or the actual OAuth flow before asking the user to register it.
+
+Do not instruct a user in VS Code Chat to run `/mcp auth` or `/mcp show`: those are GitHub Copilot CLI commands and require an active `copilot` CLI session. Keep the GitHub Copilot CLI configuration and authentication procedure under its own section.
+
+For official VS Code procedures, see [Add MCP servers](https://code.visualstudio.com/docs/agent-customization/mcp-servers), [Manage and troubleshoot MCP servers](https://code.visualstudio.com/docs/agents/run/manage-mcp-servers), and the [MCP configuration reference](https://code.visualstudio.com/docs/agents/reference/mcp-configuration). The Launchpad integration and callback values have not been validated by this guide; do not claim the setup is working until the authenticated Launchpad tools are visible in the selected VS Code chat harness.
 
 ### Claude Code
 
@@ -271,7 +273,11 @@ Open Cursor's **Customize** page, select the Launchpad MCP server, complete OAut
 
 ### Visual Studio Code
 
-Run **MCP: List Servers** from the Command Palette, select the Launchpad server, and start it if needed. VS Code opens a browser for OAuth on first connection. Confirm the server is running and its tools appear in **Configure Tools** in Chat. The source guide marks the Launchpad integration as unvalidated.
+In the Chat view, select the intended agent harness, then open **Chat: Open Customizations** > **MCP Servers**. Confirm that `launchpad` is present, enabled, and configured for the intended workspace/environment. Start or restart it from the server actions, or run **MCP: List Servers** and select the server. Complete browser sign-in if VS Code prompts for OAuth.
+
+If the server remains at **Starting**, do not keep restarting it or assume the OAuth callback is wrong. Open that server's output from **MCP Servers** and inspect the first connection error. Check, in order: the selected harness and configuration source; workspace trust; the exact HTTPS endpoint and client ID; the OAuth client type, MCP Client setting, authorization-code grant, PKCE, and callback confirmed for this VS Code client; and the server output for authentication or protocol errors. A pre-login HTTP 401 alone does not establish that the endpoint is wrong. Ask the user for only a redacted error excerpt; never request credentials or token-store contents.
+
+Once connected, verify that Launchpad tools are listed and available in the selected chat harness, then make a low-impact tool call if appropriate. A saved config or a **Running** status alone is not proof that the tools are usable. See [Manage and troubleshoot MCP servers](https://code.visualstudio.com/docs/agents/run/manage-mcp-servers) for server controls and output, and keep `/mcp` CLI commands out of VS Code instructions.
 
 ### AWS Kiro CLI
 
