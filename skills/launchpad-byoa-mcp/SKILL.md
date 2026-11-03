@@ -122,7 +122,6 @@ Use the existing effective workspace `opencode.json` or `opencode.jsonc`; if non
 }
 ```
 
-The source guide specifies `oauth.auth_server_metadata_url` as a Launchpad workaround. Preserve this requirement, using the metadata URL from step 3, but verify installed-version support before editing: the public [OpenCode MCP documentation](https://opencode.ai/docs/mcp-servers/) does not document this field or `redirectUri`. If support cannot be verified or the installed build rejects them, stop and report the compatibility blocker; do not silently remove the workaround or claim this template works on every OpenCode version. Authenticate only in step 5.
 
 ### GitHub Copilot CLI
 
