@@ -92,11 +92,14 @@ The plugin uses the host assistant's MCP connection; it does not bundle a separa
 
 ## Configure Launchpad MCP
 
-Prompt your harness to do the installation itself with a simple prompt like:
+Prompt your harness to do the installation itself with a simple initial prompt like:
 
 ```Setup launchpad authoring in this workspace using the guidance in this git repo: https://github.com/pegasystems/pega-launchpad-agent-skills```
 
 Follow the [Launchpad MCP skill guide](skills/launchpad-byoa-mcp/SKILL.md) and the documentation specific to your agent harness to configure Launchpad and connect to its MCP server.
 
-Note: after the mcp authentication step, you may need to reload or restart your harness. If authentication is successful, ask your harness resume the MCP configuration.
+Note: after the mcp authentication step, you may need to reload or restart your harness. If authentication is successful, ask your harness resume the MCP configuration. You can ask the harness to resume with a simple prompt like:
+
+```Continue launchpad authoring setup```
+
 

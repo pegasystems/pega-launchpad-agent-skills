@@ -76,10 +76,10 @@ Use the callback documented for the target agent:
 | Codex | Endpoint-specific; see the Codex note below |
 | Cursor desktop | `http://localhost:8787/callback` |
 | Cursor web and Cloud Agents | `https://www.cursor.com/agents/mcp/oauth/callback` |
-| VS Code | `http://127.0.0.1:33418` and `https://vscode.dev/redirect` |
+| VS Code | Loopback Server: `http://127.0.0.1:33418` (guide's expected value; verify for the installed client); URL Handler: `https://vscode.dev/redirect` |
 | AWS Kiro CLI | `http://localhost:8787/callback` |
 
-Present only the row for the selected harness. Verify the callback against available installed-version help or current documentation before asking the user to register it. If it cannot be verified, label it as the guide's expected callback and ask the user to confirm it against their client; do not silently substitute a URL. The VS Code values in this table are unverified expected callbacks from this guide, not a guarantee for every VS Code version or harness. Confirm the current callback for the actual VS Code MCP client before registration; never use the GitHub Copilot CLI callback for VS Code. The source guide notes that Cursor, VS Code, and Kiro were not validated when it was written. Confirm current support with the agent's documentation if using one of these clients.
+Present only the row for the selected harness. Verify the callback against available installed-version help or current documentation before asking the user to register it. If it cannot be verified, label it as the guide's expected callback and ask the user to confirm it against their client; do not silently substitute a URL. For VS Code, the current implementation uses `https://vscode.dev/redirect` for the URL Handler flow. The guide's `http://127.0.0.1:33418` value is only an expected Loopback Server callback; verify it against the installed client. Register the callback for the flow the user will use, and never use the GitHub Copilot CLI callback for VS Code. The source guide notes that Cursor, VS Code, and Kiro were not validated when it was written. Confirm current support with the agent's documentation if using one of these clients.
 
 Corrections from the current agent documentation:
 
@@ -180,7 +180,9 @@ First confirm that the target is **Visual Studio Code**, not a separate GitHub C
 }
 ```
 
-This is VS Code's configuration format, not the portable Copilot CLI format. Preserve existing server entries and use the exact `oauth.clientId` value for the public Launchpad client. If the installed VS Code version or selected harness rejects or does not recognize this OAuth property, do not switch formats or invent additional fields; inspect the server output and verify the supported schema for that client before changing the configuration. The VS Code guide's callback values in Section 2 are unverified; confirm the callback with current documentation or the actual OAuth flow before asking the user to register it.
+This is VS Code's configuration format, not the portable Copilot CLI format. Preserve existing server entries and use the exact `oauth.clientId` value for the public Launchpad client. If the installed VS Code version or selected harness rejects or does not recognize this OAuth property, do not switch formats or invent additional fields; inspect the server output and verify the supported schema for that client before changing the configuration. The Loopback Server callback in Section 2 is only a guide-expected value and must be confirmed for the installed client; the current VS Code URL Handler flow uses `https://vscode.dev/redirect`.
+
+For OAuth in local desktop VS Code, the default flow is **Loopback Server**. If it fails or is canceled, VS Code may ask whether to try a different way, naming **URL Handler**. To use that alternate flow, select **Yes** in the notification, then complete the browser sign-in and allow the `https://vscode.dev/redirect` callback to return to VS Code. Register `https://vscode.dev/redirect` in the Launchpad OAuth client for this flow. The flow is selected during authentication, not with a `redirectUri` field in `mcp.json`; do not add an undocumented field. If the notification is declined or dismissed, restart the server and retry authentication to get another opportunity to choose the alternate flow.
 
 Do not instruct a user in VS Code Chat to run `/mcp auth` or `/mcp show`: those are GitHub Copilot CLI commands and require an active `copilot` CLI session. Keep the GitHub Copilot CLI configuration and authentication procedure under its own section.
 
@@ -274,6 +276,8 @@ Open Cursor's **Customize** page, select the Launchpad MCP server, complete OAut
 ### Visual Studio Code
 
 In the Chat view, select the intended agent harness, then open **Chat: Open Customizations** > **MCP Servers**. Confirm that `launchpad` is present, enabled, and configured for the intended workspace/environment. Start or restart it from the server actions, or run **MCP: List Servers** and select the server. Complete browser sign-in if VS Code prompts for OAuth.
+
+On local desktop VS Code, the default OAuth attempt uses **Loopback Server**. If it fails or is canceled, accept the prompt asking whether to try a different way (**URL Handler**) by selecting **Yes**. Complete sign-in in the browser and allow `https://vscode.dev/redirect` to return to VS Code. If the prompt was declined or dismissed, restart the MCP server and retry authentication. The URL Handler callback must be registered on the Launchpad OAuth client; it is not configured in `.vscode/mcp.json`.
 
 If the server remains at **Starting**, do not keep restarting it or assume the OAuth callback is wrong. Open that server's output from **MCP Servers** and inspect the first connection error. Check, in order: the selected harness and configuration source; workspace trust; the exact HTTPS endpoint and client ID; the OAuth client type, MCP Client setting, authorization-code grant, PKCE, and callback confirmed for this VS Code client; and the server output for authentication or protocol errors. A pre-login HTTP 401 alone does not establish that the endpoint is wrong. Ask the user for only a redacted error excerpt; never request credentials or token-store contents.
 
