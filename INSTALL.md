@@ -1,4 +1,4 @@
-# Install LaunchPad Agent Helpers
+# Install Launchpad Agent Helpers
 
 This guide covers installing the two independent offerings in this repository. For a product overview and the skills catalog, see [README.md](README.md).
 
@@ -6,11 +6,11 @@ This guide covers installing the two independent offerings in this repository. F
 
 | If you want to... | Install |
 | --- | --- |
-| Get task-specific help with LaunchPad development in your coding assistant | One or more **LaunchPad agent skills** |
-| Have an assistant guide a Custom UX component from app discovery through publishing | The **LaunchPad UX Builder plugin** |
-| Get both general LaunchPad guidance and the guided Custom UX workflow | Both |
+| Get task-specific help with Launchpad development in your coding assistant | One or more **Launchpad agent skills** |
+| Have an assistant guide a Custom UX component from app discovery through publishing | The **Launchpad UX Builder plugin** |
+| Get both general Launchpad guidance and the guided Custom UX workflow | Both |
 
-## Install LaunchPad agent skills
+## Install Launchpad agent skills
 
 Each skill is a folder under [`skills/`](skills/) containing a `SKILL.md` and, in some cases, supporting references or assets. Install a skill folder in the discovery location used by your coding assistant. Keep the whole folder together so the skill can access its supporting files.
 
@@ -58,12 +58,12 @@ For example, to add `launchpad-webembed` to a project for GitHub Copilot, copy t
 
 Restart or reload the assistant if it does not discover a newly installed or updated skill. Once installed, ask a task that matches the skill, or invoke it by name if your assistant supports that.
 
-## Install the LaunchPad UX Builder plugin
+## Install the Launchpad UX Builder plugin
 
 The plugin bundles the `launchpad-ux-custom-builder` skill, templates, and its guided build-and-publish workflow. It requires:
 
-- An assistant that supports Agent Plugins and can connect to LaunchPad through MCP.
-- Access to a LaunchPad environment and permission to publish Custom UX components.
+- An assistant that supports Agent Plugins and can connect to Launchpad through MCP.
+- Access to a Launchpad environment and permission to publish Custom UX components.
 - Node.js, npm, and network access for the DXCB dependencies and publishing workflow.
 
 Install the directory containing `plugin.json` using your assistant's Agent Plugin mechanism. For a local checkout in VS Code, add the plugin root to `chat.pluginLocations` in your settings:
@@ -84,6 +84,6 @@ Build a custom UX component for my Launchpad app.
 
 The plugin uses the host assistant's MCP connection; it does not bundle a separate MCP server. See the [UX Builder plugin guide](plugins/launchpad-ux-builder/README.md) for host-specific behavior, MCP configuration, and workflow details.
 
-## Configure LaunchPad MCP
+## Configure Launchpad MCP
 
-Installing a skill or plugin does not by itself connect your coding assistant to a LaunchPad environment. For MCP setup, use the [LaunchPad MCP skill guide](skills/launchpad-byoa-mcp/SKILL.md) and the documentation for your assistant. The UX Builder workflow can help configure or verify the connection it needs.
+Installing a skill or plugin does not by itself connect your coding assistant to a Launchpad environment. For MCP setup, use the [Launchpad MCP skill guide](skills/launchpad-byoa-mcp/SKILL.md) and the documentation for your assistant. The UX Builder workflow can help configure or verify the connection it needs.

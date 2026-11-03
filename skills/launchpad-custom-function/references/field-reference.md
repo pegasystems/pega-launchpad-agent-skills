@@ -21,11 +21,11 @@ UI representation of keys defined JSON.
 
 
 ### Record types
-LaunchPad Field with mode of `SingleRecord` or `ListOfRecord` are object or colection inputs. To determine the set of 
-Fields that can be accessed see the Fields defined in the Field's RecordClass 
+Launchpad Field with mode of `SingleRecord` or `ListOfRecord` are object or colection inputs. To determine the set of
+Fields that can be accessed see the Fields defined in the Field's RecordClass
 
 ## Formats
-Since the reference to the LaunchPad field comes as JSON key you MUST combine them using one of the following formats:
+Since the reference to the Launchpad field comes as JSON key you MUST combine them using one of the following formats:
 - CAMEL_CASE
     - lowercase Namespace
     - lowercase RuleResolutionID with the first letter capitalized
@@ -42,4 +42,3 @@ The DOUBLE_UNDERSCORE is the default format.
 
 ### JVM
 Use `@Field` annotation for Java based languages
-

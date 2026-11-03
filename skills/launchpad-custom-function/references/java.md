@@ -1,12 +1,12 @@
 ## Java
-LaunchPad supports Java code compiled using Java 11 code or earlier. 
-Code written with later version of the JDK will not execute, LaunchPad only support Java 11 JVM.
+Launchpad supports Java code compiled using Java 11 code or earlier.
+Code written with later version of the JDK will not execute, Launchpad only support Java 11 JVM.
 
 ## Code Bundle
 The Code Bundle refers to the Java JAR file.
 
 ## Function handle
-LaunchPad's function handle when using Java takes the form of
+Launchpad's function handle when using Java takes the form of
 - The package name
 - The Class name
 - :: delimiter
@@ -15,7 +15,7 @@ LaunchPad's function handle when using Java takes the form of
 
 ## Input
 For Java methods that require an Object as input you MUST use the @Field annotation on the 
-variables defined on the Object. Using Jackson the annotation helps map the LaunchPad field to the
+variables defined on the Object. Using Jackson the annotation helps map the Launchpad field to the
 appropriate Java variable and visa versa.
 ``` java
 
@@ -63,7 +63,7 @@ class UPlusCalculator {
 }
 ```
 
-The LaunchPad function handler would be defined as
+The Launchpad function handler would be defined as
 ```
     com.pega.uplus.UPlusCalculator::compute
 ```
@@ -99,7 +99,7 @@ class UPlusCalculator {
 }
 ```
 
-The LaunchPad function handler would be defined as
+The Launchpad function handler would be defined as
 ```
     com.pega.uplus.obj.UPlusCalculator::compute
 ```

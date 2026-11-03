@@ -1,6 +1,6 @@
 # Repository guidance
 
-This repository contains reusable LaunchPad agent skills and a UX Builder
+This repository contains reusable Launchpad agent skills and a UX Builder
 plugin. Keep this file to repository-level guidance; use the linked guides for
 workflow-specific steps.
 
@@ -10,9 +10,9 @@ For available skills, see [`README.md`](README.md) and their `SKILL.md`
 files. For supported installation options, see [`INSTALL.md`](INSTALL.md).
 Skill installation is separate from configuring an MCP server.
 
-## LaunchPad MCP
+## Launchpad MCP
 
-For connecting a coding tool to LaunchPad or troubleshooting MCP setup, follow
+For connecting a coding tool to Launchpad or troubleshooting MCP setup, follow
 [`skills/launchpad-byoa-mcp/SKILL.md`](skills/launchpad-byoa-mcp/SKILL.md) and
 the selected tool's official documentation.
 
