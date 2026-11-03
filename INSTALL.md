@@ -98,3 +98,5 @@ Prompt your harness to do the installation itself with a simple prompt like:
 
 Follow the [Launchpad MCP skill guide](skills/launchpad-byoa-mcp/SKILL.md) and the documentation specific to your agent harness to configure Launchpad and connect to its MCP server.
 
+Note: after the mcp authentication step, you may need to reload or restart your harness. If authentication is successful, ask your harness resume the MCP configuration.
+
