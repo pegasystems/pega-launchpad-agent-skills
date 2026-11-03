@@ -14,7 +14,13 @@ This guide covers installing the two independent offerings in this repository. F
 
 Each skill is a folder under [`skills/`](skills/) containing a `SKILL.md` and, in some cases, supporting references or assets. Install a skill folder in the discovery location used by your coding assistant. Keep the whole folder together so the skill can access its supporting files.
 
-### Install from the skills CLI
+### Install with the help of your agent harness
+
+Prompt your harness to do the installation itself with a simple prompt like:
+
+```Setup launchpad skills in this workspace using the guidance in this git repo: https://github.com/pegasystems/pega-launchpad-agent-skills```
+
+### Install using the skills CLI
 
 With Node.js available, install one skill from this repository:
 
@@ -86,11 +92,9 @@ The plugin uses the host assistant's MCP connection; it does not bundle a separa
 
 ## Configure Launchpad MCP
 
-With Node.js available, first install the skill from this repository:
+Prompt your harness to do the installation itself with a simple prompt like:
 
-```bash
-npx skills add https://github.com/pegasystems/pega-launchpad-agent-skills --skill launchpad-byoa-mcp
-```
+```Setup launchpad authoring in this workspace using the guidance in this git repo: https://github.com/pegasystems/pega-launchpad-agent-skills```
 
-Then, use that [Launchpad MCP skill guide](skills/launchpad-byoa-mcp/SKILL.md) and the documentation specific to your agent harness to configure Launchpad and connect to its MCP server.
+Follow the [Launchpad MCP skill guide](skills/launchpad-byoa-mcp/SKILL.md) and the documentation specific to your agent harness to configure Launchpad and connect to its MCP server.
 
