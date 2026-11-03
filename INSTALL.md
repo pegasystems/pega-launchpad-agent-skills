@@ -86,4 +86,11 @@ The plugin uses the host assistant's MCP connection; it does not bundle a separa
 
 ## Configure Launchpad MCP
 
-Installing a skill or plugin does not by itself connect your coding assistant to a Launchpad environment. For MCP setup, use the [Launchpad MCP skill guide](skills/launchpad-byoa-mcp/SKILL.md) and the documentation for your assistant. The UX Builder workflow can help configure or verify the connection it needs.
+With Node.js available, first install the skill from this repository:
+
+```bash
+npx skills add https://github.com/pegasystems/pega-launchpad-agent-skills --skill launchpad-byoa-mcp
+```
+
+Then, use that [Launchpad MCP skill guide](skills/launchpad-byoa-mcp/SKILL.md) and the documentation specific to your agent harness to configure Launchpad and connect to its MCP server.
+
