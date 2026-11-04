@@ -36,7 +36,7 @@ npx skills add https://github.com/pegasystems/pega-launchpad-agent-skills
 
 Available skills:
 
-- `launchpad-byoa-mcp`
+- `launchpad-byoa-mcp-initial-setup`
 - `launchpad-custom-function`
 - `launchpad-dx-apis`
 - `launchpad-ux-custom-components`
@@ -96,10 +96,9 @@ Prompt your harness to do the installation itself with a simple initial prompt l
 
 ```Setup launchpad authoring in this workspace using the guidance in this git repo: https://github.com/pegasystems/pega-launchpad-agent-skills```
 
-Follow the [Launchpad MCP skill guide](skills/launchpad-byoa-mcp/SKILL.md) and the documentation specific to your agent harness to configure Launchpad and connect to its MCP server.
+Follow the [Launchpad MCP initial setup guide](skills/launchpad-byoa-mcp-initial-setup/SKILL.md) and the documentation specific to your agent harness to configure Launchpad and connect to its MCP server.
 
 Note: after the mcp authentication step, you may need to reload or restart your harness. If authentication is successful, ask your harness resume the MCP configuration. You can ask the harness to resume with a simple prompt like:
 
 ```Continue launchpad authoring setup```
-
 

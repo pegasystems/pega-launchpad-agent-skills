@@ -1,11 +1,11 @@
 ---
-name: launchpad-byoa-mcp
-description: 'Set up or troubleshoot a Launchpad authoring MCP connection for a local coding assistant, including Claude Code, OpenCode, Copilot, Cursor, Codex, VS Code, and Kiro. Use for OAuth registration, endpoint selection, client configuration, sign-in, connection verification, or retrieving Launchpad authoring skills from MCP. Not for the built-in Launchpad AI Assistant or customer-facing contexts.'
+name: launchpad-byoa-mcp-initial-setup
+description: 'Guide the initial setup and configuration of a Launchpad authoring MCP connection for a local coding assistant, including Claude Code, OpenCode, Copilot, Cursor, Codex, VS Code, and Kiro. Use for OAuth registration, endpoint selection, client configuration, sign-in, connection verification, setup troubleshooting, and retrieving Launchpad authoring skills. Not for ongoing Launchpad development, the built-in Launchpad AI Assistant, or customer-facing contexts.'
 ---
 
-# Bring Your Agent: Set Up Launchpad Vibe Coding
+# Initial Setup: Connect an Agent to Launchpad Authoring MCP
 
-Use this procedure to connect a local coding assistant to Launchpad for authoring, retrieve additional authoring skills from its MCP server, or troubleshoot an existing connection. It is intended for both people and agents; no plugin is required. Installing this skill does not configure MCP.
+Use this one-time procedure to configure a local coding assistant's connection to Launchpad for authoring, authenticate it, verify access, and retrieve additional authoring skills from its MCP server. It is intended for both people and agents; no plugin is required. Installing this skill does not configure MCP. Once setup is complete, this skill is generally not needed for ongoing Launchpad app development.
 
 ## Start Here
 
@@ -16,10 +16,10 @@ Use this procedure to connect a local coding assistant to Launchpad for authorin
 Open the destination workspace in your coding agent and ask:
 
 ```text
-Use the installed launchpad-byoa-mcp/SKILL.md to guide me through
-OAuth registration, MCP endpoint calculation, agent configuration,
-authentication, verification, and retrieving the additional Launchpad
-authoring skills from the connected MCP server.
+Use the installed launchpad-byoa-mcp-initial-setup/SKILL.md to guide me
+through initial OAuth registration, MCP endpoint calculation, agent
+configuration, authentication, verification, and retrieving the additional
+Launchpad authoring skills from the connected MCP server.
 ```
 
 Have your Launchpad application URL (or explicit MCP endpoint for a custom deployment) and access to **Administrator Setup** available. The agent needs permission to read and edit the selected harness's configuration. Shell access helps with validation and authentication, but browser login remains your action. Do not provide passwords, client secrets, or tokens to the agent. In command examples, replace the entire `<placeholder>` with a properly quoted value for your shell; do not enter the angle brackets literally.
@@ -315,4 +315,4 @@ If resuming this step, check the destination and continue from the first incompl
 
 ## Distribution Notes
 
-Distribute this file with any supporting files in the `launchpad-byoa-mcp/` skill directory. Do not bundle workspace MCP configuration, OAuth credentials, authentication caches, staging files, or backups. Installing the files alone does not guarantee the assistant has discovered them.
+Distribute this file with any supporting files in the `launchpad-byoa-mcp-initial-setup/` skill directory. Do not bundle workspace MCP configuration, OAuth credentials, authentication caches, staging files, or backups. Installing the files alone does not guarantee the assistant has discovered them.

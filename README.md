@@ -21,7 +21,7 @@ This repository offers two complementary helpers. They are separate and can be i
 
 The standalone skills are reusable across supported AI coding tools. Browse the collection:
 
-- [Connecting Launchpad to MCP-capable tools](skills/launchpad-byoa-mcp/SKILL.md)
+- [Initial setup for connecting Launchpad to MCP-capable tools](skills/launchpad-byoa-mcp-initial-setup/SKILL.md)
 - [Calling Launchpad via DX APIs](skills/launchpad-dx-apis/SKILL.md)
 - [Embedding Launchpad with Web Embed](skills/launchpad-webembed/SKILL.md)
 - [Creating Custom UX components](skills/launchpad-ux-custom-components/SKILL.md)

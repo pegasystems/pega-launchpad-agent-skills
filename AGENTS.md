@@ -12,9 +12,9 @@ Skill installation is separate from configuring an MCP server.
 
 ## Launchpad MCP
 
-For connecting a coding tool to Launchpad or troubleshooting MCP setup, follow
-[`skills/launchpad-byoa-mcp/SKILL.md`](skills/launchpad-byoa-mcp/SKILL.md) and
-the selected tool's official documentation.
+For initial setup or troubleshooting of a coding tool's Launchpad MCP
+connection, follow [`skills/launchpad-byoa-mcp-initial-setup/SKILL.md`](skills/launchpad-byoa-mcp-initial-setup/SKILL.md)
+and the selected tool's official documentation.
 
 ## UX Builder
 
