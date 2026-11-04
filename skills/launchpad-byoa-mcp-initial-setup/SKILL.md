@@ -76,10 +76,10 @@ Use the callback documented for the target agent:
 | Codex | Endpoint-specific; see the Codex note below |
 | Cursor desktop | `http://localhost:8787/callback` |
 | Cursor web and Cloud Agents | `https://www.cursor.com/agents/mcp/oauth/callback` |
-| VS Code | Loopback Server: `http://127.0.0.1:33418` (guide's expected value; verify for the installed client); URL Handler: `https://vscode.dev/redirect` |
+| VS Code | Loopback Server: `http://127.0.0.1:33418/` (the trailing slash is required, emphasize that to the user when registering the callback); URL Handler: `https://vscode.dev/redirect` |
 | AWS Kiro CLI | `http://localhost:8787/callback` |
 
-Present only the row for the selected harness. Verify the callback against available installed-version help or current documentation before asking the user to register it. If it cannot be verified, label it as the guide's expected callback and ask the user to confirm it against their client; do not silently substitute a URL. For VS Code, the current implementation uses `https://vscode.dev/redirect` for the URL Handler flow. The guide's `http://127.0.0.1:33418` value is only an expected Loopback Server callback; verify it against the installed client. Register the callback for the flow the user will use, and never use the GitHub Copilot CLI callback for VS Code. The source guide notes that Cursor, VS Code, and Kiro were not validated when it was written. Confirm current support with the agent's documentation if using one of these clients.
+Present only the row for the selected harness. Verify the callback against available installed-version help or current documentation before asking the user to register it. If it cannot be verified, label it as the guide's expected callback and ask the user to confirm it against their client; do not silently substitute a URL. For VS Code, the current implementation uses `https://vscode.dev/redirect` for the URL Handler flow. The guide's `http://127.0.0.1:33418/` value is only an expected Loopback Server callback; verify it against the installed client. Register the callback for the flow the user will use, and never use the GitHub Copilot CLI callback for VS Code. Confirm current support with the agent's documentation if using one of these clients.
 
 Corrections from the current agent documentation:
 
