@@ -1,5 +1,5 @@
 ## NodeJS
-LaunchPad support NodeJS 20
+Launchpad support NodeJS 20
 
 ## Code Bundle
 A zip file containing all the Node file(s).
@@ -31,6 +31,5 @@ export const processInput = async (event) => {
   };
 
 ```
-
 
 

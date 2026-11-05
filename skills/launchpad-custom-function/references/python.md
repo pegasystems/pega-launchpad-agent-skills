@@ -27,7 +27,7 @@ def compute(rhs: int, lhs: int):
     }
 ```
 
-LaunchPad handler for the function
+Launchpad handler for the function
 ```
 uplus_function.compute
 ```
