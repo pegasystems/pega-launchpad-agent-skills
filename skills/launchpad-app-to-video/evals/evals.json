@@ -1,0 +1,46 @@
+[
+  {
+    "id": "promo-video",
+    "question": "Make a promo video for my Launchpad app.",
+    "expectedSkills": [
+      "launchpad-app-to-video"
+    ],
+    "mustMention": [
+      "HyperFrames",
+      "Launchpad MCP",
+      "Node.js 22",
+      "FFmpeg"
+    ],
+    "mustNotMention": [
+      "MusicGen",
+      "GDPR certified",
+      "HIPAA certified"
+    ]
+  },
+  {
+    "id": "teaser-music",
+    "question": "Create a 45-second teaser for my Launchpad claims app with background music.",
+    "expectedSkills": [
+      "launchpad-app-to-video"
+    ],
+    "mustMention": [
+      "HeyGen",
+      "commercial use",
+      "licence",
+      "CREDITS.md"
+    ],
+    "mustNotMention": [
+      "MusicGen",
+      "Lyria"
+    ]
+  },
+  {
+    "id": "not-a-video",
+    "question": "Build a Launchpad case type for expense approvals.",
+    "expectedSkills": [],
+    "mustNotMention": [
+      "HyperFrames",
+      "teaser video"
+    ]
+  }
+]

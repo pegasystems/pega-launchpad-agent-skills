@@ -36,6 +36,7 @@ npx skills add https://github.com/pegasystems/pega-launchpad-agent-skills
 
 Available skills:
 
+- `launchpad-app-to-video` (also needs the [HyperFrames](https://github.com/heygen-com/hyperframes) skills, installed separately)
 - `launchpad-byoa-mcp-initial-setup`
 - `launchpad-custom-function`
 - `launchpad-dx-apis`
