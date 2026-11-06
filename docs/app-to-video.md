@@ -4,7 +4,7 @@ The `launchpad-app-to-video` skill turns a Pega Launchpad application into a 30-
 
 The result is a marketing film for an enterprise buyer: it opens on an outcome, shows the product working in real UI, and closes on why the app is a safe choice. Every on-screen claim traces back to the app's rules or to something you told the assistant.
 
-For the full instructions the assistant follows, see [SKILL.md](SKILL.md).
+For the full instructions the assistant follows, see [SKILL.md](../skills/launchpad-app-to-video/SKILL.md).
 
 ## What you need
 
@@ -28,7 +28,7 @@ Or use the skills CLI (requires Node.js):
 npx skills add https://github.com/pegasystems/pega-launchpad-agent-skills --skill launchpad-app-to-video
 ```
 
-Or copy the whole `skills/launchpad-app-to-video/` folder into your assistant's skills location (for example `.claude/skills/`, `.github/skills/`, or `.cursor/skills/`). Keep the folder together so the skill can find `references/voiceover.md`. See [INSTALL.md](../../INSTALL.md#install-manually) for every assistant's location.
+Or copy the whole `skills/launchpad-app-to-video/` folder into your assistant's skills location (for example `.claude/skills/`, `.github/skills/`, or `.cursor/skills/`). Keep the folder together so the skill can find `references/voiceover.md`. See [INSTALL.md](../INSTALL.md#install-manually) for every assistant's location.
 
 Restart or reload your assistant if it does not pick up the new skill. That is all the setup you do up front.
 
