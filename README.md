@@ -27,7 +27,7 @@ The standalone skills are reusable across supported AI coding tools. Browse the 
 - [Creating Custom UX components](skills/launchpad-ux-custom-components/SKILL.md)
 - [Creating custom functions](skills/launchpad-custom-function/SKILL.md)
 - [Building custom React front ends](skills/launchpad-ux-custom-frontend/SKILL.md)
-- [Turning a Launchpad app into a video](skills/launchpad-app-to-video/SKILL.md)
+- [Turning a Launchpad app into a video](skills/launchpad-app-to-video/app-to-video.md)
 
 ### Launchpad UX Builder plugin
 
