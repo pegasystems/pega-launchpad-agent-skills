@@ -1,0 +1,44 @@
+[
+  {
+    "id": "home-page",
+    "question": "Make a home page for my Launchpad app.",
+    "expectedSkills": [
+      "launchpad-app-to-homepage"
+    ],
+    "mustMention": [
+      "Launchpad MCP",
+      "Node",
+      "check_site.mjs"
+    ],
+    "mustNotMention": [
+      "GDPR certified",
+      "HIPAA certified",
+      "Built on Pega Launchpad"
+    ]
+  },
+  {
+    "id": "landing-page-ai",
+    "question": "Build an AI-first marketing landing page for my Launchpad claims app.",
+    "expectedSkills": [
+      "launchpad-app-to-homepage"
+    ],
+    "mustMention": [
+      "AI inventory",
+      "human",
+      "Illustrative"
+    ],
+    "mustNotMention": [
+      "autonomous",
+      "aggregateRating"
+    ]
+  },
+  {
+    "id": "not-a-home-page",
+    "question": "Build a Launchpad case type for expense approvals.",
+    "expectedSkills": [],
+    "mustNotMention": [
+      "check_site.mjs",
+      "home page"
+    ]
+  }
+]
