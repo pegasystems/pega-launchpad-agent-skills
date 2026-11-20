@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launchpad Learn</title>
+<style>
+  :root{
+    --bg:#f5f6fa; --panel:#fff; --ink:#1d2433; --muted:#5f6b7f; --line:#e3e6ee;
+    --nav:#141b2d; --nav2:#1d2640; --navink:#c9d1e4;
+    --accent:#5b4bdb; --accent2:#ece9ff; --ok:#13865a; --okbg:#e3f6ee; --bad:#c23b3b; --badbg:#fdeaea;
+    --case:#2f6fdb; --data:#0f8f7e; --persona:#b0569d; --warn:#a86a00; --warnbg:#fff4dc;
+    --code:#0f1424; --codeink:#d6def5;
+    --r:12px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);display:flex;min-height:100vh}
+  a{color:var(--accent)}
+  code{font:13px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;background:#eef0f6;padding:1px 5px;border-radius:5px}
+  /* sidebar */
+  aside{width:290px;flex:none;background:var(--nav);color:var(--navink);position:sticky;top:0;height:100vh;overflow:auto;display:flex;flex-direction:column}
+  .brand{padding:22px 20px 14px;display:flex;gap:10px;align-items:center}
+  .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#7b6bff,#3fc3c9);display:grid;place-items:center;color:#fff;font-weight:800}
+  .brand b{color:#fff;font-size:16px;display:block;line-height:1.1}
+  .brand span{font-size:12px;opacity:.7}
+  .prog{margin:4px 20px 14px}
+  .bar{height:6px;background:#2a3456;border-radius:6px;overflow:hidden}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,#7b6bff,#3fc3c9);width:0;transition:width .4s}
+  .prog small{display:block;margin-top:6px;font-size:12px;opacity:.75}
+  nav a{display:flex;gap:12px;align-items:center;padding:10px 20px;color:var(--navink);text-decoration:none;border-left:3px solid transparent}
+  nav a:hover{background:var(--nav2)}
+  nav a.on{background:var(--nav2);border-left-color:#7b6bff;color:#fff}
+  .num{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:12px;font-weight:700;background:#2a3456}
+  .done .num{background:var(--ok);color:#fff}
+  nav a small{display:block;font-size:11.5px;opacity:.65;line-height:1.3}
+  .navsep{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.5;padding:16px 20px 6px}
+  .appctx{margin:auto 14px 16px;padding:12px;border-radius:10px;background:var(--nav2);font-size:12px}
+  .appctx b{color:#fff}
+  /* main */
+  main{flex:1;min-width:0;padding:34px 48px 80px;max-width:1020px}
+  .crumb{font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  h1{font-size:30px;margin:4px 0 4px;line-height:1.2}
+  .sub{color:var(--muted);margin:0 0 6px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 24px}
+  .chip{font-size:12.5px;padding:3px 10px;border-radius:20px;background:var(--accent2);color:var(--accent);font-weight:600}
+  .chip.grey{background:#eceef4;color:var(--muted)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px 26px;margin:0 0 18px}
+  .card h2{font-size:19px;margin:0 0 10px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-bottom:2px solid var(--line);padding:8px 10px}
+  td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  .pill{font-size:12px;font-weight:700;padding:2px 9px;border-radius:12px;color:#fff;white-space:nowrap}
+  .pill.case{background:var(--case)} .pill.data{background:var(--data)} .pill.persona{background:var(--persona)}
+  .callout{border-radius:var(--r);padding:16px 20px;margin:0 0 18px;border:1px solid}
+  .callout.tip{background:var(--accent2);border-color:#d6d0ff}
+  .callout.found{background:var(--warnbg);border-color:#f2dca6}
+  .callout.found:before{content:"🔎 Found in your app";display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--warn);margin-bottom:4px}
+  .callout.tip:before{content:"💡 Tip";display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:4px}
+  .callout ul{margin:6px 0}
+  pre.json{background:var(--code);color:var(--codeink);border-radius:10px;padding:16px 18px;overflow:auto;font:12.8px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;margin:8px 0 0}
+  pre.py{background:#f3f1ff;border-radius:8px;padding:10px 14px;font:12.8px/1.5 ui-monospace,Consolas,monospace;margin:6px 0;overflow:auto}
+  .k{color:#9cc4ff}.s{color:#b6e3a1}.n{color:#ffc58a}.b{color:#ff9ac1}
+  .caption{font-size:12.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  .codewrap{position:relative}
+  .copy{position:absolute;top:8px;right:8px;font-size:11.5px;background:#2a3456;color:#fff;border:0;border-radius:6px;padding:4px 9px;cursor:pointer;opacity:.8}
+  .notes{margin:14px 0 0;padding-left:20px}.notes li{margin:4px 0}
+  .hier{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0;color:var(--muted);font-weight:700}
+  .hier span{background:var(--accent2);color:var(--accent);padding:5px 12px;border-radius:8px}
+  /* lifecycle */
+  .lane{display:flex;gap:6px;align-items:stretch;flex-wrap:wrap;margin:6px 0 14px}
+  .lanelbl{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .stage{flex:1;min-width:140px;background:#fff;border:1px solid var(--line);border-top:4px solid var(--case);border-radius:8px;padding:10px 12px;position:relative}
+  .stage b{display:block;font-size:14px}
+  .stage small{font-size:11.5px;color:var(--muted)}
+  .stage.alt{border-top-color:#9aa3b5}
+  .stage.res{border-top-color:var(--ok)}
+  /* flow */
+  .node{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:20px;font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff}
+  .node.start,.node.end{background:#eceef4}
+  .node.auto{background:#e7f0ff;border-color:#c9dafc}
+  .node.decision{background:#fff1d9;border-color:#f2d59c}
+  .node.goto{background:#f3eefa;border-color:#e0d3f3}
+  .node.assign{background:#e3f6ee;border-color:#b8e6d1}
+  .arrow{color:var(--muted);margin:0 4px}
+  .spine{display:flex;flex-wrap:wrap;align-items:center;gap:2px;margin:10px 0}
+  .branch{display:flex;align-items:center;flex-wrap:wrap;gap:2px;margin:6px 0 6px 40px}
+  .blabel{font-size:12px;font-weight:700;min-width:110px;color:var(--warn)}
+  .legend{font-size:12px;color:var(--muted);margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+  /* handson */
+  .steps{list-style:none;padding:0;margin:0}
+  .steps li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .steps li:last-child{border:0}
+  .steps input{margin-top:5px;width:17px;height:17px;accent-color:var(--accent)}
+  .steps li.ck span{color:var(--muted);text-decoration:line-through}
+  /* quiz */
+  .quiz h2:before{content:"✅ "}
+  .q{border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0}
+  .q .qt{font-weight:650;margin-bottom:10px}
+  .opt{display:block;width:100%;text-align:left;padding:10px 14px;margin:6px 0;border:1px solid var(--line);border-radius:8px;background:#fafbfd;cursor:pointer;font:inherit;color:inherit}
+  .opt:hover{border-color:var(--accent)}
+  .opt.right{background:var(--okbg);border-color:var(--ok)}
+  .opt.wrong{background:var(--badbg);border-color:var(--bad)}
+  .why{font-size:13.5px;margin-top:6px;padding:8px 12px;border-radius:8px}
+  .why.right{background:var(--okbg);color:#0c5e3f}.why.wrong{background:var(--badbg);color:#8d2727}
+  .cls{display:grid;grid-template-columns:1fr 180px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+  .cls:last-of-type{border:0}
+  select{font:inherit;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:#fff}
+  select.right{border-color:var(--ok);background:var(--okbg)} select.wrong{border-color:var(--bad);background:var(--badbg)}
+  .btn{font:inherit;font-weight:650;border:0;border-radius:9px;padding:9px 18px;background:var(--accent);color:#fff;cursor:pointer}
+  .btn.ghost{background:#fff;color:var(--accent);border:1px solid #d6d0ff}
+  .btn:disabled{opacity:.45;cursor:default}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .banner{background:linear-gradient(90deg,#e6fff3,#eef2ff);border:1px solid #b8e6d1;border-radius:var(--r);padding:16px 20px;margin:18px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  textarea{width:100%;min-height:80px;font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+  .mcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;text-decoration:none;color:inherit;display:block;transition:transform .12s,box-shadow .12s}
+  .mcard:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(30,40,80,.08)}
+  .mcard .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .mcard h3{margin:0;font-size:16px}
+  .mcard p{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+  .status{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:10px;background:#eceef4;color:var(--muted)}
+  .status.done{background:var(--okbg);color:var(--ok)}
+  .status.prog{background:var(--warnbg);color:var(--warn)}
+  .gl dt{font-weight:700;margin-top:12px}.gl dd{margin:2px 0 0;color:var(--muted)}
+  .search{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-bottom:6px}
+  .toast{position:fixed;bottom:22px;right:22px;background:var(--nav);color:#fff;padding:10px 16px;border-radius:9px;opacity:0;transition:opacity .25s;pointer-events:none}
+  .toast.on{opacity:1}
+  .layers{margin:10px 0}.layer{padding:10px 14px;border-radius:8px;font-weight:650;margin:4px 0}
+  .layer.app{background:#e7f0ff;color:var(--case)}.layer.plat{background:#eceef4;color:var(--muted)}
+  @media (max-width:860px){body{display:block}aside{position:static;width:auto;height:auto}main{padding:24px 18px}}
+</style>
+</head>
+<body>
+<aside>
+  <div class="brand"><div class="logo">L</div><div><b>Launchpad Learn</b><span id="aud"></span></div></div>
+  <div class="prog"><div class="bar"><i id="pbar"></i></div><small id="ptext"></small></div>
+  <nav id="nav"></nav>
+  <div class="appctx" id="appctx"></div>
+</aside>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+
+<script src="course.js"></script>
+<script>
+(() => {
+  const C = window.COURSE;
+  document.title = C.title || 'Launchpad Learn';
+  document.getElementById('aud').textContent = C.audience || 'Launchpad course';
+  const KEY = "launchpad-learn:" + (C.app && C.app.name || "course");
+  const S = Object.assign({answers:{}, checks:{}, notes:{}}, JSON.parse(localStorage.getItem(KEY) || "{}"));
+  const save = () => localStorage.setItem(KEY, JSON.stringify(S));
+  const $ = (s, el=document) => el.querySelector(s);
+  const esc = t => String(t)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+  const toast = m => { const t=$("#toast"); t.textContent=m; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1600); };
+
+  const hl = code => esc(code).replace(
+    /("(?:\\.|[^"\\])*")(\s*:)?|\b(true|false|null)\b|(-?\b\d+(?:\.\d+)?\b)/g,
+    (m, str, colon, bool, num) => str ? (colon ? `<span class="k">${str}</span>${colon}` : `<span class="s">${str}</span>`)
+      : bool ? `<span class="b">${bool}</span>` : `<span class="n">${num}</span>`);
+
+  // ---------- progress ----------
+  const isRight = q => {
+    const a = S.answers[q.id];
+    if (a == null) return false;
+    if (q.type === "mcq") return !!q.options[a]?.correct;
+    return a.checked && q.items.every((it,i) => a.sel[i] === it.answer);
+  };
+  const modState = m => {
+    if (!m.ready || !m.quiz) return "todo";
+    const n = m.quiz.filter(isRight).length;
+    return n === m.quiz.length ? "done" : (n || Object.keys(S.checks).some(k=>k.startsWith(m.id)) ? "prog" : "todo");
+  };
+  const progress = () => {
+    const ms = C.modules.filter(m=>m.ready);
+    const done = ms.filter(m=>modState(m)==="done").length;
+    $("#pbar").style.width = (100*done/C.modules.length)+"%";
+    $("#ptext").textContent = `${done} of ${C.modules.length} modules complete`;
+  };
+
+  // ---------- nav ----------
+  const renderNav = cur => {
+    $("#nav").innerHTML =
+      `<a href="#home" class="${cur==='home'?'on':''}"><span class="num">⌂</span><span>Home</span></a>
+       <div class="navsep">Modules</div>` +
+      C.modules.map(m => `<a href="#${m.id}" class="${cur===m.id?'on':''} ${modState(m)==='done'?'done':''}">
+         <span class="num">${modState(m)==='done'?'✓':m.num}</span>
+         <span>${esc(m.title)}<small>${esc(m.subtitle)}</small></span></a>`).join("") +
+      `<div class="navsep">Reference</div>
+       <a href="#glossary" class="${cur==='glossary'?'on':''}"><span class="num">≡</span><span>Glossary</span></a>`;
+    $("#appctx").innerHTML = `Learning on<br><b>${esc(C.app.name)}</b><br>branch <code style="background:#2a3456;color:#fff">${esc(C.app.branch)}</code>`;
+    progress();
+  };
+
+  // ---------- section renderers ----------
+  const R = {
+    text: s => `<div class="card">${s.title?`<h2>${s.title}</h2>`:""}${s.html}</div>`,
+    table: s => `<div class="card">${s.title?`<h2>${s.title}</h2>`:""}<table><thead><tr>${s.headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead>
+      <tbody>${s.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`,
+    callout: s => `<div class="callout ${s.kind||'tip'}">${s.html}</div>`,
+    code: (s, k) => `<div class="card">${s.caption?`<div class="caption">${s.caption}</div>`:""}
+      <div class="codewrap"><button class="copy" data-copy="${k}">Copy</button><pre class="json">${hl(s.code)}</pre></div>
+      ${s.notes?`<ul class="notes">${s.notes.map(n=>`<li>${n}</li>`).join("")}</ul>`:""}</div>`,
+    lifecycle: s => {
+      const st = (x, alt) => `<div class="stage ${alt?'alt':''} ${x.tag==='Resolution'?'res':''}"><b>${esc(x.name)}</b><small>${x.tag==='init'?'Initialization':'→ '+x.tag}</small></div>`;
+      return `<div class="card"><h2>${s.title}</h2>
+        <div class="lanelbl">Primary stages (happy path)</div><div class="lane">${s.primary.map(x=>st(x)).join("")}</div>
+        <div class="lanelbl">Alternate stages</div><div class="lane">${s.alternate.map(x=>st(x,true)).join("")}</div>
+        <div class="legend"><span>Green top = resolves the case</span><span>Blue = primary</span><span>Grey = alternate</span></div></div>`;
+    },
+    flow: s => {
+      const node = n => `<span class="node ${n.kind}">${esc(n.name)}</span>`;
+      const chain = arr => arr.map(node).join(`<span class="arrow">→</span>`);
+      return `<div class="card"><h2>${s.title}</h2>${s.intro?`<p>${s.intro}</p>`:""}
+        <div class="spine">${chain(s.spine)}</div>
+        ${s.branches.map(b=>`<div class="branch"><span class="blabel">↳ ${esc(b.label)}</span>${chain(b.path)}</div>`).join("")}
+        <div class="legend"><span class="node auto">Automation</span><span class="node decision">Decision</span><span class="node goto">GoTo</span><span class="node assign">Assignment</span></div></div>`;
+    },
+    handson: (s, k, m) => `<div class="card"><h2>🛠 ${s.title}</h2><ul class="steps">${s.steps.map((t,i)=>{
+        const id=`${m.id}-h${k}-${i}`; return `<li class="${S.checks[id]?'ck':''}"><input type="checkbox" data-check="${id}" ${S.checks[id]?'checked':''}><span>${t}</span></li>`;}).join("")}</ul></div>`
+  };
+
+  // ---------- quiz ----------
+  const renderQ = (q, i) => {
+    const a = S.answers[q.id];
+    if (q.type === "mcq") {
+      const picked = a;
+      return `<div class="q" data-q="${q.id}"><div class="qt">${i+1}. ${q.q}</div>
+        ${q.options.map((o,j)=>`<button class="opt ${picked===j?(o.correct?'right':'wrong'):''}" data-mcq="${q.id}" data-i="${j}">${esc(o.t)}</button>`).join("")}
+        ${picked!=null?`<div class="why ${q.options[picked].correct?'right':'wrong'}">${q.options[picked].correct?'✔ Correct. ':'✘ Not quite. '}${q.options[picked].why||''}</div>`:""}</div>`;
+    }
+    const sel = a?.sel || [];
+    return `<div class="q" data-q="${q.id}"><div class="qt">${i+1}. ${q.q}</div>
+      ${q.items.map((it,j)=>{
+        const st = a?.checked ? (sel[j]===it.answer?'right':'wrong') : '';
+        return `<div class="cls"><div>${it.label}${a?.checked?`<div class="why ${st}">${st==='right'?'✔ ':'✘ Answer: '+it.answer+'. '}${it.why}</div>`:""}</div>
+          <select class="${st}" data-cls="${q.id}" data-i="${j}"><option value="">Choose…</option>${q.choices.map(c=>`<option ${sel[j]===c?'selected':''}>${c}</option>`).join("")}</select></div>`;}).join("")}
+      <div class="row" style="margin-top:10px"><button class="btn" data-checkcls="${q.id}">Check</button></div></div>`;
+  };
+
+  // ---------- pages ----------
+  const home = () => {
+    const ready = C.modules;
+    return `<div class="crumb">Welcome</div><h1>${esc(C.title)}</h1>
+      <p class="sub">An interactive course built from your team's real app. Each module has a concept, live JSON from <b>${esc(C.app.name)}</b>, a hands-on step in Studio, and a quiz.</p>
+      <div class="chips"><span class="chip">${C.modules.length} modules</span><span class="chip grey">≈ ${ready.reduce((t,m)=>t+(m.minutes||0),0)} min</span><span class="chip grey">Progress saved in this browser</span></div>
+      <div class="callout found">${esc(C.app.note)}</div>
+      <div class="grid">${C.modules.map(m=>{const st=modState(m);return `<a class="mcard" href="#${m.id}">
+        <div class="top"><span class="caption">Module ${m.num}</span><span class="status ${st}">${st==='done'?'Complete':st==='prog'?'In progress':'Not started'}</span></div>
+        <h3>${esc(m.title)}</h3><p>${esc(m.subtitle)}</p><p><i>≈ ${esc(m.analogy)}</i></p></a>`;}).join("")}</div>
+      <div class="row" style="margin-top:24px"><a class="btn" href="#m1" style="text-decoration:none">Start Module 1 →</a>
+        <button class="btn ghost" id="reset">Reset progress</button></div>`;
+  };
+
+  const glossary = () => `<div class="crumb">Reference</div><h1>Glossary</h1><p class="sub">Launchpad terms with developer-friendly definitions.</p>
+    <div class="card"><input class="search" id="gsearch" placeholder="Filter terms…"><dl class="gl" id="gl">
+    ${C.glossary.map(([t,d])=>`<div data-term="${esc((t+' '+d).toLowerCase())}"><dt>${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join("")}</dl></div>`;
+
+  const module = m => {
+    const idx = C.modules.indexOf(m), next = C.modules[idx+1], prev = C.modules[idx-1];
+    const st = modState(m);
+    return `<div class="crumb">Module ${m.num} of ${C.modules.length}</div><h1>${esc(m.title)}</h1><p class="sub">${esc(m.subtitle)}</p>
+      <div class="chips"><span class="chip">≈ ${esc(m.analogy)}</span>${m.minutes?`<span class="chip grey">${m.minutes} min</span>`:""}</div>
+      ${m.sections.map((s,k)=>R[s.type](s,k,m)).join("")}
+      <div class="card quiz"><h2>Check your understanding</h2>${m.quiz.map(renderQ).join("")}
+        ${st==='done'?`<div class="banner"><div><b>🎉 Module ${m.num} complete!</b><br><span class="sub">All answers correct.</span></div>${next?`<a class="btn" href="#${next.id}" style="text-decoration:none">Module ${next.num}: ${esc(next.title)} →</a>`:`<a class="btn" href="#home" style="text-decoration:none">🏁 Course complete</a>`}</div>`:""}
+      </div>
+      <div class="card"><h2>💬 My notes &amp; questions</h2>
+        <p class="sub">Write down anything that's unclear. Copy your notes, with your quiz results, to share with your team or to paste into your Launchpad-connected AI agent.</p>
+        <textarea id="notes" placeholder="e.g. Why does the Denied path go to Decision & Notify?">${esc(S.notes[m.id]||"")}</textarea>
+        <div class="row" style="margin-top:10px"><button class="btn" id="copynotes">Copy my notes</button></div></div>
+      <div class="row" style="justify-content:space-between">${prev?`<a href="#${prev.id}">← ${esc(prev.title)}</a>`:`<a href="#home">← Home</a>`}${next?`<a href="#${next.id}">${esc(next.title)} →</a>`:""}</div>`;
+  };
+
+  // ---------- router ----------
+  const route = () => {
+    const id = (location.hash||"#home").slice(1);
+    const m = C.modules.find(x=>x.id===id);
+    $("#main").innerHTML = m ? module(m) : id==="glossary" ? glossary() : home();
+    renderNav(m ? m.id : id==="glossary" ? "glossary" : "home");
+    wire(m);
+  };
+
+  const wire = m => {
+    const main = $("#main");
+    main.onclick = e => {
+      const t = e.target.closest("button, a"); if (!t) return;
+      if (t.dataset.mcq) { S.answers[t.dataset.mcq] = +t.dataset.i; save(); rerender(); }
+      if (t.dataset.checkcls) { const a = S.answers[t.dataset.checkcls] || {sel:[]}; a.checked = true; S.answers[t.dataset.checkcls] = a; save(); rerender(); }
+      if (t.dataset.copy != null && m) { navigator.clipboard.writeText(m.sections[+t.dataset.copy].code); toast("JSON copied"); }
+      if (t.id === "copynotes" && m) {
+        const lines = m.quiz.map((q,i)=>{
+          const a=S.answers[q.id];
+          const ans = q.type==="mcq" ? (a!=null?q.options[a].t:"(unanswered)") : q.items.map((it,j)=>`${it.label.replace(/[<>]/g,"")} → ${(a?.sel||[])[j]||"?"}`).join("; ");
+          return `Q${i+1} ${isRight(q)?"✔":"✘"}: ${q.q.replace(/[<>]/g,"")}\n   My answer: ${ans}`;
+        });
+        const txt = `Launchpad tutorial, Module ${m.num} (${m.title}).\nQuiz results:\n${lines.join("\n")}\n\nMy questions:\n${$("#notes").value || "(none)"}`;
+        navigator.clipboard.writeText(txt); toast("Notes copied");
+      }
+      if (t.id === "reset" && confirm("Reset all progress?")) { localStorage.removeItem(KEY); location.reload(); }
+    };
+    main.onchange = e => {
+      const t = e.target;
+      if (t.dataset.cls) { const a = S.answers[t.dataset.cls] || {sel:[]}; a.sel[+t.dataset.i] = t.value; a.checked = false; S.answers[t.dataset.cls] = a; save(); }
+      if (t.dataset.check) { S.checks[t.dataset.check] = t.checked; save(); t.closest("li").classList.toggle("ck", t.checked); renderNav(m.id); }
+    };
+    const n = $("#notes"); if (n) n.oninput = () => { S.notes[m.id] = n.value; save(); };
+    const g = $("#gsearch"); if (g) g.oninput = () => document.querySelectorAll("#gl > div").forEach(d => d.style.display = d.dataset.term.includes(g.value.toLowerCase()) ? "" : "none");
+  };
+
+  const rerender = () => { const y = scrollY; route(); scrollTo(0, y); };
+  addEventListener("hashchange", () => { route(); scrollTo(0,0); });
+  route();
+})();
+</script>
+</body>
+</html>
