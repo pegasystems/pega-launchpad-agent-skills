@@ -14,7 +14,7 @@ This repository offers two complementary helpers. They are separate and can be i
 
 | Helper | What it provides |
 | --- | --- |
-| **Launchpad agent skills** | A collection of task-specific instructions for AI coding assistants, covering Launchpad MCP, DX APIs, web embedding, custom functions, Custom UX components, custom React front ends, app videos, and app home pages. Choose the skills relevant to your work. |
+| **Launchpad agent skills** | A collection of task-specific instructions for AI coding assistants, covering Launchpad MCP, DX APIs, web embedding, custom functions, Custom UX components, custom React front ends, app videos, app home pages, and dynamic launchpad learning courses. Choose the skills relevant to your work. |
 | **Launchpad UX Builder plugin** | A guided, end-to-end workflow for building Custom UX components: it discovers your app, recommends a component, generates a theme-aware preview, and helps build and publish it. It requires an MCP-capable assistant and Launchpad access with permission to publish Custom UX. |
 
 ### Launchpad agent skills
@@ -29,6 +29,7 @@ The standalone skills are reusable across supported AI coding tools. Browse the 
 - [Building custom React front ends](skills/launchpad-ux-custom-frontend/SKILL.md)
 - [Turning a Launchpad app into a video](docs/app-to-video.md)
 - [Turning a Launchpad app into a home page](docs/app-to-homepage.md)
+- [Generate a local web page to interactively learn about launchpad and your launchpad app](skills/launchpad-learning-course/SKILL.md)
 
 ### Launchpad UX Builder plugin
 
