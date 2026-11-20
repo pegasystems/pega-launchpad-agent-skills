@@ -151,7 +151,12 @@
   const S = Object.assign({answers:{}, checks:{}, notes:{}}, JSON.parse(localStorage.getItem(KEY) || "{}"));
   const save = () => localStorage.setItem(KEY, JSON.stringify(S));
   const $ = (s, el=document) => el.querySelector(s);
-  const esc = t => String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const esc = t => String(t)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
   const toast = m => { const t=$("#toast"); t.textContent=m; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1600); };
 
   const hl = code => esc(code).replace(
