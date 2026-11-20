@@ -291,8 +291,8 @@
       if (t.id === "copynotes" && m) {
         const lines = m.quiz.map((q,i)=>{
           const a=S.answers[q.id];
-          const ans = q.type==="mcq" ? (a!=null?q.options[a].t:"(unanswered)") : q.items.map((it,j)=>`${it.label.replace(/<[^>]+>/g,"")} → ${(a?.sel||[])[j]||"?"}`).join("; ");
-          return `Q${i+1} ${isRight(q)?"✔":"✘"}: ${q.q.replace(/<[^>]+>/g,"")}\n   My answer: ${ans}`;
+          const ans = q.type==="mcq" ? (a!=null?q.options[a].t:"(unanswered)") : q.items.map((it,j)=>`${it.label.replace(/[<>]/g,"")} → ${(a?.sel||[])[j]||"?"}`).join("; ");
+          return `Q${i+1} ${isRight(q)?"✔":"✘"}: ${q.q.replace(/[<>]/g,"")}\n   My answer: ${ans}`;
         });
         const txt = `Launchpad tutorial, Module ${m.num} (${m.title}).\nQuiz results:\n${lines.join("\n")}\n\nMy questions:\n${$("#notes").value || "(none)"}`;
         navigator.clipboard.writeText(txt); toast("Notes copied");
